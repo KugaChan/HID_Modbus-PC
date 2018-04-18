@@ -1,0 +1,30 @@
+C:\Users\kuGa\Desktop\KMouse\KMouse\bin\Debug\KMouse.exe.config
+C:\Users\kuGa\Desktop\KMouse\KMouse\bin\Debug\KMouse.exe
+C:\Users\kuGa\Desktop\KMouse\KMouse\bin\Debug\KMouse.pdb
+C:\Users\kuGa\Desktop\KMouse\KMouse\obj\Debug\KMouse.csprojResolveAssemblyReference.cache
+C:\Users\kuGa\Desktop\KMouse\KMouse\obj\Debug\KMouse.Form1.resources
+C:\Users\kuGa\Desktop\KMouse\KMouse\obj\Debug\KMouse.Properties.Resources.resources
+C:\Users\kuGa\Desktop\KMouse\KMouse\obj\Debug\KMouse.csproj.GenerateResource.Cache
+C:\Users\kuGa\Desktop\KMouse\KMouse\obj\Debug\KMouse.exe
+C:\Users\kuGa\Desktop\KMouse\KMouse\obj\Debug\KMouse.pdb
+D:\CurrentProject\KMouse\KMouse\KMouse\bin\Debug\KMouse.exe.config
+D:\CurrentProject\KMouse\KMouse\KMouse\obj\Debug\KMouse.exe
+D:\CurrentProject\KMouse\KMouse\KMouse\obj\Debug\KMouse.pdb
+D:\CurrentProject\KMouse\KMouse\KMouse\bin\Debug\KMouse.exe
+D:\CurrentProject\KMouse\KMouse\KMouse\bin\Debug\KMouse.pdb
+D:\CurrentProject\KMouse\KMouse\KMouse\obj\Debug\KMouse.csprojResolveAssemblyReference.cache
+D:\CurrentProject\KMouse\KMouse\KMouse\obj\Debug\KMouse.Properties.Resources.resources
+D:\CurrentProject\KMouse\KMouse\KMouse\obj\Debug\KMouse.csproj.GenerateResource.Cache
+D:\CurrentProject\KMouse\KMouse\KMouse\obj\Debug\KMouse.KMouse.resources
+E:\我的文档\C程序代码\Experiments for C#\KMouse\KMouse\KMouse\bin\Debug\KMouse.exe.config
+E:\我的文档\C程序代码\Experiments for C#\KMouse\KMouse\KMouse\obj\Debug\KMouse.exe
+E:\我的文档\C程序代码\Experiments for C#\KMouse\KMouse\KMouse\obj\Debug\KMouse.pdb
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\bin\Debug\KMouse.exe.config
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\obj\Debug\KMouse.exe
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\obj\Debug\KMouse.pdb
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\bin\Debug\KMouse.exe
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\bin\Debug\KMouse.pdb
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\obj\Debug\KMouse.csprojResolveAssemblyReference.cache
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\obj\Debug\KMouse.KMouse.resources
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\obj\Debug\KMouse.Properties.Resources.resources
+D:\kuGa\MyProj\智能鼠标\STM32F103C8+Modbus+PC通过串口控制键鼠\CodePC\KMouse\obj\Debug\KMouse.csproj.GenerateResource.Cache
