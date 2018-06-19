@@ -115,9 +115,12 @@ namespace KMouse
 		//const u32 KEY_KEYBOARD_Fn = 71;
 		//const u32 KEY_KEYBOARD_Win = 72;
 
-		const u8 REG_KEYBOARD_SET_CTRL = 0xE0;
-		const u8 REG_KEYBOARD_SET_SHIFT = 0xE1;
-		const u8 REG_KEYBOARD_SET_ALT = 0xE2;
+        //const u8 REG_KEYBOARD_SET_CTRL = 0xE0;
+        //const u8 REG_KEYBOARD_SET_SHIFT = 0xE1;
+        //const u8 REG_KEYBOARD_SET_ALT = 0xE2;
+        //const u8 REG_KEYBOARD_SET_GUI = 0xE3;
+
+        const u16 KEY_KEYBOARD_NULL = 0xFFFF;
 
 		bool modbus_send_cmd_is_busy = false;
 
@@ -183,20 +186,19 @@ namespace KMouse
 
 		private void button_Ctrl_Click(object sender, EventArgs e)
 		{
-			Func_KB_Set(REG_KEYBOARD_SET_CTRL);
+            //Func_KB_Click(REG_KEYBOARD_SET_CTRL);
 		}
 
 		private void button_Shift_L_Click(object sender, EventArgs e)
 		{
-			Func_KB_Set(REG_KEYBOARD_SET_SHIFT);
+            //Func_KB_Click(REG_KEYBOARD_SET_SHIFT);
 		}
 
 		private void button_ALt_Click(object sender, EventArgs e)
 		{
-			Func_KB_Set(REG_KEYBOARD_SET_ALT);
+            //Func_KB_Click(REG_KEYBOARD_SET_ALT);
 		}
         /***********用于鼠标单击点亮 Alt, Ctrl和Shift，目前不用了，可以用键盘热键实现****************/
-
 
 		/**********************鼠标单击键盘按钮，用得少，主要用热键***********************/
 		private void button_A_Click(object sender, EventArgs e)

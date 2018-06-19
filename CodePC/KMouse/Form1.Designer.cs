@@ -150,6 +150,7 @@
             this.comboBox_COMNumber = new System.Windows.Forms.ComboBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkBox_ShowTxt = new System.Windows.Forms.CheckBox();
+            this.label_CmdSuccessCnt = new System.Windows.Forms.Label();
             this.groupBox_Log.SuspendLayout();
             this.groupBox_Mouse.SuspendLayout();
             this.groupBox_Keyboard.SuspendLayout();
@@ -1591,11 +1592,21 @@
             this.checkBox_ShowTxt.Text = "Show_Txt";
             this.checkBox_ShowTxt.UseVisualStyleBackColor = true;
             // 
+            // label_CmdSuccessCnt
+            // 
+            this.label_CmdSuccessCnt.AutoSize = true;
+            this.label_CmdSuccessCnt.Location = new System.Drawing.Point(748, 268);
+            this.label_CmdSuccessCnt.Name = "label_CmdSuccessCnt";
+            this.label_CmdSuccessCnt.Size = new System.Drawing.Size(47, 12);
+            this.label_CmdSuccessCnt.TabIndex = 127;
+            this.label_CmdSuccessCnt.Text = "CmdCnt:";
+            // 
             // KMouse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(842, 426);
+            this.Controls.Add(this.label_CmdSuccessCnt);
             this.Controls.Add(this.checkBox_ShowTxt);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox_Keyboard);
@@ -1746,6 +1757,7 @@
 		private System.Windows.Forms.ComboBox comboBox_COMNumber;
 		private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.CheckBox checkBox_ShowTxt;
+        private System.Windows.Forms.Label label_CmdSuccessCnt;
 	}
 }
 

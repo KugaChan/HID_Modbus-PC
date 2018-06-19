@@ -25,8 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionMSB = 1;
-		private const u8 _VersionLSB = 1;
+		private const u8 _VersionGit = 2;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
@@ -62,7 +61,7 @@ namespace KMouse
 		{
 			s32 i;
 
-			this.Text = "KMouse V" + _VersionMSB.ToString() + "." + _VersionLSB.ToString();
+            this.Text = "KMouse Git" + _VersionGit.ToString();
 			
 			/*********************初始化鼠标按键 start**********************/
 			for(i = 0; i < KEY_MousePress_ALL; i++)
@@ -206,6 +205,24 @@ namespace KMouse
 		{
 			//Console.WriteLine(DateTime.Now.ToString("yy/MM/dd HH:mm:ss"));
 			//Console.WriteLine("modbus_recv_timeout:{0}", modbus_recv_timeout);
+            if (modbus_is_busy == true)
+            {
+                modbus_respone_timeout++;
+                if (modbus_respone_timeout == 100)
+                {
+                    modbus_respone_timeout = 0;
+
+                    MessageBox.Show("Modbus响应超时!", "警告");
+
+                    bool res;
+                    res = Func_Modbus_Recv_Handle();
+
+                    if (res == false)
+                    {
+                        Func_COM_Close();
+                    }
+                }
+            }
 
 			if(modbus_recv_timeout != dwAllFF)
 			{

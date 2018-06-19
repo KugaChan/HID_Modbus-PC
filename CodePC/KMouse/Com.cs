@@ -29,6 +29,9 @@ namespace KMouse
 		private bool com_change_baudrate = false;
 
 
+        private u32 modbus_success_cnt;
+        private u32 modbus_fail_cnt;
+
         public enum HardwareEnum
         {
             // 硬件

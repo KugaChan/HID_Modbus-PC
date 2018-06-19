@@ -370,9 +370,19 @@ namespace KMouse
 
 			if(KeyCode == Keys.Enter) { Func_KB_Click(KEY_KEYBOARD_Enter + key_add); }
 
-			//if(KeyCode == Keys.ControlKey) { Func_KB_Set(REG_KEYBOARD_SET_CTRL); }
-			//if(KeyCode == Keys.ShiftKey) { Func_KB_Set(REG_KEYBOARD_SET_SHIFT); }
-			//if(KeyCode == Keys.Menu) { Func_KB_Set(REG_KEYBOARD_SET_ALT); }	
+            //if( (KeyCode == Keys.ControlKey) ||
+            //    (KeyCode == Keys.ShiftKey) ||
+            //    (KeyCode == Keys.Menu) ||
+            //    (KeyCode == Keys.ControlKey) ||
+            //    (KeyCode == Keys.ControlKey) ||
+            //    (KeyCode == Keys.ControlKey) )
+            //{
+            //    { Func_KB_Click(KEY_KEYBOARD_NULL + key_add); }
+            //}
+
+            if(KeyCode == Keys.ControlKey) { Func_KB_Click(KEY_KEYBOARD_NULL + key_add); }
+            if(KeyCode == Keys.ShiftKey) { Func_KB_Click(KEY_KEYBOARD_NULL + key_add); }
+            if(KeyCode == Keys.Menu) { Func_KB_Click(KEY_KEYBOARD_NULL + key_add); }
 		}
 
 		private void KMouse_KeyDown(object sender, KeyEventArgs e)	//真正的KeyDown被架空，使用ProcessDialogKey作为keydown

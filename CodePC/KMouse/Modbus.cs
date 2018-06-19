@@ -35,6 +35,7 @@ namespace KMouse
 		private u32 modbus_recv_cnt = 0;
 		private u32 modbus_recv_num = 8;
 		private u32 modbus_recv_timeout = dwAllFF;
+        private u32 modbus_respone_timeout = 0;
 		private bool modbus_handling = false;
 
 		bool modbus_is_busy = false;
@@ -144,6 +145,8 @@ namespace KMouse
 			try
 			{
                 modbus_is_busy = true;
+                modbus_respone_timeout = 0;
+
                 com.Write(modbus_send_data, 0, MODBUS_SEND_03_NUM);
 
                 if (checkBox_ShowTxt.Checked == true)
@@ -237,7 +240,7 @@ namespace KMouse
 			u8 Register_Address = 0;
 
 			modbus_is_busy = false;
-			switch(modbus_recv_data[1])										//功能码
+            switch (modbus_recv_data[1])									//功能码
 			{
 				case 0x03:													//读寄存器的值(WORD)
 				{
@@ -310,74 +313,6 @@ namespace KMouse
 
 							case REG_KEYBOARD:
 							{
-                                /***********用于鼠标单击点亮 Alt, Ctrl和Shift，命令发送完自动取消，目前不用了，****************/
-								this.Invoke((EventHandler)(delegate
-								{
-									if(button_Ctrl.BackColor == System.Drawing.Color.Yellow)
-									{
-										Func_KB_Set(REG_KEYBOARD_SET_CTRL);
-									}
-									if(button_Shift.BackColor == System.Drawing.Color.Yellow)
-									{
-										Func_KB_Set(REG_KEYBOARD_SET_SHIFT);
-									}
-									if(button_ALt.BackColor == System.Drawing.Color.Yellow)
-									{
-										Func_KB_Set(REG_KEYBOARD_SET_ALT);
-									}
-								}));
-                                /***********用于鼠标单击点亮 Alt, Ctrl和Shift，命令发送完自动取消，目前不用了，****************/
-								break;
-							}
-
-							case REG_KEYBOARD_SET_CTRL:
-							{
-								this.Invoke((EventHandler)(delegate
-								{
-									if(Func_Val == 0)
-									{
-										button_Ctrl.BackColor = System.Drawing.Color.Gainsboro;
-									}
-									else
-									{
-										button_Ctrl.BackColor = System.Drawing.Color.Yellow;
-									}
-								}));
-
-								break;
-							}
-
-							case REG_KEYBOARD_SET_SHIFT:
-							{
-								this.Invoke((EventHandler)(delegate
-								{
-									if(Func_Val == 0)
-									{
-										button_Shift.BackColor = System.Drawing.Color.Gainsboro;
-									}
-									else
-									{
-										button_Shift.BackColor = System.Drawing.Color.Yellow;
-									}
-								}));
-
-								break;
-							}
-
-							case REG_KEYBOARD_SET_ALT:
-							{
-								this.Invoke((EventHandler)(delegate
-								{
-									if(Func_Val == 0)
-									{
-										button_ALt.BackColor = System.Drawing.Color.Gainsboro;
-									}
-									else
-									{
-										button_ALt.BackColor = System.Drawing.Color.Yellow;
-									}
-								}));
-
 								break;
 							}
 							default:
@@ -420,9 +355,27 @@ namespace KMouse
 					break;
 				}
 			}
+            modbus_recv_data[1] = 0xFF;                                     //取完后立马清掉，表示已经用过了
 
 			modbus_recv_cnt = 0;
 			modbus_handling = false;
+
+            if (res == true)
+            {
+                modbus_success_cnt++;
+            }
+            else
+            {
+                modbus_fail_cnt++;
+                modbus_send_cmd_is_busy = false;
+            }
+            this.Invoke((EventHandler)(delegate
+            {
+                label_CmdSuccessCnt.Text = "CmdCnt: ";
+                label_CmdSuccessCnt.Text += modbus_success_cnt.ToString();
+                label_CmdSuccessCnt.Text += " | ";
+                label_CmdSuccessCnt.Text += modbus_fail_cnt.ToString();
+            }));
 
 			return res;
 		}
