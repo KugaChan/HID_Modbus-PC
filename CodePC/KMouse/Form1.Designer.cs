@@ -63,7 +63,7 @@
             this.button_PageDwon = new System.Windows.Forms.Button();
             this.button_PageUp = new System.Windows.Forms.Button();
             this.button_Space = new System.Windows.Forms.Button();
-            this.button_ALt = new System.Windows.Forms.Button();
+            this.button_Alt = new System.Windows.Forms.Button();
             this.button_Win = new System.Windows.Forms.Button();
             this.button_Fn = new System.Windows.Forms.Button();
             this.button_Ctrl = new System.Windows.Forms.Button();
@@ -457,7 +457,7 @@
             this.groupBox_Keyboard.Controls.Add(this.button_PageDwon);
             this.groupBox_Keyboard.Controls.Add(this.button_PageUp);
             this.groupBox_Keyboard.Controls.Add(this.button_Space);
-            this.groupBox_Keyboard.Controls.Add(this.button_ALt);
+            this.groupBox_Keyboard.Controls.Add(this.button_Alt);
             this.groupBox_Keyboard.Controls.Add(this.button_Win);
             this.groupBox_Keyboard.Controls.Add(this.button_Fn);
             this.groupBox_Keyboard.Controls.Add(this.button_Ctrl);
@@ -625,17 +625,17 @@
             this.button_Space.UseVisualStyleBackColor = true;
             this.button_Space.Click += new System.EventHandler(this.button_Space_Click);
             // 
-            // button_ALt
+            // button_Alt
             // 
-            this.button_ALt.ForeColor = System.Drawing.Color.Blue;
-            this.button_ALt.Location = new System.Drawing.Point(160, 161);
-            this.button_ALt.Name = "button_ALt";
-            this.button_ALt.Size = new System.Drawing.Size(46, 23);
-            this.button_ALt.TabIndex = 195;
-            this.button_ALt.TabStop = false;
-            this.button_ALt.Text = "Alt";
-            this.button_ALt.UseVisualStyleBackColor = true;
-            this.button_ALt.Click += new System.EventHandler(this.button_ALt_Click);
+            this.button_Alt.ForeColor = System.Drawing.Color.Blue;
+            this.button_Alt.Location = new System.Drawing.Point(160, 161);
+            this.button_Alt.Name = "button_Alt";
+            this.button_Alt.Size = new System.Drawing.Size(46, 23);
+            this.button_Alt.TabIndex = 195;
+            this.button_Alt.TabStop = false;
+            this.button_Alt.Text = "Alt";
+            this.button_Alt.UseVisualStyleBackColor = true;
+            this.button_Alt.Click += new System.EventHandler(this.button_ALt_Click);
             // 
             // button_Win
             // 
@@ -1670,7 +1670,7 @@
 		private System.Windows.Forms.Button button_PageDwon;
 		private System.Windows.Forms.Button button_PageUp;
 		private System.Windows.Forms.Button button_Space;
-		private System.Windows.Forms.Button button_ALt;
+		private System.Windows.Forms.Button button_Alt;
 		private System.Windows.Forms.Button button_Win;
 		private System.Windows.Forms.Button button_Fn;
 		private System.Windows.Forms.Button button_Ctrl;

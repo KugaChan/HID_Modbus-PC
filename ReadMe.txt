@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git3
+1. 加入黏合Ctrl、Alt和Shift的功能，当特殊组合键与本机重复时，可以通过鼠标点击黏合来发出组合键
+
 Git2
 1. 加入重复启动软件报警
 2. Ctrl, Alt和Shift可单击

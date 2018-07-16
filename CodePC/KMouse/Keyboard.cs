@@ -132,9 +132,28 @@ namespace KMouse
 
         private bool Func_KB_FIFO_Input(u32 KEY)
         {
+            u32 KEY_Add = KEY;
+            if (button_Ctrl.BackColor == System.Drawing.Color.Yellow)
+            {
+                button_Ctrl.BackColor = System.Drawing.Color.Gainsboro;
+                KEY_Add |= KEY_KEYBOARD_Ctrl;
+            }
+
+            if (button_Shift.BackColor == System.Drawing.Color.Yellow)
+            {
+                button_Shift.BackColor = System.Drawing.Color.Gainsboro;
+                KEY_Add |= KEY_KEYBOARD_Shift;
+            }
+
+            if (button_Alt.BackColor == System.Drawing.Color.Yellow)
+            {
+                button_Alt.BackColor = System.Drawing.Color.Gainsboro;
+                KEY_Add |= KEY_KEYBOARD_Alt;
+            }
+
             if (modbus_kb_input - modbus_kb_output < MODBUS_KB_WAITING_MAX)
             {
-                modbus_kb_fifo[modbus_kb_input] = KEY;
+                modbus_kb_fifo[modbus_kb_input] = KEY_Add;
                 modbus_kb_input++;
 
                 return true;
@@ -174,7 +193,7 @@ namespace KMouse
             }            
 		}
 
-		/***********用于鼠标单击点亮 Alt, Ctrl和Shift，目前不用了，可以用键盘热键实现****************/
+		/* 鼠标单击Shift, Ctrl和Alt时使用，由于部分组合键会与本机冲突，所以需要用 */
         private void Func_KB_Set(u8 REG)
         {
             if (modbus_send_cmd_is_busy == false)
@@ -186,19 +205,39 @@ namespace KMouse
 
 		private void button_Ctrl_Click(object sender, EventArgs e)
 		{
-            //Func_KB_Click(REG_KEYBOARD_SET_CTRL);
+            if (button_Ctrl.BackColor == System.Drawing.Color.Yellow)
+            {
+                button_Ctrl.BackColor = System.Drawing.Color.Gainsboro;
+            }
+            else
+            {
+                button_Ctrl.BackColor = System.Drawing.Color.Yellow;
+            }
 		}
 
 		private void button_Shift_L_Click(object sender, EventArgs e)
 		{
-            //Func_KB_Click(REG_KEYBOARD_SET_SHIFT);
+            if (button_Shift.BackColor == System.Drawing.Color.Yellow)
+            {
+                button_Shift.BackColor = System.Drawing.Color.Gainsboro;
+            }
+            else
+            {
+                button_Shift.BackColor = System.Drawing.Color.Yellow;
+            }
 		}
 
 		private void button_ALt_Click(object sender, EventArgs e)
 		{
-            //Func_KB_Click(REG_KEYBOARD_SET_ALT);
+            if (button_Alt.BackColor == System.Drawing.Color.Yellow)
+            {
+                button_Alt.BackColor = System.Drawing.Color.Gainsboro;
+            }
+            else
+            {
+                button_Alt.BackColor = System.Drawing.Color.Yellow;
+            }
 		}
-        /***********用于鼠标单击点亮 Alt, Ctrl和Shift，目前不用了，可以用键盘热键实现****************/
 
 		/**********************鼠标单击键盘按钮，用得少，主要用热键***********************/
 		private void button_A_Click(object sender, EventArgs e)

@@ -315,6 +315,7 @@ namespace KMouse
 							{
 								break;
 							}
+
 							default:
 							{
 								MessageBox.Show("error reg!!!: " + Register_Address.ToString(), "提示");
