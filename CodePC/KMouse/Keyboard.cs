@@ -108,17 +108,17 @@ namespace KMouse
 
 		const u32 KEY_KEYBOARD_Enter = 0x58;
 
+        const u32 KEY_CODE_LeftCtrl	= 0xE0;
+        const u32 KEY_CODE_LeftShift = 0xE1;
+        const u32 KEY_CODE_LeftAlt = 0xE2;
+        const u32 KEY_CODE_LeftGUI = 0xE3;
+
         const u32 KEY_KEYBOARD_Shift = 1u << 16;
 		const u32 KEY_KEYBOARD_Ctrl = 1u << 17;		
 		const u32 KEY_KEYBOARD_Alt = 1u << 18;
 
 		//const u32 KEY_KEYBOARD_Fn = 71;
 		//const u32 KEY_KEYBOARD_Win = 72;
-
-        //const u8 REG_KEYBOARD_SET_CTRL = 0xE0;
-        //const u8 REG_KEYBOARD_SET_SHIFT = 0xE1;
-        //const u8 REG_KEYBOARD_SET_ALT = 0xE2;
-        //const u8 REG_KEYBOARD_SET_GUI = 0xE3;
 
         const u16 KEY_KEYBOARD_NULL = 0xFFFF;
 
@@ -133,21 +133,21 @@ namespace KMouse
         private bool Func_KB_FIFO_Input(u32 KEY)
         {
             u32 KEY_Add = KEY;
-            if (button_Ctrl.BackColor == System.Drawing.Color.Yellow)
+            if (button__AddCtrl.BackColor == System.Drawing.Color.Yellow)
             {
-                button_Ctrl.BackColor = System.Drawing.Color.Gainsboro;
+                button__AddCtrl.BackColor = System.Drawing.Color.Gainsboro;
                 KEY_Add |= KEY_KEYBOARD_Ctrl;
             }
 
-            if (button_Shift.BackColor == System.Drawing.Color.Yellow)
+            if (button__AddShift.BackColor == System.Drawing.Color.Yellow)
             {
-                button_Shift.BackColor = System.Drawing.Color.Gainsboro;
+                button__AddShift.BackColor = System.Drawing.Color.Gainsboro;
                 KEY_Add |= KEY_KEYBOARD_Shift;
             }
 
-            if (button_Alt.BackColor == System.Drawing.Color.Yellow)
+            if (button_AddAlt.BackColor == System.Drawing.Color.Yellow)
             {
-                button_Alt.BackColor = System.Drawing.Color.Gainsboro;
+                button_AddAlt.BackColor = System.Drawing.Color.Gainsboro;
                 KEY_Add |= KEY_KEYBOARD_Alt;
             }
 
@@ -203,43 +203,66 @@ namespace KMouse
             }
         }
 
-		private void button_Ctrl_Click(object sender, EventArgs e)
+		private void button_AddCtrl_Click(object sender, EventArgs e)
 		{
-            if (button_Ctrl.BackColor == System.Drawing.Color.Yellow)
+            if (button__AddCtrl.BackColor == System.Drawing.Color.Yellow)
             {
-                button_Ctrl.BackColor = System.Drawing.Color.Gainsboro;
+                button__AddCtrl.BackColor = System.Drawing.Color.Gainsboro;
             }
             else
             {
-                button_Ctrl.BackColor = System.Drawing.Color.Yellow;
+                button__AddCtrl.BackColor = System.Drawing.Color.Yellow;
             }
 		}
 
-		private void button_Shift_L_Click(object sender, EventArgs e)
+		private void button_AddShift_L_Click(object sender, EventArgs e)
 		{
-            if (button_Shift.BackColor == System.Drawing.Color.Yellow)
+            if (button__AddShift.BackColor == System.Drawing.Color.Yellow)
             {
-                button_Shift.BackColor = System.Drawing.Color.Gainsboro;
+                button__AddShift.BackColor = System.Drawing.Color.Gainsboro;
             }
             else
             {
-                button_Shift.BackColor = System.Drawing.Color.Yellow;
+                button__AddShift.BackColor = System.Drawing.Color.Yellow;
             }
 		}
 
-		private void button_ALt_Click(object sender, EventArgs e)
+		private void button_AddALt_Click(object sender, EventArgs e)
 		{
-            if (button_Alt.BackColor == System.Drawing.Color.Yellow)
+            if (button_AddAlt.BackColor == System.Drawing.Color.Yellow)
             {
-                button_Alt.BackColor = System.Drawing.Color.Gainsboro;
+                button_AddAlt.BackColor = System.Drawing.Color.Gainsboro;
             }
             else
             {
-                button_Alt.BackColor = System.Drawing.Color.Yellow;
+                button_AddAlt.BackColor = System.Drawing.Color.Yellow;
             }
 		}
 
 		/**********************鼠标单击键盘按钮，用得少，主要用热键***********************/
+        private void button_Win_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_ALT_Click(object sender, EventArgs e)
+        {
+            //Func_KB_Click(KEY_CODE_LeftAlt);
+            Func_KB_Click(KEY_KEYBOARD_NULL + KEY_KEYBOARD_Alt);
+        }
+
+        private void button_CTRL_Click(object sender, EventArgs e)
+        {
+            //Func_KB_Click(KEY_CODE_LeftCtrl);
+            Func_KB_Click(KEY_KEYBOARD_NULL + KEY_KEYBOARD_Ctrl);
+        }
+
+        private void button_SHIFT_Click(object sender, EventArgs e)
+        {
+            //Func_KB_Click(KEY_CODE_LeftShift);
+            Func_KB_Click(KEY_KEYBOARD_NULL + KEY_KEYBOARD_Shift);            
+        }
+
 		private void button_A_Click(object sender, EventArgs e)
 		{
 			Func_KB_Click(KEY_KEYBOARD_A);

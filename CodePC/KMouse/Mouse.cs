@@ -266,12 +266,30 @@ namespace KMouse
 
 			Console.WriteLine("KEYDOWN>>keycode:{0} {1}", KeyCode, key_func);
 
-			if(KeyCode == Keys.NumPad8) { Func_MoveUp_MouseDown(); }
-			if(KeyCode == Keys.NumPad2) { Func_MoveDown_MouseDown(); }
-			if(KeyCode == Keys.NumPad4) { Func_MoveLeft_MouseDown(); }
-			if(KeyCode == Keys.NumPad6) { Func_MoveRight_MouseDown(); }
-			if(KeyCode == Keys.NumPad1) { Func_RollUp_MouseDown(); }
-			if(KeyCode == Keys.NumPad3) { Func_RollDown_MouseDown(); }
+            //if(KeyCode == Keys.NumPad8) { Func_MoveUp_MouseDown(); }
+            //if(KeyCode == Keys.NumPad2) { Func_MoveDown_MouseDown(); }
+            //if(KeyCode == Keys.NumPad4) { Func_MoveLeft_MouseDown(); }
+            //if(KeyCode == Keys.NumPad6) { Func_MoveRight_MouseDown(); }
+            //if(KeyCode == Keys.NumPad1) { Func_RollUp_MouseDown(); }
+            //if(KeyCode == Keys.NumPad3) { Func_RollDown_MouseDown(); }
+
+            if (KeyCode == Keys.NumPad1) { Func_KB_Click(KEY_KEYBOARD_Num1); }
+            if (KeyCode == Keys.NumPad2) { Func_KB_Click(KEY_KEYBOARD_Num2); }
+            if (KeyCode == Keys.NumPad3) { Func_KB_Click(KEY_KEYBOARD_Num3); }
+            if (KeyCode == Keys.NumPad4) { Func_KB_Click(KEY_KEYBOARD_Num4); }
+            if (KeyCode == Keys.NumPad5) { Func_KB_Click(KEY_KEYBOARD_Num5); }
+            if (KeyCode == Keys.NumPad6) { Func_KB_Click(KEY_KEYBOARD_Num6); }
+            if (KeyCode == Keys.NumPad7) { Func_KB_Click(KEY_KEYBOARD_Num7); }
+            if (KeyCode == Keys.NumPad8) { Func_KB_Click(KEY_KEYBOARD_Num8); }
+            if (KeyCode == Keys.NumPad9) { Func_KB_Click(KEY_KEYBOARD_Num9); }
+            if (KeyCode == Keys.NumPad0) { Func_KB_Click(KEY_KEYBOARD_Num0); }
+
+            if (KeyCode == Keys.Divide) { Func_KB_Click(KEY_KEYBOARD_Wen); }//  /
+            if (KeyCode == Keys.Multiply) { Func_KB_Click(KEY_KEYBOARD_Num8 + KEY_KEYBOARD_Shift); }//  *
+            if (KeyCode == Keys.Subtract) { Func_KB_Click(KEY_KEYBOARD_Min); }//  -
+            if (KeyCode == Keys.Add) { Func_KB_Click(KEY_KEYBOARD_Add + KEY_KEYBOARD_Shift); }// +
+            if (KeyCode == Keys.Decimal) { Func_KB_Click(KEY_KEYBOARD_Da); }//  .
+
 
 			u32 key_add = 0;
             if ((key_func & 0x0001) != 0)   //从打印中看出来的

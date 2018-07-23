@@ -25,7 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 3;
+		private const u8 _VersionGit = 4;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
@@ -210,12 +210,15 @@ namespace KMouse
                 modbus_respone_timeout++;
                 if (modbus_respone_timeout == 100)
                 {
-                    modbus_respone_timeout = 0;
-
-                    MessageBox.Show("Modbus响应超时!", "警告");
+                    modbus_respone_timeout = 0;                    
 
                     bool res;
                     res = Func_Modbus_Recv_Handle();
+
+                    MessageBox.Show("Modbus响应超时!", "警告");
+
+                    modbus_kb_input = 0;    //清空FIFO，避免已进FIFO的key一直发送
+                    modbus_kb_output = 0;
 
                     if (res == false)
                     {
@@ -294,8 +297,5 @@ namespace KMouse
 				notifyIcon.Visible = false;				//托盘区图标隐藏 
 			}
 		}
-
-
-	
 	}
 }

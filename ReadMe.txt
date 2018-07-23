@@ -1,5 +1,9 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git4
+1. 加入Ctrl、Alt和Shift的按键本身的单击发送
+2. 加入数字小键盘的热键功能
+
 Git3
 1. 加入黏合Ctrl、Alt和Shift的功能，当特殊组合键与本机重复时，可以通过鼠标点击黏合来发出组合键
 

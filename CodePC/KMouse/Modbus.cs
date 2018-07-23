@@ -202,7 +202,7 @@ namespace KMouse
                 this.Invoke((EventHandler)(delegate
                 {
                     this.textBox_ComRec.AppendText("Recv: ");
-                    this.textBox_ComRec.AppendText(SerialIn);					//在接收文本中添加串口接收数据
+                    this.textBox_ComRec.AppendText(SerialIn);				//在接收文本中添加串口接收数据
                     this.textBox_ComRec.AppendText("\r\n");
 
                     if (textBox_ComRec.TextLength > 32768)

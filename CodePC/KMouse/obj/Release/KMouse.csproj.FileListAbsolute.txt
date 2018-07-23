@@ -34,3 +34,12 @@ D:\K\KProjGit\HID_Modbus\PC\CodePC\KMouse\obj\Release\KMouse.csprojResolveAssemb
 D:\K\KProjGit\HID_Modbus\PC\CodePC\KMouse\obj\Release\KMouse.KMouse.resources
 D:\K\KProjGit\HID_Modbus\PC\CodePC\KMouse\obj\Release\KMouse.Properties.Resources.resources
 D:\K\KProjGit\HID_Modbus\PC\CodePC\KMouse\obj\Release\KMouse.csproj.GenerateResource.Cache
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\bin\Release\KMouse.exe.config
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.exe
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.pdb
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\bin\Release\KMouse.exe
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\bin\Release\KMouse.pdb
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.csprojResolveAssemblyReference.cache
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.KMouse.resources
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.Properties.Resources.resources
+D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.csproj.GenerateResource.Cache

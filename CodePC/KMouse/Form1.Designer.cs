@@ -55,6 +55,9 @@
             this.button_MoveDown = new System.Windows.Forms.Button();
             this.button_ClickLeft = new System.Windows.Forms.Button();
             this.groupBox_Keyboard = new System.Windows.Forms.GroupBox();
+            this.button_SHIFT = new System.Windows.Forms.Button();
+            this.button_CTRL = new System.Windows.Forms.Button();
+            this.button_ALT = new System.Windows.Forms.Button();
             this.button_Down = new System.Windows.Forms.Button();
             this.button_Up = new System.Windows.Forms.Button();
             this.button_End = new System.Windows.Forms.Button();
@@ -63,10 +66,9 @@
             this.button_PageDwon = new System.Windows.Forms.Button();
             this.button_PageUp = new System.Windows.Forms.Button();
             this.button_Space = new System.Windows.Forms.Button();
-            this.button_Alt = new System.Windows.Forms.Button();
-            this.button_Win = new System.Windows.Forms.Button();
+            this.button_AddAlt = new System.Windows.Forms.Button();
             this.button_Fn = new System.Windows.Forms.Button();
-            this.button_Ctrl = new System.Windows.Forms.Button();
+            this.button__AddCtrl = new System.Windows.Forms.Button();
             this.button_Left = new System.Windows.Forms.Button();
             this.button_Screen = new System.Windows.Forms.Button();
             this.button_WenHao = new System.Windows.Forms.Button();
@@ -79,7 +81,7 @@
             this.button_C = new System.Windows.Forms.Button();
             this.button_X = new System.Windows.Forms.Button();
             this.button_Z = new System.Windows.Forms.Button();
-            this.button_Shift = new System.Windows.Forms.Button();
+            this.button__AddShift = new System.Windows.Forms.Button();
             this.button_Right = new System.Windows.Forms.Button();
             this.button_Enter = new System.Windows.Forms.Button();
             this.button_VV_Fen = new System.Windows.Forms.Button();
@@ -135,6 +137,7 @@
             this.button_F2 = new System.Windows.Forms.Button();
             this.button_F1 = new System.Windows.Forms.Button();
             this.button_ESC = new System.Windows.Forms.Button();
+            this.button_Win = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button_P_Identify = new System.Windows.Forms.Button();
             this.button_COMOpen = new System.Windows.Forms.Button();
@@ -449,6 +452,9 @@
             // 
             // groupBox_Keyboard
             // 
+            this.groupBox_Keyboard.Controls.Add(this.button_SHIFT);
+            this.groupBox_Keyboard.Controls.Add(this.button_CTRL);
+            this.groupBox_Keyboard.Controls.Add(this.button_ALT);
             this.groupBox_Keyboard.Controls.Add(this.button_Down);
             this.groupBox_Keyboard.Controls.Add(this.button_Up);
             this.groupBox_Keyboard.Controls.Add(this.button_End);
@@ -457,10 +463,9 @@
             this.groupBox_Keyboard.Controls.Add(this.button_PageDwon);
             this.groupBox_Keyboard.Controls.Add(this.button_PageUp);
             this.groupBox_Keyboard.Controls.Add(this.button_Space);
-            this.groupBox_Keyboard.Controls.Add(this.button_Alt);
-            this.groupBox_Keyboard.Controls.Add(this.button_Win);
+            this.groupBox_Keyboard.Controls.Add(this.button_AddAlt);
             this.groupBox_Keyboard.Controls.Add(this.button_Fn);
-            this.groupBox_Keyboard.Controls.Add(this.button_Ctrl);
+            this.groupBox_Keyboard.Controls.Add(this.button__AddCtrl);
             this.groupBox_Keyboard.Controls.Add(this.button_Left);
             this.groupBox_Keyboard.Controls.Add(this.button_Screen);
             this.groupBox_Keyboard.Controls.Add(this.button_WenHao);
@@ -473,7 +478,7 @@
             this.groupBox_Keyboard.Controls.Add(this.button_C);
             this.groupBox_Keyboard.Controls.Add(this.button_X);
             this.groupBox_Keyboard.Controls.Add(this.button_Z);
-            this.groupBox_Keyboard.Controls.Add(this.button_Shift);
+            this.groupBox_Keyboard.Controls.Add(this.button__AddShift);
             this.groupBox_Keyboard.Controls.Add(this.button_Right);
             this.groupBox_Keyboard.Controls.Add(this.button_Enter);
             this.groupBox_Keyboard.Controls.Add(this.button_VV_Fen);
@@ -537,6 +542,42 @@
             this.groupBox_Keyboard.Tag = "0";
             this.groupBox_Keyboard.Text = "Keyboard";
             // 
+            // button_SHIFT
+            // 
+            this.button_SHIFT.ForeColor = System.Drawing.Color.Red;
+            this.button_SHIFT.Location = new System.Drawing.Point(576, 132);
+            this.button_SHIFT.Name = "button_SHIFT";
+            this.button_SHIFT.Size = new System.Drawing.Size(46, 23);
+            this.button_SHIFT.TabIndex = 206;
+            this.button_SHIFT.TabStop = false;
+            this.button_SHIFT.Text = "SHIFT";
+            this.button_SHIFT.UseVisualStyleBackColor = true;
+            this.button_SHIFT.Click += new System.EventHandler(this.button_SHIFT_Click);
+            // 
+            // button_CTRL
+            // 
+            this.button_CTRL.ForeColor = System.Drawing.Color.Red;
+            this.button_CTRL.Location = new System.Drawing.Point(524, 161);
+            this.button_CTRL.Name = "button_CTRL";
+            this.button_CTRL.Size = new System.Drawing.Size(46, 23);
+            this.button_CTRL.TabIndex = 205;
+            this.button_CTRL.TabStop = false;
+            this.button_CTRL.Text = "CTRL";
+            this.button_CTRL.UseVisualStyleBackColor = true;
+            this.button_CTRL.Click += new System.EventHandler(this.button_CTRL_Click);
+            // 
+            // button_ALT
+            // 
+            this.button_ALT.ForeColor = System.Drawing.Color.Red;
+            this.button_ALT.Location = new System.Drawing.Point(472, 161);
+            this.button_ALT.Name = "button_ALT";
+            this.button_ALT.Size = new System.Drawing.Size(46, 23);
+            this.button_ALT.TabIndex = 204;
+            this.button_ALT.TabStop = false;
+            this.button_ALT.Text = "ALT";
+            this.button_ALT.UseVisualStyleBackColor = true;
+            this.button_ALT.Click += new System.EventHandler(this.button_ALT_Click);
+            // 
             // button_Down
             // 
             this.button_Down.Location = new System.Drawing.Point(625, 161);
@@ -594,7 +635,7 @@
             // 
             // button_PageDwon
             // 
-            this.button_PageDwon.Location = new System.Drawing.Point(524, 161);
+            this.button_PageDwon.Location = new System.Drawing.Point(420, 161);
             this.button_PageDwon.Name = "button_PageDwon";
             this.button_PageDwon.Size = new System.Drawing.Size(46, 23);
             this.button_PageDwon.TabIndex = 198;
@@ -605,7 +646,7 @@
             // 
             // button_PageUp
             // 
-            this.button_PageUp.Location = new System.Drawing.Point(472, 161);
+            this.button_PageUp.Location = new System.Drawing.Point(368, 161);
             this.button_PageUp.Name = "button_PageUp";
             this.button_PageUp.Size = new System.Drawing.Size(46, 23);
             this.button_PageUp.TabIndex = 197;
@@ -618,38 +659,28 @@
             // 
             this.button_Space.Location = new System.Drawing.Point(212, 161);
             this.button_Space.Name = "button_Space";
-            this.button_Space.Size = new System.Drawing.Size(254, 23);
+            this.button_Space.Size = new System.Drawing.Size(150, 23);
             this.button_Space.TabIndex = 196;
             this.button_Space.TabStop = false;
             this.button_Space.Text = "Space";
             this.button_Space.UseVisualStyleBackColor = true;
             this.button_Space.Click += new System.EventHandler(this.button_Space_Click);
             // 
-            // button_Alt
+            // button_AddAlt
             // 
-            this.button_Alt.ForeColor = System.Drawing.Color.Blue;
-            this.button_Alt.Location = new System.Drawing.Point(160, 161);
-            this.button_Alt.Name = "button_Alt";
-            this.button_Alt.Size = new System.Drawing.Size(46, 23);
-            this.button_Alt.TabIndex = 195;
-            this.button_Alt.TabStop = false;
-            this.button_Alt.Text = "Alt";
-            this.button_Alt.UseVisualStyleBackColor = true;
-            this.button_Alt.Click += new System.EventHandler(this.button_ALt_Click);
-            // 
-            // button_Win
-            // 
-            this.button_Win.Location = new System.Drawing.Point(108, 161);
-            this.button_Win.Name = "button_Win";
-            this.button_Win.Size = new System.Drawing.Size(46, 23);
-            this.button_Win.TabIndex = 194;
-            this.button_Win.TabStop = false;
-            this.button_Win.Text = "Win";
-            this.button_Win.UseVisualStyleBackColor = true;
+            this.button_AddAlt.ForeColor = System.Drawing.Color.Blue;
+            this.button_AddAlt.Location = new System.Drawing.Point(56, 161);
+            this.button_AddAlt.Name = "button_AddAlt";
+            this.button_AddAlt.Size = new System.Drawing.Size(46, 23);
+            this.button_AddAlt.TabIndex = 195;
+            this.button_AddAlt.TabStop = false;
+            this.button_AddAlt.Text = "Alt";
+            this.button_AddAlt.UseVisualStyleBackColor = true;
+            this.button_AddAlt.Click += new System.EventHandler(this.button_AddALt_Click);
             // 
             // button_Fn
             // 
-            this.button_Fn.Location = new System.Drawing.Point(56, 161);
+            this.button_Fn.Location = new System.Drawing.Point(108, 161);
             this.button_Fn.Name = "button_Fn";
             this.button_Fn.Size = new System.Drawing.Size(46, 23);
             this.button_Fn.TabIndex = 193;
@@ -657,17 +688,17 @@
             this.button_Fn.Text = "Fn";
             this.button_Fn.UseVisualStyleBackColor = true;
             // 
-            // button_Ctrl
+            // button__AddCtrl
             // 
-            this.button_Ctrl.ForeColor = System.Drawing.Color.Blue;
-            this.button_Ctrl.Location = new System.Drawing.Point(4, 161);
-            this.button_Ctrl.Name = "button_Ctrl";
-            this.button_Ctrl.Size = new System.Drawing.Size(46, 23);
-            this.button_Ctrl.TabIndex = 192;
-            this.button_Ctrl.TabStop = false;
-            this.button_Ctrl.Text = "Ctrl";
-            this.button_Ctrl.UseVisualStyleBackColor = true;
-            this.button_Ctrl.Click += new System.EventHandler(this.button_Ctrl_Click);
+            this.button__AddCtrl.ForeColor = System.Drawing.Color.Blue;
+            this.button__AddCtrl.Location = new System.Drawing.Point(4, 161);
+            this.button__AddCtrl.Name = "button__AddCtrl";
+            this.button__AddCtrl.Size = new System.Drawing.Size(46, 23);
+            this.button__AddCtrl.TabIndex = 192;
+            this.button__AddCtrl.TabStop = false;
+            this.button__AddCtrl.Text = "Ctrl";
+            this.button__AddCtrl.UseVisualStyleBackColor = true;
+            this.button__AddCtrl.Click += new System.EventHandler(this.button_AddCtrl_Click);
             // 
             // button_Left
             // 
@@ -683,7 +714,7 @@
             // button_Screen
             // 
             this.button_Screen.ForeColor = System.Drawing.Color.Black;
-            this.button_Screen.Location = new System.Drawing.Point(576, 132);
+            this.button_Screen.Location = new System.Drawing.Point(160, 161);
             this.button_Screen.Name = "button_Screen";
             this.button_Screen.Size = new System.Drawing.Size(46, 23);
             this.button_Screen.TabIndex = 190;
@@ -802,17 +833,17 @@
             this.button_Z.UseVisualStyleBackColor = true;
             this.button_Z.Click += new System.EventHandler(this.button_Z_Click);
             // 
-            // button_Shift
+            // button__AddShift
             // 
-            this.button_Shift.ForeColor = System.Drawing.Color.Blue;
-            this.button_Shift.Location = new System.Drawing.Point(4, 132);
-            this.button_Shift.Name = "button_Shift";
-            this.button_Shift.Size = new System.Drawing.Size(46, 23);
-            this.button_Shift.TabIndex = 179;
-            this.button_Shift.TabStop = false;
-            this.button_Shift.Text = "Shift";
-            this.button_Shift.UseVisualStyleBackColor = true;
-            this.button_Shift.Click += new System.EventHandler(this.button_Shift_L_Click);
+            this.button__AddShift.ForeColor = System.Drawing.Color.Blue;
+            this.button__AddShift.Location = new System.Drawing.Point(4, 132);
+            this.button__AddShift.Name = "button__AddShift";
+            this.button__AddShift.Size = new System.Drawing.Size(46, 23);
+            this.button__AddShift.TabIndex = 179;
+            this.button__AddShift.TabStop = false;
+            this.button__AddShift.Text = "Shift";
+            this.button__AddShift.UseVisualStyleBackColor = true;
+            this.button__AddShift.Click += new System.EventHandler(this.button_AddShift_L_Click);
             // 
             // button_Right
             // 
@@ -1420,6 +1451,17 @@
             this.button_ESC.UseVisualStyleBackColor = true;
             this.button_ESC.Click += new System.EventHandler(this.button_ESC_Click);
             // 
+            // button_Win
+            // 
+            this.button_Win.Location = new System.Drawing.Point(749, 384);
+            this.button_Win.Name = "button_Win";
+            this.button_Win.Size = new System.Drawing.Size(46, 23);
+            this.button_Win.TabIndex = 194;
+            this.button_Win.TabStop = false;
+            this.button_Win.Text = "Win";
+            this.button_Win.UseVisualStyleBackColor = true;
+            this.button_Win.Click += new System.EventHandler(this.button_Win_Click);
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.button_P_Identify);
@@ -1612,6 +1654,7 @@
             this.Controls.Add(this.groupBox_Keyboard);
             this.Controls.Add(this.groupBox_Mouse);
             this.Controls.Add(this.groupBox_Log);
+            this.Controls.Add(this.button_Win);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -1670,10 +1713,10 @@
 		private System.Windows.Forms.Button button_PageDwon;
 		private System.Windows.Forms.Button button_PageUp;
 		private System.Windows.Forms.Button button_Space;
-		private System.Windows.Forms.Button button_Alt;
+		private System.Windows.Forms.Button button_AddAlt;
 		private System.Windows.Forms.Button button_Win;
 		private System.Windows.Forms.Button button_Fn;
-		private System.Windows.Forms.Button button_Ctrl;
+		private System.Windows.Forms.Button button__AddCtrl;
 		private System.Windows.Forms.Button button_Left;
 		private System.Windows.Forms.Button button_Screen;
 		private System.Windows.Forms.Button button_WenHao;
@@ -1686,7 +1729,7 @@
 		private System.Windows.Forms.Button button_C;
 		private System.Windows.Forms.Button button_X;
 		private System.Windows.Forms.Button button_Z;
-		private System.Windows.Forms.Button button_Shift;
+		private System.Windows.Forms.Button button__AddShift;
 		private System.Windows.Forms.Button button_Right;
 		private System.Windows.Forms.Button button_Enter;
 		private System.Windows.Forms.Button button_VV_Fen;
@@ -1758,6 +1801,9 @@
 		private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.CheckBox checkBox_ShowTxt;
         private System.Windows.Forms.Label label_CmdSuccessCnt;
+        private System.Windows.Forms.Button button_ALT;
+        private System.Windows.Forms.Button button_SHIFT;
+        private System.Windows.Forms.Button button_CTRL;
 	}
 }
 
