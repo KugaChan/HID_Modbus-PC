@@ -1,5 +1,11 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git6
+1. 调整一下案件布局，与触摸屏方案一致
+
+Git5
+1. 优化组合键的发送逻辑
+
 Git4
 1. 加入Ctrl、Alt和Shift的按键本身的单击发送
 2. 加入数字小键盘的热键功能
