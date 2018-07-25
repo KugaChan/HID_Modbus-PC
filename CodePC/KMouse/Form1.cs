@@ -25,7 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 4;
+		private const u8 _VersionGit = 5;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
