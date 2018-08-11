@@ -156,10 +156,22 @@ namespace KMouse
             }
         }
 
+        private bool Func_KB_FIFO_HasData()
+        {
+            if (modbus_kb_input - modbus_kb_output > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private u32 Func_KB_FIFO_Output()
         {
             u32 KEY;
-            if (modbus_kb_input - modbus_kb_output > 0)
+            if (Func_KB_FIFO_HasData() == true)
             {
                 KEY = modbus_kb_fifo[modbus_kb_output];
                 modbus_kb_output++;
@@ -175,13 +187,7 @@ namespace KMouse
 
 		private void Func_KB_Click(u32 KEY)
 		{
-            Func_KB_FIFO_Input(KEY);
-            if (modbus_send_cmd_is_busy == false)
-            {
-                modbus_send_cmd_is_busy = true;
-                //Func_Modbus_Send_03(REG_KEYBOARD, 1, KEY);
-                Func_Modbus_Send_03(REG_KEYBOARD, 1, Func_KB_FIFO_Output());
-            }            
+            Func_KB_FIFO_Input(KEY);           
 		}
 
 		/* 鼠标单击Shift, Ctrl和Alt时使用，由于部分组合键会与本机冲突，所以需要用 */

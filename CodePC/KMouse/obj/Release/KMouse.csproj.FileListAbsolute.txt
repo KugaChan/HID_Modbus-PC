@@ -52,3 +52,6 @@ G:\KProjGit\GitHub\HID_Modbus-PC\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.
 G:\KProjGit\GitHub\HID_Modbus-PC\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.KMouse.resources
 G:\KProjGit\GitHub\HID_Modbus-PC\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.Properties.Resources.resources
 G:\KProjGit\GitHub\HID_Modbus-PC\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.csproj.GenerateResource.Cache
+D:\KProjGit\GitHub\HID_Modubs-PC\Git6\CodePC\KMouse\bin\Release\KMouse.exe.config
+D:\KProjGit\GitHub\HID_Modubs-PC\Git6\CodePC\KMouse\obj\Release\KMouse.exe
+D:\KProjGit\GitHub\HID_Modubs-PC\Git6\CodePC\KMouse\obj\Release\KMouse.pdb

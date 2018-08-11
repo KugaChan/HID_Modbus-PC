@@ -149,6 +149,13 @@ namespace KMouse
 
                 com.Write(modbus_send_data, 0, MODBUS_SEND_03_NUM);
 
+                Console.Write("PC->MCU:");
+                for (int v = 0; v < MODBUS_SEND_03_NUM; v++)
+                {
+                    Console.Write(" {0:X}", modbus_send_data[v]);
+                }
+                Console.Write("\r\n");
+
                 if (checkBox_ShowTxt.Checked == true)
                 {
                     textBox_ComRec.Text += "Send: ";
@@ -323,18 +330,8 @@ namespace KMouse
 								break;
 							}
 						}
+                        modbus_send_cmd_is_busy = false;
 
-                        if (modbus_send_cmd_is_busy == true)
-                        {
-                            if (modbus_kb_input - modbus_kb_output > 0)
-                            {
-                                Func_Modbus_Send_03(REG_KEYBOARD, 1, Func_KB_FIFO_Output());
-                            }
-                            else
-                            {
-                                modbus_send_cmd_is_busy = false;
-                            }
-                        }
 					}
 					else
 					{

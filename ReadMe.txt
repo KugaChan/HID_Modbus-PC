@@ -1,5 +1,9 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git7
+1. 加入eKey功能，间接实现复制粘贴功能
+2. 通过定时器发送FIFO，更加稳定
+
 Git6
 1. 调整一下案件布局，与触摸屏方案一致
 
