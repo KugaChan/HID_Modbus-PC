@@ -1,5 +1,10 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git8
+1. 调整定时器时间为10ms，不至于太卡
+2. 修正之前鼠标移动和点击不能使用的问题
+3. 可发送命令让USB设备复位
+
 Git7
 1. 加入eKey功能，间接实现复制粘贴功能
 2. 通过定时器发送FIFO，更加稳定

@@ -28,24 +28,27 @@ namespace KMouse
 		const u32 KEY_MOUSE_Leave = 0x0000FFFF;
 
 		const u8 REG_MOUSE_PRESS = 3;
-		const u32 KEY_MousePress_MoveUP = 0;
-		const u32 KEY_MousePress_MoveDown = 1;
-		const u32 KEY_MousePress_MoveLeft = 2;
-		const u32 KEY_MousePress_MoveRight = 3;
-		const u32 KEY_MousePress_RollUp = 4;
-		const u32 KEY_MousePress_RollDown = 5;
-		const u32 KEY_MousePress_ALL = 6;
+		const u32 KEY_MousePress_MoveUP = 2;
+		const u32 KEY_MousePress_MoveDown = 3;
+		const u32 KEY_MousePress_MoveLeft = 4;
+		const u32 KEY_MousePress_MoveRight = 5;
+		const u32 KEY_MousePress_RollUp = 6;
+		const u32 KEY_MousePress_RollDown = 7;
+		const u32 KEY_MousePress_ALL = 8;
 		bool[] mouse_press_en = new bool[KEY_MousePress_ALL];
 		bool[] mouse_press_en_last = new bool[KEY_MousePress_ALL];		
 
 		const u8 REG_MOUSE_CLICK = 5;
-		const u32 KEY_MouseClick_ClickLeft = 0;
-		const u32 KEY_MouseClick_ClickRight = 1;
+		const u32 KEY_MouseClick_ClickLeft = 8;
+		const u32 KEY_MouseClick_ClickRight = 9;
 		
 		const u8 REG_MOUSE_SPEED = 7;
 		const u32 KEY_MouseSpeed_SpeedUp = 0;
 		const u32 KEY_MouseSpeed_SpeedDown = 1;
 		const u32 KEY_MouseSpeed_SpeedChk = 2;
+
+		const u8 REG_MOUSE_REBOOT = 66;
+
 		bool mouse_speed_chk = false;
 
 		/******************************************************************/
@@ -118,7 +121,7 @@ namespace KMouse
 			if(is_down)
 			{
 				mouse_press_en[key] = true;
-				Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, key);	
+				Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, key);
 			}
 			else
 			{

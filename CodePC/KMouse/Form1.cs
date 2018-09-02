@@ -25,14 +25,11 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 7;
+		private const u8 _VersionGit = 8;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
 
-		//串口使用的变量
-		
-		private const float Tag_VersionNum = 1.0F;
 
 		int[] badurate_array = 
 		{
@@ -567,5 +564,10 @@ namespace KMouse
                 Func_Modbus_Send_03(REG_KEYBOARD, 1, Func_KB_FIFO_Output());
             }
         }
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			Func_Modbus_Send_03(REG_MOUSE_REBOOT, 1, 0);
+		}
 	}
 }
