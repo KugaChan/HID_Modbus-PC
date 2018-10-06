@@ -57,7 +57,7 @@ namespace KMouse
 			if(button_ClickLeft.Enabled == true)
 			{
 				button_ClickLeft.Enabled = false;
-				Func_Modbus_Send_03(REG_MOUSE_CLICK, 1, KEY_MouseClick_ClickLeft);			
+				Func_Modbus_Send_03(REG_MOUSE_CLICK, 1, KEY_MouseClick_ClickLeft);
 			}
 		}
 
@@ -74,7 +74,7 @@ namespace KMouse
 			if(button_SpeedUp.Enabled == true)
 			{
 				button_SpeedUp.Enabled = false;
-				Func_Modbus_Send_03(REG_MOUSE_SPEED, 1, KEY_MouseSpeed_SpeedUp);		
+				Func_Modbus_Send_03(REG_MOUSE_SPEED, 1, KEY_MouseSpeed_SpeedUp);
 			}
 		}
 
@@ -262,19 +262,16 @@ namespace KMouse
 			}
 		}
 
+        [DllImport("user32.dll")]
+        public static extern short GetKeyState(int keyCode);
+
 		private void Func_KMouse_KeyDown(Keys KeyCode)
 		{
+
 			u32 key_func = (u32)KeyCode >> 16;
 			KeyCode = (Keys)((u32)KeyCode & (0x0000FFFFu));
 
 			Console.WriteLine("KEYDOWN>>keycode:{0} {1}", KeyCode, key_func);
-
-            //if(KeyCode == Keys.NumPad8) { Func_MoveUp_MouseDown(); }
-            //if(KeyCode == Keys.NumPad2) { Func_MoveDown_MouseDown(); }
-            //if(KeyCode == Keys.NumPad4) { Func_MoveLeft_MouseDown(); }
-            //if(KeyCode == Keys.NumPad6) { Func_MoveRight_MouseDown(); }
-            //if(KeyCode == Keys.NumPad1) { Func_RollUp_MouseDown(); }
-            //if(KeyCode == Keys.NumPad3) { Func_RollDown_MouseDown(); }
 
             if (KeyCode == Keys.NumPad1) { Func_KB_Click(KEY_KEYBOARD_Num1); }
             if (KeyCode == Keys.NumPad2) { Func_KB_Click(KEY_KEYBOARD_Num2); }
@@ -289,8 +286,6 @@ namespace KMouse
 
             if (KeyCode == Keys.Divide) { Func_KB_Click(KEY_KEYBOARD_Wen); }//  /
             if (KeyCode == Keys.Multiply) { Func_KB_Click(KEY_KEYBOARD_Num8 + KEY_KEYBOARD_Shift); }//  *
-            if (KeyCode == Keys.Subtract) { Func_KB_Click(KEY_KEYBOARD_Min); }//  -
-            if (KeyCode == Keys.Add) { Func_KB_Click(KEY_KEYBOARD_Add + KEY_KEYBOARD_Shift); }// +
             if (KeyCode == Keys.Decimal) { Func_KB_Click(KEY_KEYBOARD_Da); }//  .
 
 
@@ -377,17 +372,71 @@ namespace KMouse
 			if(KeyCode == Keys.F11) { Func_KB_Click(KEY_KEYBOARD_F11 + key_add); }
 			if(KeyCode == Keys.F12) { Func_KB_Click(KEY_KEYBOARD_F12 + key_add); }
 			if(KeyCode == Keys.PrintScreen) { Func_KB_Click(KEY_KEYBOARD_PrintScreen + key_add); }
+            if (KeyCode == Keys.Delete) { Func_KB_Click(KEY_KEYBOARD_Del + key_add); }
 
-			if(KeyCode == Keys.Home) { Func_KB_Click(KEY_KEYBOARD_Home + key_add); }
-			if(KeyCode == Keys.PageUp) { Func_KB_Click(KEY_KEYBOARD_PageUp + key_add); }
-			if(KeyCode == Keys.Delete) { Func_KB_Click(KEY_KEYBOARD_Del + key_add); }
-			if(KeyCode == Keys.End) { Func_KB_Click(KEY_KEYBOARD_End + key_add); }
-			if(KeyCode == Keys.PageDown) { Func_KB_Click(KEY_KEYBOARD_PageDown + key_add); }
+            bool NumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
+            if (NumLock == true)
+            {
+                if (KeyCode == Keys.Right) { Func_KB_Click(KEY_KEYBOARD_Right + key_add); }
+                if (KeyCode == Keys.Left) { Func_KB_Click(KEY_KEYBOARD_Left + key_add); }
+                if (KeyCode == Keys.Down) { Func_KB_Click(KEY_KEYBOARD_Down + key_add); }
+                if (KeyCode == Keys.Up) { Func_KB_Click(KEY_KEYBOARD_Up + key_add); }
 
-			if(KeyCode == Keys.Right) { Func_KB_Click(KEY_KEYBOARD_Right + key_add); }
-			if(KeyCode == Keys.Left) { Func_KB_Click(KEY_KEYBOARD_Left + key_add); }
-			if(KeyCode == Keys.Down) { Func_KB_Click(KEY_KEYBOARD_Down + key_add); }
-			if(KeyCode == Keys.Up) { Func_KB_Click(KEY_KEYBOARD_Up + key_add); }
+                if (KeyCode == Keys.Home) { Func_KB_Click(KEY_KEYBOARD_Home + key_add); }
+                if (KeyCode == Keys.End) { Func_KB_Click(KEY_KEYBOARD_End + key_add); }
+                if (KeyCode == Keys.PageDown) { Func_KB_Click(KEY_KEYBOARD_PageDown + key_add); }
+                if (KeyCode == Keys.PageUp) { Func_KB_Click(KEY_KEYBOARD_PageUp + key_add); }
+                                
+                if (KeyCode == Keys.Add) { Func_KB_Click(KEY_KEYBOARD_Add + KEY_KEYBOARD_Shift); }// +
+                if (KeyCode == Keys.Subtract) { Func_KB_Click(KEY_KEYBOARD_Min); }//  -
+            }
+            else
+            {
+                if (KeyCode == Keys.Right) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, KEY_MousePress_MoveRight);
+                }
+                if (KeyCode == Keys.Left) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, KEY_MousePress_MoveLeft);
+                }
+                if (KeyCode == Keys.Down) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, KEY_MousePress_MoveDown);
+                }
+                if (KeyCode == Keys.Up) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, KEY_MousePress_MoveUP);
+                }
+
+                if (KeyCode == Keys.Home) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_CLICK, 1, KEY_MouseClick_ClickLeft);
+                }
+                if (KeyCode == Keys.PageUp)
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_CLICK, 1, KEY_MouseClick_ClickRight);
+                }
+
+                if (KeyCode == Keys.End) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, KEY_MousePress_RollUp);
+                }
+                if (KeyCode == Keys.PageDown) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, KEY_MousePress_RollDown);
+                }
+
+                if (KeyCode == Keys.Add) 
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_SPEED, 1, KEY_MouseSpeed_SpeedUp);
+                }
+
+                if (KeyCode == Keys.Subtract)
+                {
+                    Func_Modbus_Send_03(REG_MOUSE_SPEED, 1, KEY_MouseSpeed_SpeedDown);
+                }
+            }
 
 			if(KeyCode == Keys.Enter) { Func_KB_Click(KEY_KEYBOARD_Enter + key_add); }
 

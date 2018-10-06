@@ -1,5 +1,9 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git9
+1. 通过NumberLock的状态去决定数字键盘是控制鼠标还是输入数字
+2. 默认焦点放在按键上
+
 Git8
 1. 调整定时器时间为10ms，不至于太卡
 2. 修正之前鼠标移动和点击不能使用的问题

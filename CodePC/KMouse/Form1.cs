@@ -25,7 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 8;
+		private const u8 _VersionGit = 9;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
@@ -59,7 +59,9 @@ namespace KMouse
 			s32 i;
 
             this.Text = "KMouse Git" + _VersionGit.ToString();
-			
+
+            textBox_eKey.Enabled = false;
+
 			/*********************初始化鼠标按键 start**********************/
 			for(i = 0; i < KEY_MousePress_ALL; i++)
 			{
@@ -569,5 +571,17 @@ namespace KMouse
 		{
 			Func_Modbus_Send_03(REG_MOUSE_REBOOT, 1, 0);
 		}
+
+        private void checkBox_EKeyEN_CheckedChanged(object sender, EventArgs e)
+        {
+            if (textBox_eKey.Enabled == true)
+            {
+                textBox_eKey.Enabled = false;
+            }
+            else
+            {
+                textBox_eKey.Enabled = true;
+            }
+        }
 	}
 }
