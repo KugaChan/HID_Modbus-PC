@@ -270,6 +270,11 @@ namespace KMouse
 							case REG_IDENTIFY:								//测试modbus通信是否正常
 							{
 								Console.WriteLine("REG_IDENTIFY:{0:X}", Func_Val);
+								this.Invoke((EventHandler)(delegate
+								{
+									label_Status.Text = Func_Val.ToString();
+								}));
+								
 								break;
 							}
 
@@ -319,6 +324,8 @@ namespace KMouse
 							}
 
 							case REG_KEYBOARD:
+							case REG_SYSTEM_REBOOT:
+							case REG_USB_RECONNECT:
 							{
 								break;
 							}

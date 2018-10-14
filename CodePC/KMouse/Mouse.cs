@@ -47,7 +47,9 @@ namespace KMouse
 		const u32 KEY_MouseSpeed_SpeedDown = 1;
 		const u32 KEY_MouseSpeed_SpeedChk = 2;
 
-		const u8 REG_MOUSE_REBOOT = 66;
+		const u8 REG_USB_RECONNECT = 11;
+
+		const u8 REG_SYSTEM_REBOOT = 66;		
 
 		bool mouse_speed_chk = false;
 
@@ -112,6 +114,16 @@ namespace KMouse
 		private void button_P_Identify_Click(object sender, EventArgs e)
 		{
 			Func_Modbus_Send_03(REG_IDENTIFY, 1, 0);
+		}
+
+		private void button_Reboot_Click(object sender, EventArgs e)
+		{
+			Func_Modbus_Send_03(REG_SYSTEM_REBOOT, 1, 0);
+		}
+
+		private void button_Reconect_Click(object sender, EventArgs e)
+		{
+			Func_Modbus_Send_03(REG_USB_RECONNECT, 1, 0);
 		}
 
 		/******************************************************************/

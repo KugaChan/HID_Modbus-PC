@@ -25,7 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 9;
+		private const u8 _VersionGit = 10;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
@@ -566,11 +566,6 @@ namespace KMouse
                 Func_Modbus_Send_03(REG_KEYBOARD, 1, Func_KB_FIFO_Output());
             }
         }
-
-		private void button2_Click(object sender, EventArgs e)
-		{
-			Func_Modbus_Send_03(REG_MOUSE_REBOOT, 1, 0);
-		}
 
         private void checkBox_EKeyEN_CheckedChanged(object sender, EventArgs e)
         {

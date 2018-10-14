@@ -1,5 +1,9 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git10
+1. 增加identify按钮获得HID的USB连接状态
+2. 增加reconnect按钮，让HID在USB连接异常时重连一次
+
 Git9
 1. 通过NumberLock的状态去决定数字键盘是控制鼠标还是输入数字
 2. 默认焦点放在按键上
