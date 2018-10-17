@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git11
+1. 去掉定时发送FIFO的设定，只要modbus非忙碌，就把FIFO里的指令发出去，效率最大化
+
 Git10
 1. 增加identify按钮获得HID的USB连接状态
 2. 增加reconnect按钮，让HID在USB连接异常时重连一次

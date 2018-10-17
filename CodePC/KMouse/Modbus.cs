@@ -339,6 +339,11 @@ namespace KMouse
 						}
                         modbus_send_cmd_is_busy = false;
 
+						if(Func_KB_FIFO_HasData() == true)
+						{
+							modbus_send_cmd_is_busy = true;
+							Func_Modbus_Send_03(REG_KEYBOARD, 1, Func_KB_FIFO_Output());
+						}
 					}
 					else
 					{

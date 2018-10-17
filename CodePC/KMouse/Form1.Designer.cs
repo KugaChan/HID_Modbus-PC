@@ -1690,7 +1690,7 @@
 			// timer_FIFO_Snd
 			// 
 			this.timer_FIFO_Snd.Enabled = true;
-			this.timer_FIFO_Snd.Interval = 5;
+			this.timer_FIFO_Snd.Interval = 1000;
 			this.timer_FIFO_Snd.Tick += new System.EventHandler(this.timer_FIFO_Snd_Tick);
 			// 
 			// button_Reconect
@@ -1723,6 +1723,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
+			this.MaximizeBox = false;
 			this.Name = "KMouse";
 			this.Text = "KMouse";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
