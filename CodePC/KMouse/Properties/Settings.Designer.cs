@@ -46,5 +46,17 @@ namespace KMouse.Properties {
                 this["_com_num_select_index"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Hello world!")]
+        public string eKey_string {
+            get {
+                return ((string)(this["eKey_string"]));
+            }
+            set {
+                this["eKey_string"] = value;
+            }
+        }
     }
 }

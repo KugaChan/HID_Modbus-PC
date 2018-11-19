@@ -8,5 +8,8 @@
     <Setting Name="_com_num_select_index" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
+    <Setting Name="eKey_string" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hello world!</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

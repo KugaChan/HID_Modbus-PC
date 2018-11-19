@@ -193,7 +193,10 @@ namespace KMouse
 
 		private void Func_KB_Click(u32 KEY)
 		{
-            Func_KB_FIFO_Input(KEY);           
+            if(com_is_open == true)
+            {
+                Func_KB_FIFO_Input(KEY);
+            }            
 		}
 
 		/* 鼠标单击Shift, Ctrl和Alt时使用，由于部分组合键会与本机冲突，所以需要用 */

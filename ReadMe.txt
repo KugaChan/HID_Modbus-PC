@@ -1,5 +1,10 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git12
+1. 修复当FIFO大于1024时会提示出错的bug
+2. 保存上一次输入的eKey字符串
+3. 当串口关闭时，按键和热键都不加入FIFO，避免一直提示错误
+
 Git11
 1. 去掉定时发送FIFO的设定，只要modbus非忙碌，就把FIFO里的指令发出去，效率最大化
 

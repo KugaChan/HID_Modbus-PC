@@ -25,7 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 11;
+		private const u8 _VersionGit = 12;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
@@ -127,6 +127,8 @@ namespace KMouse
 			comboBox_COMDataBit.SelectedIndex = 0;
 			comboBox_COMStopBit.SelectedIndex = 1;
 			com.DataReceived += Func_COM_DataRec;//指定串口接收函数
+
+            textBox_eKey.Text = Properties.Settings.Default.eKey_string;
 
 			Func_COM_Open();
 		}
@@ -344,8 +346,7 @@ namespace KMouse
                 Console.WriteLine("c:{0}\n", char_buffer[i]);
 
 		        if(special_key_step == SPEC_KEY_NONE)
-		        {
-                    
+		        {                    
 			        /**********************************将基本按键解释 Start*********************************/
 			        switch(char_buffer[i])
 			        {
@@ -551,6 +552,8 @@ namespace KMouse
                     MessageBox.Show("无效的处理流程" + char_buffer[i].ToString(), "错误");
 		        }
 	        }
+
+            Properties.Settings.Default.eKey_string = textBox_eKey.Text;
         }
 
         private void button1_Click(object sender, EventArgs e)
