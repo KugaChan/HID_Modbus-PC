@@ -156,9 +156,10 @@
             this.button_P_Identify = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkBox_ShowTxt = new System.Windows.Forms.CheckBox();
-            this.label_CmdSuccessCnt = new System.Windows.Forms.Label();
+            this.label_SuccessCmdCnt = new System.Windows.Forms.Label();
             this.timer_FIFO_Snd = new System.Windows.Forms.Timer(this.components);
             this.button_Reconect = new System.Windows.Forms.Button();
+            this.label_FailCmdCnt = new System.Windows.Forms.Label();
             this.groupBox_Log.SuspendLayout();
             this.groupBox_Mouse.SuspendLayout();
             this.groupBox_Keyboard.SuspendLayout();
@@ -1514,9 +1515,9 @@
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.comboBox_COMDataBit);
             this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.comboBox_COMCheckBit);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.comboBox_COMBaudrate);
+            this.groupBox3.Controls.Add(this.comboBox_COMCheckBit);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.comboBox_COMNumber);
             this.groupBox3.Location = new System.Drawing.Point(509, 15);
@@ -1530,21 +1531,22 @@
             // 
             // button_COMOpen
             // 
+            this.button_COMOpen.Font = new System.Drawing.Font("宋体", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button_COMOpen.ForeColor = System.Drawing.Color.Red;
-            this.button_COMOpen.Location = new System.Drawing.Point(257, 36);
+            this.button_COMOpen.Location = new System.Drawing.Point(240, 36);
             this.button_COMOpen.Margin = new System.Windows.Forms.Padding(2);
             this.button_COMOpen.Name = "button_COMOpen";
-            this.button_COMOpen.Size = new System.Drawing.Size(66, 23);
+            this.button_COMOpen.Size = new System.Drawing.Size(91, 25);
             this.button_COMOpen.TabIndex = 11;
             this.button_COMOpen.TabStop = false;
-            this.button_COMOpen.Text = "串口已关";
+            this.button_COMOpen.Text = "COM is closed";
             this.button_COMOpen.UseVisualStyleBackColor = true;
             this.button_COMOpen.Click += new System.EventHandler(this.button_ComOpen_Click);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(241, 18);
+            this.label13.Location = new System.Drawing.Point(142, 44);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(35, 12);
@@ -1555,7 +1557,7 @@
             // 
             this.comboBox_COMStopBit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_COMStopBit.FormattingEnabled = true;
-            this.comboBox_COMStopBit.Location = new System.Drawing.Point(277, 15);
+            this.comboBox_COMStopBit.Location = new System.Drawing.Point(177, 41);
             this.comboBox_COMStopBit.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_COMStopBit.Name = "comboBox_COMStopBit";
             this.comboBox_COMStopBit.Size = new System.Drawing.Size(46, 20);
@@ -1576,17 +1578,17 @@
             // 
             this.comboBox_COMDataBit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_COMDataBit.FormattingEnabled = true;
-            this.comboBox_COMDataBit.Location = new System.Drawing.Point(188, 15);
+            this.comboBox_COMDataBit.Location = new System.Drawing.Point(177, 15);
             this.comboBox_COMDataBit.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_COMDataBit.Name = "comboBox_COMDataBit";
-            this.comboBox_COMDataBit.Size = new System.Drawing.Size(48, 20);
+            this.comboBox_COMDataBit.Size = new System.Drawing.Size(46, 20);
             this.comboBox_COMDataBit.TabIndex = 16;
             this.comboBox_COMDataBit.TabStop = false;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(140, 44);
+            this.label11.Location = new System.Drawing.Point(233, 18);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(47, 12);
@@ -1597,7 +1599,7 @@
             // 
             this.comboBox_COMCheckBit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_COMCheckBit.FormattingEnabled = true;
-            this.comboBox_COMCheckBit.Location = new System.Drawing.Point(188, 39);
+            this.comboBox_COMCheckBit.Location = new System.Drawing.Point(283, 15);
             this.comboBox_COMCheckBit.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox_COMCheckBit.Name = "comboBox_COMCheckBit";
             this.comboBox_COMCheckBit.Size = new System.Drawing.Size(48, 20);
@@ -1678,14 +1680,14 @@
             this.checkBox_ShowTxt.Text = "Show_Txt";
             this.checkBox_ShowTxt.UseVisualStyleBackColor = true;
             // 
-            // label_CmdSuccessCnt
+            // label_SuccessCmdCnt
             // 
-            this.label_CmdSuccessCnt.AutoSize = true;
-            this.label_CmdSuccessCnt.Location = new System.Drawing.Point(755, 310);
-            this.label_CmdSuccessCnt.Name = "label_CmdSuccessCnt";
-            this.label_CmdSuccessCnt.Size = new System.Drawing.Size(47, 12);
-            this.label_CmdSuccessCnt.TabIndex = 127;
-            this.label_CmdSuccessCnt.Text = "CmdCnt:";
+            this.label_SuccessCmdCnt.AutoSize = true;
+            this.label_SuccessCmdCnt.Location = new System.Drawing.Point(755, 310);
+            this.label_SuccessCmdCnt.Name = "label_SuccessCmdCnt";
+            this.label_SuccessCmdCnt.Size = new System.Drawing.Size(53, 12);
+            this.label_SuccessCmdCnt.TabIndex = 127;
+            this.label_SuccessCmdCnt.Text = "Success:";
             // 
             // timer_FIFO_Snd
             // 
@@ -1706,15 +1708,25 @@
             this.button_Reconect.UseVisualStyleBackColor = true;
             this.button_Reconect.Click += new System.EventHandler(this.button_Reconect_Click);
             // 
+            // label_FailCmdCnt
+            // 
+            this.label_FailCmdCnt.AutoSize = true;
+            this.label_FailCmdCnt.Location = new System.Drawing.Point(755, 326);
+            this.label_FailCmdCnt.Name = "label_FailCmdCnt";
+            this.label_FailCmdCnt.Size = new System.Drawing.Size(35, 12);
+            this.label_FailCmdCnt.TabIndex = 129;
+            this.label_FailCmdCnt.Text = "Fail:";
+            // 
             // KMouse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(842, 390);
+            this.Controls.Add(this.label_FailCmdCnt);
             this.Controls.Add(this.button_Reconect);
             this.Controls.Add(this.button_Reboot);
             this.Controls.Add(this.button_P_Identify);
-            this.Controls.Add(this.label_CmdSuccessCnt);
+            this.Controls.Add(this.label_SuccessCmdCnt);
             this.Controls.Add(this.checkBox_ShowTxt);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox_Keyboard);
@@ -1866,7 +1878,7 @@
 		private System.Windows.Forms.ComboBox comboBox_COMNumber;
 		private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.CheckBox checkBox_ShowTxt;
-        private System.Windows.Forms.Label label_CmdSuccessCnt;
+        private System.Windows.Forms.Label label_SuccessCmdCnt;
         private System.Windows.Forms.TextBox textBox_eKey;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button_eKey;
@@ -1875,6 +1887,7 @@
         private System.Windows.Forms.CheckBox checkBox_EKeyEN;
 		private System.Windows.Forms.Label label_Status;
 		private System.Windows.Forms.Button button_Reconect;
+        private System.Windows.Forms.Label label_FailCmdCnt;
 	}
 }
 

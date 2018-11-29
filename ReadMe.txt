@@ -1,5 +1,10 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git13
+1. 整理Com函数，与KCOM使用的串口模块同步上
+2. Modbus通信出错后，不再使用弹窗的警告，而是使用系统声音报警+文件显示，简化操作
+3. 串口未打开时按热键或点击发送，都不会进入FIFO里，而且会有系统报警声
+
 Git12
 1. 修复当FIFO大于1024时会提示出错的bug
 2. 保存上一次输入的eKey字符串

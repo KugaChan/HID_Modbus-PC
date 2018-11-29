@@ -193,10 +193,14 @@ namespace KMouse
 
 		private void Func_KB_Click(u32 KEY)
 		{
-            if(com_is_open == true)
+            if(com.IsOpen == true)
             {
                 Func_KB_FIFO_Input(KEY);
-            }            
+            }
+            else
+            {
+                System.Media.SystemSounds.Beep.Play();  //没开串口就想点击发送热键，则有报警声
+            }
 		}
 
 		/* 鼠标单击Shift, Ctrl和Alt时使用，由于部分组合键会与本机冲突，所以需要用 */

@@ -25,27 +25,11 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 12;
+		private const u8 _VersionGit = 13;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
 
-
-		int[] badurate_array = 
-		{
-			4800,
-			9600,
-			19200,
-			38400,
-			115200,
-            128000,
-            230400,
-            256000,
-            460800,
-            921600,
-            1222400,
-			1382400
-		};
 		//窗体使用的变量
 		private bool form_is_closed = false;
 
@@ -70,67 +54,11 @@ namespace KMouse
 			}
 			/*********************初始化鼠标按键 end************************/
 
-
-            /********************更新串口下来列表的选项-start******************/
-            string[] strArr = Func_GetHarewareInfo(HardwareEnum.Win32_PnPEntity, "Name");
-            int SerialNum = 0;
-
-            foreach(string vPortName in SerialPort.GetPortNames())
-            {
-                String SerialIn = "";
-                SerialIn += vPortName;
-                SerialIn += ':';
-                foreach(string s in strArr)
-                {                    
-                    if(s.Contains(vPortName))
-                    {
-                        SerialIn += s;
-                    }
-                }
-                Console.WriteLine(SerialIn);
-                comboBox_COMNumber.Items.Add(SerialIn);
-                SerialNum++;
-            }
-            /********************更新串口下来列表的选项-end********************/
-
-            //波特率
-			for(i = 0; i < badurate_array.Length; i++)
-			{
-				comboBox_COMBaudrate.Items.Add(badurate_array[i].ToString());
-			}
-
-            //校验位
-			comboBox_COMCheckBit.Items.Add("None");	
-			comboBox_COMCheckBit.Items.Add("Odd");
-			comboBox_COMCheckBit.Items.Add("Even");
-
-            //数据位
-			comboBox_COMDataBit.Items.Add("8");
-			comboBox_COMStopBit.Items.Add("0");
-
-            //停止位
-			comboBox_COMStopBit.Items.Add("1");
-			comboBox_COMStopBit.Items.Add("2");
-			comboBox_COMStopBit.Items.Add("1.5");
-
-            if((SerialNum > 0) && (Properties.Settings.Default._com_num_select_index < SerialNum))    //串口列表选用号
-            {
-                comboBox_COMNumber.SelectedIndex = Properties.Settings.Default._com_num_select_index;
-            }
-			else
-			{
-				comboBox_COMNumber.SelectedIndex = -1;
-			}
-
-			comboBox_COMBaudrate.SelectedIndex = Properties.Settings.Default._baudrate_select_index;		
-			comboBox_COMCheckBit.SelectedIndex = 0;
-			comboBox_COMDataBit.SelectedIndex = 0;
-			comboBox_COMStopBit.SelectedIndex = 1;
-			com.DataReceived += Func_COM_DataRec;//指定串口接收函数
+            Func_Com_Component_Init();           
 
             textBox_eKey.Text = Properties.Settings.Default.eKey_string;
 
-			Func_COM_Open();
+			Func_Com_Open();
 		}
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)   //窗体关闭函数
@@ -199,6 +127,10 @@ namespace KMouse
 
         private void Func_PropertiesSettingsSave()
         {
+            Properties.Settings.Default._baudrate_select_index = comboBox_COMBaudrate.SelectedIndex;
+            Properties.Settings.Default.eKey_string = textBox_eKey.Text;
+            Properties.Settings.Default._com_num_select_index = comboBox_COMNumber.SelectedIndex;
+
             Properties.Settings.Default.Save();       
         }		
 
@@ -206,6 +138,8 @@ namespace KMouse
 		{
 			//Console.WriteLine(DateTime.Now.ToString("yy/MM/dd HH:mm:ss"));
 			//Console.WriteLine("modbus_recv_timeout:{0}", modbus_recv_timeout);
+
+            //发了命令，但是1s内都没有回复
             if (modbus_is_busy == true)
             {
                 modbus_respone_timeout++;
@@ -216,9 +150,14 @@ namespace KMouse
                     bool res;
                     res = Func_Modbus_Recv_Handle();
 
-                    MessageBox.Show("Modbus响应超时!", "警告");
+                    //MessageBox.Show("Modbus Respone timeout!!!", "Warning");
+                    this.Invoke((EventHandler)(delegate
+                    {
+                        textBox_ComRec.AppendText("Modbus Respone timeout!!!\r\n");
+                    }));
 
-                    modbus_kb_input = 0;    //清空FIFO，避免已进FIFO的key一直发送
+                    //清空FIFO，避免已进FIFO的key一直发送
+                    modbus_kb_input = 0;
                     modbus_kb_output = 0;
 
                     if (res == false)
@@ -228,6 +167,7 @@ namespace KMouse
                 }
             }
 
+            //已经开始了接收，但是1s内都没有接收完
 			if(modbus_recv_timeout != dwAllFF)
 			{
 				modbus_recv_timeout++;
@@ -253,11 +193,17 @@ namespace KMouse
 					}
 
 					modbus_recv_cnt = 0;
-					MessageBox.Show(SerialIn, "Warning, Modbus Recv timeout!!!");
+
+					//MessageBox.Show(SerialIn, "Warning, Modbus Recv timeout!!!");
+                    this.Invoke((EventHandler)(delegate
+                    {
+                        textBox_ComRec.AppendText("Modbus Recv timeout: " + SerialIn + "!!!\r\n");
+                    }));
+                    System.Media.SystemSounds.Hand.Play();
 				}
 			}
 
-			if((com_is_open == true) && (modbus_is_busy == false))
+            if((com.IsOpen == true) && (modbus_is_busy == false))
 			{
 				for(u32 i = 0; i < KEY_MousePress_ALL; i++)
 				{
@@ -350,110 +296,110 @@ namespace KMouse
 			        /**********************************将基本按键解释 Start*********************************/
 			        switch(char_buffer[i])
 			        {
-				        case '`': {Func_KB_FIFO_Input(KEY_KEYBOARD_Dou); break; }
-				        case '1': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num1); break; }
-				        case '2': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num2); break; }
-				        case '3': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num3); break; }
-				        case '4': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num4); break; }
-				        case '5': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num5); break; }
-				        case '6': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num6); break; }
-				        case '7': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num7); break; }
-				        case '8': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num8); break; }
-				        case '9': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num9); break; }
-				        case '0': {Func_KB_FIFO_Input(KEY_KEYBOARD_Num0); break; }
-				        case '-': {Func_KB_FIFO_Input(KEY_KEYBOARD_Min); break; }
-				        case '=': {Func_KB_FIFO_Input(KEY_KEYBOARD_Add); break; }
+				        case '`': {Func_KB_Click(KEY_KEYBOARD_Dou); break; }
+				        case '1': {Func_KB_Click(KEY_KEYBOARD_Num1); break; }
+				        case '2': {Func_KB_Click(KEY_KEYBOARD_Num2); break; }
+				        case '3': {Func_KB_Click(KEY_KEYBOARD_Num3); break; }
+				        case '4': {Func_KB_Click(KEY_KEYBOARD_Num4); break; }
+				        case '5': {Func_KB_Click(KEY_KEYBOARD_Num5); break; }
+				        case '6': {Func_KB_Click(KEY_KEYBOARD_Num6); break; }
+				        case '7': {Func_KB_Click(KEY_KEYBOARD_Num7); break; }
+				        case '8': {Func_KB_Click(KEY_KEYBOARD_Num8); break; }
+				        case '9': {Func_KB_Click(KEY_KEYBOARD_Num9); break; }
+				        case '0': {Func_KB_Click(KEY_KEYBOARD_Num0); break; }
+				        case '-': {Func_KB_Click(KEY_KEYBOARD_Min); break; }
+				        case '=': {Func_KB_Click(KEY_KEYBOARD_Add); break; }
 
-				        case 'q': {Func_KB_FIFO_Input(KEY_KEYBOARD_Q); break; }
-				        case 'w': {Func_KB_FIFO_Input(KEY_KEYBOARD_W); break; }
-				        case 'e': {Func_KB_FIFO_Input(KEY_KEYBOARD_E); break; }
-				        case 'r': {Func_KB_FIFO_Input(KEY_KEYBOARD_R); break; }
-				        case 't': {Func_KB_FIFO_Input(KEY_KEYBOARD_T); break; }
-				        case 'y': {Func_KB_FIFO_Input(KEY_KEYBOARD_Y); break; }
-				        case 'u': {Func_KB_FIFO_Input(KEY_KEYBOARD_U); break; }
-				        case 'i': {Func_KB_FIFO_Input(KEY_KEYBOARD_I); break; }
-				        case 'o': {Func_KB_FIFO_Input(KEY_KEYBOARD_O); break; }
-				        case 'p': {Func_KB_FIFO_Input(KEY_KEYBOARD_P); break; }
-                        //case '[': {Func_KB_FIFO_Input(KEY_KEYBOARD_Kuo1); break; }
-				        case ']': {Func_KB_FIFO_Input(KEY_KEYBOARD_Kuo2); break; }
-				        case '\\': {Func_KB_FIFO_Input(KEY_KEYBOARD_Or); break; }
+				        case 'q': {Func_KB_Click(KEY_KEYBOARD_Q); break; }
+				        case 'w': {Func_KB_Click(KEY_KEYBOARD_W); break; }
+				        case 'e': {Func_KB_Click(KEY_KEYBOARD_E); break; }
+				        case 'r': {Func_KB_Click(KEY_KEYBOARD_R); break; }
+				        case 't': {Func_KB_Click(KEY_KEYBOARD_T); break; }
+				        case 'y': {Func_KB_Click(KEY_KEYBOARD_Y); break; }
+				        case 'u': {Func_KB_Click(KEY_KEYBOARD_U); break; }
+				        case 'i': {Func_KB_Click(KEY_KEYBOARD_I); break; }
+				        case 'o': {Func_KB_Click(KEY_KEYBOARD_O); break; }
+				        case 'p': {Func_KB_Click(KEY_KEYBOARD_P); break; }
+                        //case '[': {Func_KB_Click(KEY_KEYBOARD_Kuo1); break; }
+				        case ']': {Func_KB_Click(KEY_KEYBOARD_Kuo2); break; }
+				        case '\\': {Func_KB_Click(KEY_KEYBOARD_Or); break; }
 
-				        case 'a': {Func_KB_FIFO_Input(KEY_KEYBOARD_A); break; }
-				        case 's': {Func_KB_FIFO_Input(KEY_KEYBOARD_S); break; }
-				        case 'd': {Func_KB_FIFO_Input(KEY_KEYBOARD_D); break; }
-				        case 'f': {Func_KB_FIFO_Input(KEY_KEYBOARD_F); break; }
-				        case 'g': {Func_KB_FIFO_Input(KEY_KEYBOARD_G); break; }
-				        case 'h': {Func_KB_FIFO_Input(KEY_KEYBOARD_H); break; }
-				        case 'j': {Func_KB_FIFO_Input(KEY_KEYBOARD_J); break; }
-				        case 'k': {Func_KB_FIFO_Input(KEY_KEYBOARD_K); break; }
-				        case 'l': {Func_KB_FIFO_Input(KEY_KEYBOARD_L); break; }
-				        case ';': {Func_KB_FIFO_Input(KEY_KEYBOARD_Mao); break; }
-				        case '\'':{Func_KB_FIFO_Input(KEY_KEYBOARD_Fen); break; }
+				        case 'a': {Func_KB_Click(KEY_KEYBOARD_A); break; }
+				        case 's': {Func_KB_Click(KEY_KEYBOARD_S); break; }
+				        case 'd': {Func_KB_Click(KEY_KEYBOARD_D); break; }
+				        case 'f': {Func_KB_Click(KEY_KEYBOARD_F); break; }
+				        case 'g': {Func_KB_Click(KEY_KEYBOARD_G); break; }
+				        case 'h': {Func_KB_Click(KEY_KEYBOARD_H); break; }
+				        case 'j': {Func_KB_Click(KEY_KEYBOARD_J); break; }
+				        case 'k': {Func_KB_Click(KEY_KEYBOARD_K); break; }
+				        case 'l': {Func_KB_Click(KEY_KEYBOARD_L); break; }
+				        case ';': {Func_KB_Click(KEY_KEYBOARD_Mao); break; }
+				        case '\'':{Func_KB_Click(KEY_KEYBOARD_Fen); break; }
 
-				        case 'z': {Func_KB_FIFO_Input(KEY_KEYBOARD_Z); break; }
-				        case 'x': {Func_KB_FIFO_Input(KEY_KEYBOARD_X); break; }
-				        case 'c': {Func_KB_FIFO_Input(KEY_KEYBOARD_C); break; }
-				        case 'v': {Func_KB_FIFO_Input(KEY_KEYBOARD_V); break; }
-				        case 'b': {Func_KB_FIFO_Input(KEY_KEYBOARD_B); break; }
-				        case 'n': {Func_KB_FIFO_Input(KEY_KEYBOARD_N); break; }
-				        case 'm': {Func_KB_FIFO_Input(KEY_KEYBOARD_M); break; }
-				        case ',': {Func_KB_FIFO_Input(KEY_KEYBOARD_Xiao); break; }
-				        case '.': {Func_KB_FIFO_Input(KEY_KEYBOARD_Da); break; }
-				        case '/': {Func_KB_FIFO_Input(KEY_KEYBOARD_Wen); break; }
-				        case ' ': {Func_KB_FIFO_Input(KEY_KEYBOARD_Space); break; }
+				        case 'z': {Func_KB_Click(KEY_KEYBOARD_Z); break; }
+				        case 'x': {Func_KB_Click(KEY_KEYBOARD_X); break; }
+				        case 'c': {Func_KB_Click(KEY_KEYBOARD_C); break; }
+				        case 'v': {Func_KB_Click(KEY_KEYBOARD_V); break; }
+				        case 'b': {Func_KB_Click(KEY_KEYBOARD_B); break; }
+				        case 'n': {Func_KB_Click(KEY_KEYBOARD_N); break; }
+				        case 'm': {Func_KB_Click(KEY_KEYBOARD_M); break; }
+				        case ',': {Func_KB_Click(KEY_KEYBOARD_Xiao); break; }
+				        case '.': {Func_KB_Click(KEY_KEYBOARD_Da); break; }
+				        case '/': {Func_KB_Click(KEY_KEYBOARD_Wen); break; }
+				        case ' ': {Func_KB_Click(KEY_KEYBOARD_Space); break; }
 				        /**********************************将基本按键解释 END*********************************/
 
 				        /**********************************将上档按键解释 Start*********************************/
-				        case '~': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Dou);break;}
-				        case '!': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num1);break;}
-				        case '@': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num2);break;}
-				        case '#': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num3);break;}
-				        case '$': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num4);break;}
-				        case '%': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num5);break;}
-				        case '^': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num6);break;}
-				        case '&': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num7);break;}
-				        case '*': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num8);break;}
-				        case '(': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num9);break;}
-				        case ')': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Num0);break;}
-				        case '_': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Min);break;}
-				        case '+': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Add);break;}
+				        case '~': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Dou);break;}
+				        case '!': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num1);break;}
+				        case '@': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num2);break;}
+				        case '#': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num3);break;}
+				        case '$': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num4);break;}
+				        case '%': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num5);break;}
+				        case '^': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num6);break;}
+				        case '&': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num7);break;}
+				        case '*': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num8);break;}
+				        case '(': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num9);break;}
+				        case ')': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Num0);break;}
+				        case '_': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Min);break;}
+				        case '+': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Add);break;}
 
-				        case 'Q': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Q);break;}
-				        case 'W': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_W);break;}
-				        case 'E': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_E);break;}
-				        case 'R': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_R);break;}
-				        case 'T': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_T);break;}
-				        case 'Y': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Y);break;}
-				        case 'U': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_U);break;}
-				        case 'I': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_I);break;}
-				        case 'O': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_O);break;}
-				        case 'P': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_P);break;}
-				        case '{': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Kuo1);break;}
-				        case '}': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Kuo2);break;}
-				        case '|': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Or);break;}
+				        case 'Q': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Q);break;}
+				        case 'W': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_W);break;}
+				        case 'E': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_E);break;}
+				        case 'R': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_R);break;}
+				        case 'T': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_T);break;}
+				        case 'Y': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Y);break;}
+				        case 'U': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_U);break;}
+				        case 'I': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_I);break;}
+				        case 'O': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_O);break;}
+				        case 'P': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_P);break;}
+				        case '{': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Kuo1);break;}
+				        case '}': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Kuo2);break;}
+				        case '|': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Or);break;}
 
-				        case 'A': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_A);break;}
-				        case 'S': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_S);break;}
-				        case 'D': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_D);break;}
-				        case 'F': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_F);break;}
-				        case 'G': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_G);break;}
-				        case 'H': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_H);break;}
-				        case 'J': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_J);break;}
-				        case 'K': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_K);break;}
-				        case 'L': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_L);break;}
-				        case ':': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Mao);break;}
-				        case '"': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Fen);break;}
+				        case 'A': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_A);break;}
+				        case 'S': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_S);break;}
+				        case 'D': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_D);break;}
+				        case 'F': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_F);break;}
+				        case 'G': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_G);break;}
+				        case 'H': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_H);break;}
+				        case 'J': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_J);break;}
+				        case 'K': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_K);break;}
+				        case 'L': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_L);break;}
+				        case ':': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Mao);break;}
+				        case '"': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Fen);break;}
 
-				        case 'Z': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Z);break;}
-				        case 'X': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_X);break;}
-				        case 'C': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_C);break;}
-				        case 'V': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_V);break;}
-				        case 'B': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_B);break;}
-				        case 'N': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_N);break;}
-				        case 'M': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_M);break;}
-				        case '<': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Xiao);break;}
-				        case '>': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Da);break;}
-				        case '?': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_FIFO_Input(KEY_KEYBOARD_Wen);break;}
+				        case 'Z': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Z);break;}
+				        case 'X': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_X);break;}
+				        case 'C': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_C);break;}
+				        case 'V': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_V);break;}
+				        case 'B': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_B);break;}
+				        case 'N': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_N);break;}
+				        case 'M': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_M);break;}
+				        case '<': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Xiao);break;}
+				        case '>': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Da);break;}
+				        case '?': {button_Shift.BackColor = System.Drawing.Color.Yellow;Func_KB_Click(KEY_KEYBOARD_Wen);break;}
 				        /**********************************将上档按键解释 END*********************************/
 
 				        //触发特殊按键
@@ -474,7 +420,7 @@ namespace KMouse
 		        {
 			        if(char_buffer[i] == '[')
 			        {
-                        Func_KB_FIFO_Input(KEY_KEYBOARD_Kuo1);
+                        Func_KB_Click(KEY_KEYBOARD_Kuo1);
 				        special_key_step = SPEC_KEY_NONE;
 			        }
 			        else
@@ -502,36 +448,36 @@ namespace KMouse
 				        else
 				        {
 
-                            if (func_char_string_compare(spec_key_buff, "esc", 3) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_ESC); }//ESC
-                            else if (func_char_string_compare(spec_key_buff, "f1", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F1); }//F1
-                            else if (func_char_string_compare(spec_key_buff, "f2", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F2); }//F2
-                            else if (func_char_string_compare(spec_key_buff, "f3", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F3); }//F3
-                            else if (func_char_string_compare(spec_key_buff, "f4", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F4); }//F4
-                            else if (func_char_string_compare(spec_key_buff, "f5", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F5); }//F5
-                            else if (func_char_string_compare(spec_key_buff, "f6", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F6); }//F6
-                            else if (func_char_string_compare(spec_key_buff, "f7", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F7); }//F7
-                            else if (func_char_string_compare(spec_key_buff, "f8", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F8); }//F8
-                            else if (func_char_string_compare(spec_key_buff, "f9", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F9); }//F9
-                            else if (func_char_string_compare(spec_key_buff, "f10", 3) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F10); }//F10
-                            else if (func_char_string_compare(spec_key_buff, "f11", 3) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F11); }//F11
-                            else if (func_char_string_compare(spec_key_buff, "f12", 3) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_F12); }//F12
-                            else if (func_char_string_compare(spec_key_buff, "del", 3) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Del); }//Del
-                            else if (func_char_string_compare(spec_key_buff, "bp", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Back); }//BP
-                            else if (func_char_string_compare(spec_key_buff, "tab", 3) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Tab); ; }//Tab
-                            else if (func_char_string_compare(spec_key_buff, "caps", 4) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Caps); ; }//Caps
-                            else if (func_char_string_compare(spec_key_buff, "enter", 5) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Enter); ; }//Enter
-                            else if (func_char_string_compare(spec_key_buff, "home", 4) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Home); ; }//Home
-                            else if (func_char_string_compare(spec_key_buff, "psc", 3) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_PrintScreen); ; }//PrintScreen
-                            else if (func_char_string_compare(spec_key_buff, "up", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Up); ; }//Up
-                            else if (func_char_string_compare(spec_key_buff, "end", 2) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_End); ; }//End				
-                            else if (func_char_string_compare(spec_key_buff, "pageup", 6) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_PageUp); ; }//Page Up
-                            else if (func_char_string_compare(spec_key_buff, "pagedown", 8) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_PageDown); ; }//Page Down
-                            else if (func_char_string_compare(spec_key_buff, "left", 4) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Left); ; }//Left
-                            else if (func_char_string_compare(spec_key_buff, "down", 4) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Down); ; }//Down
-                            else if (func_char_string_compare(spec_key_buff, "right", 5) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_Right); ; }//Right
-                            else if (func_char_string_compare(spec_key_buff, "null", 4) == true) { Func_KB_FIFO_Input(KEY_KEYBOARD_NULL); ; }//空按键，触发组合键
-                            //else if(func_char_string_compare(spec_key_buff, "fn", 2) == true){Func_KB_FIFO_Input(KEY_KEYBOARD_NULL);}//fn
-                            //else if(func_char_string_compare(spec_key_buff, "win", 3) == true){Func_KB_FIFO_Input(KEY_KEYBOARD_NULL);}//win
+                            if (func_char_string_compare(spec_key_buff, "esc", 3) == true) { Func_KB_Click(KEY_KEYBOARD_ESC); }//ESC
+                            else if (func_char_string_compare(spec_key_buff, "f1", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F1); }//F1
+                            else if (func_char_string_compare(spec_key_buff, "f2", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F2); }//F2
+                            else if (func_char_string_compare(spec_key_buff, "f3", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F3); }//F3
+                            else if (func_char_string_compare(spec_key_buff, "f4", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F4); }//F4
+                            else if (func_char_string_compare(spec_key_buff, "f5", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F5); }//F5
+                            else if (func_char_string_compare(spec_key_buff, "f6", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F6); }//F6
+                            else if (func_char_string_compare(spec_key_buff, "f7", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F7); }//F7
+                            else if (func_char_string_compare(spec_key_buff, "f8", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F8); }//F8
+                            else if (func_char_string_compare(spec_key_buff, "f9", 2) == true) { Func_KB_Click(KEY_KEYBOARD_F9); }//F9
+                            else if (func_char_string_compare(spec_key_buff, "f10", 3) == true) { Func_KB_Click(KEY_KEYBOARD_F10); }//F10
+                            else if (func_char_string_compare(spec_key_buff, "f11", 3) == true) { Func_KB_Click(KEY_KEYBOARD_F11); }//F11
+                            else if (func_char_string_compare(spec_key_buff, "f12", 3) == true) { Func_KB_Click(KEY_KEYBOARD_F12); }//F12
+                            else if (func_char_string_compare(spec_key_buff, "del", 3) == true) { Func_KB_Click(KEY_KEYBOARD_Del); }//Del
+                            else if (func_char_string_compare(spec_key_buff, "bp", 2) == true) { Func_KB_Click(KEY_KEYBOARD_Back); }//BP
+                            else if (func_char_string_compare(spec_key_buff, "tab", 3) == true) { Func_KB_Click(KEY_KEYBOARD_Tab); ; }//Tab
+                            else if (func_char_string_compare(spec_key_buff, "caps", 4) == true) { Func_KB_Click(KEY_KEYBOARD_Caps); ; }//Caps
+                            else if (func_char_string_compare(spec_key_buff, "enter", 5) == true) { Func_KB_Click(KEY_KEYBOARD_Enter); ; }//Enter
+                            else if (func_char_string_compare(spec_key_buff, "home", 4) == true) { Func_KB_Click(KEY_KEYBOARD_Home); ; }//Home
+                            else if (func_char_string_compare(spec_key_buff, "psc", 3) == true) { Func_KB_Click(KEY_KEYBOARD_PrintScreen); ; }//PrintScreen
+                            else if (func_char_string_compare(spec_key_buff, "up", 2) == true) { Func_KB_Click(KEY_KEYBOARD_Up); ; }//Up
+                            else if (func_char_string_compare(spec_key_buff, "end", 2) == true) { Func_KB_Click(KEY_KEYBOARD_End); ; }//End				
+                            else if (func_char_string_compare(spec_key_buff, "pageup", 6) == true) { Func_KB_Click(KEY_KEYBOARD_PageUp); ; }//Page Up
+                            else if (func_char_string_compare(spec_key_buff, "pagedown", 8) == true) { Func_KB_Click(KEY_KEYBOARD_PageDown); ; }//Page Down
+                            else if (func_char_string_compare(spec_key_buff, "left", 4) == true) { Func_KB_Click(KEY_KEYBOARD_Left); ; }//Left
+                            else if (func_char_string_compare(spec_key_buff, "down", 4) == true) { Func_KB_Click(KEY_KEYBOARD_Down); ; }//Down
+                            else if (func_char_string_compare(spec_key_buff, "right", 5) == true) { Func_KB_Click(KEY_KEYBOARD_Right); ; }//Right
+                            else if (func_char_string_compare(spec_key_buff, "null", 4) == true) { Func_KB_Click(KEY_KEYBOARD_NULL); ; }//空按键，触发组合键
+                            //else if(func_char_string_compare(spec_key_buff, "fn", 2) == true){Func_KB_Click(KEY_KEYBOARD_NULL);}//fn
+                            //else if(func_char_string_compare(spec_key_buff, "win", 3) == true){Func_KB_Click(KEY_KEYBOARD_NULL);}//win
 					        else
 					        {
                                 MessageBox.Show("无效的特殊字符" + char_buffer[i].ToString(), "错误");
@@ -552,8 +498,6 @@ namespace KMouse
                     MessageBox.Show("无效的处理流程" + char_buffer[i].ToString(), "错误");
 		        }
 	        }
-
-            Properties.Settings.Default.eKey_string = textBox_eKey.Text;
         }
 
         private void button1_Click(object sender, EventArgs e)

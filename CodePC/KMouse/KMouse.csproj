@@ -59,15 +59,12 @@
     </Compile>
     <Compile Include="Keyboard.cs">
       <SubType>Form</SubType>
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Modbus.cs">
       <SubType>Form</SubType>
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Mouse.cs">
       <SubType>Form</SubType>
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,14 +23,28 @@ namespace KMouse
 		private u32 com_recv_cnt;
         private bool com_is_receiving = false;
         private bool com_allow_receive = true;
-        //功能
-        private SerialPort com = new SerialPort();
-        private bool com_is_open = false;
-		private bool com_change_baudrate = false;
-
+        private bool com_change_baudrate = false;
+        
+        private SerialPort com = new SerialPort();		
 
         private u32 modbus_success_cnt;
         private u32 modbus_fail_cnt;
+
+        int[] badurate_array = 
+		{
+			4800,
+			9600,
+			19200,
+			38400,
+			115200,
+            128000,
+            230400,
+            256000,
+            460800,
+            921600,
+            1222400,
+			1382400
+		};
 
         public enum HardwareEnum
         {
@@ -124,6 +138,68 @@ namespace KMouse
             }
         }
 
+        public void Func_Com_Component_Init()
+        {
+            s32 i;
+
+            /********************更新串口下来列表的选项-start******************/
+            string[] strArr = Func_GetHarewareInfo(HardwareEnum.Win32_PnPEntity, "Name");
+            int SerialNum = 0;
+
+            foreach(string vPortName in SerialPort.GetPortNames())
+            {
+                String SerialIn = "";
+                SerialIn += vPortName;
+                SerialIn += ':';
+                foreach(string s in strArr)
+                {
+                    if(s.Contains(vPortName))
+                    {
+                        SerialIn += s;
+                    }
+                }
+                Console.WriteLine(SerialIn);
+                comboBox_COMNumber.Items.Add(SerialIn);
+                SerialNum++;
+            }
+            /********************更新串口下来列表的选项-end********************/
+
+            //波特率
+            for(i = 0; i < badurate_array.Length; i++)
+            {
+                comboBox_COMBaudrate.Items.Add(badurate_array[i].ToString());
+            }
+
+            //校验位
+            comboBox_COMCheckBit.Items.Add("None");
+            comboBox_COMCheckBit.Items.Add("Odd");
+            comboBox_COMCheckBit.Items.Add("Even");
+
+            //数据位
+            comboBox_COMDataBit.Items.Add("8");
+            comboBox_COMStopBit.Items.Add("0");
+
+            //停止位
+            comboBox_COMStopBit.Items.Add("1");
+            comboBox_COMStopBit.Items.Add("2");
+            comboBox_COMStopBit.Items.Add("1.5");
+
+            if((SerialNum > 0) && (Properties.Settings.Default._com_num_select_index < SerialNum))    //串口列表选用号
+            {
+                comboBox_COMNumber.SelectedIndex = Properties.Settings.Default._com_num_select_index;
+            }
+            else
+            {
+                comboBox_COMNumber.SelectedIndex = -1;
+            }
+
+            comboBox_COMBaudrate.SelectedIndex = Properties.Settings.Default._baudrate_select_index;
+            comboBox_COMCheckBit.SelectedIndex = 0;
+            comboBox_COMDataBit.SelectedIndex = 0;
+            comboBox_COMStopBit.SelectedIndex = 1;
+            com.DataReceived += Func_COM_DataRec;//指定串口接收函数
+        }
+
         private void label_ClearRec_DoubleClick(object sender, EventArgs e)
         {
             textBox_ComRec.Text = "";
@@ -133,14 +209,17 @@ namespace KMouse
 
         private void comboBox_COMBaudrate_SelectedIndexChanged(object sender, EventArgs e)
         {
-			Properties.Settings.Default._baudrate_select_index = comboBox_COMBaudrate.SelectedIndex;
+            Func_Com_ReOpen();
+        }
 
-            if(com_is_open == true) //在串口运行的时候更改波特率，串口关闭时候修改的时候直接在按钮函数里改就行了
+        public void Func_Com_ReOpen()
+        {
+            if(com.IsOpen == true) //在串口运行的时候更改波特率，串口关闭时候修改的时候直接在按钮函数里改就行了
             {
                 if(com_is_receiving == true)
                 {
                     com_allow_receive = false;
-					com_change_baudrate = true;
+                    com_change_baudrate = true;
                 }
                 else
                 {
@@ -153,7 +232,7 @@ namespace KMouse
                     }
                     catch
                     {
-                        MessageBox.Show("无法打开串口", "提示");
+                        MessageBox.Show("Can't open the COM port", "Attention!");
                     }
                 }
                 com_recv_cnt = 0;
@@ -185,227 +264,222 @@ namespace KMouse
             comboBox_COMNumber.SelectedIndex = -1;
         }
 
-		private String port_name_try;   //记录当前使用的COM的名字，由于是多线程访问，这个变量必须放在外面
-		public void Func_COM_Close()
-		{
-			if(com_is_open == true)
-			{
-				/****************串口异常断开则直接关闭窗体 Start**************/
-				int get_port_name_cnt = 0;
-				while(true)
-				{
-					bool get_port_name_sta = false;
+        private String port_name_try;   //记录当前使用的COM的名字，由于是多线程访问，这个变量必须放在外面
+        public void Func_COM_Close()
+        {
+            if(com.IsOpen == true)
+            {
+                /****************串口异常断开则直接关闭窗体 Start**************/
+                int get_port_name_cnt = 0;
+                while(true)
+                {
+                    bool get_port_name_sta = false;
 
-					try
-					{
-						this.Invoke((EventHandler)(delegate
-						{
+                    try
+                    {
+                        this.Invoke((EventHandler)(delegate
+                        {
 							comboBox_COMCheckBit.Enabled = true;
 							comboBox_COMDataBit.Enabled = true;
 							comboBox_COMNumber.Enabled = true;
 							comboBox_COMStopBit.Enabled = true;
 
-							port_name_try = comboBox_COMNumber.SelectedItem.ToString();
-						}));
-						get_port_name_sta = true;
-					}
-					catch(Exception ex)
-					{
-						//Console.WriteLine(ex.Message);
-						get_port_name_cnt++;
-						if(get_port_name_cnt % 999 == 0)
-						{
-							MessageBox.Show(ex.Message, "无法关闭串口");
-							while(true) ;//发生这种情况会怎么样...
-						}
-					}
+                            port_name_try = comboBox_COMNumber.SelectedItem.ToString();
+                        }));
+                        get_port_name_sta = true;
+                    }
+                    catch(Exception ex)
+                    {
+                        //Console.WriteLine(ex.Message);
+                        get_port_name_cnt++;
+                        if(get_port_name_cnt % 999 == 0)
+                        {
+                            MessageBox.Show(ex.Message, "Can't cloase COM port");
+                            while(true) ;//发生这种情况会怎么样...
+                        }
+                    }
 
-					if(get_port_name_sta == true)
-					{
-						break;
-					}
-					//System.Threading.Thread.Sleep(10);
-				}
+                    if(get_port_name_sta == true)
+                    {
+                        break;
+                    }
+                    //System.Threading.Thread.Sleep(10);
+                }
 
-				String PortName = port_name_try;
-				int end = PortName.IndexOf(":");
-				PortName = PortName.Substring(0, end);                      //截取获得COM口序号
+                String PortName = port_name_try;
+                int end = PortName.IndexOf(":");
+                PortName = PortName.Substring(0, end);                      //截取获得COM口序号
 
-				bool current_com_exist = false;
-				string[] strArr = Func_GetHarewareInfo(HardwareEnum.Win32_PnPEntity, "Name");
-				foreach(string vPortName in SerialPort.GetPortNames())
-				{
-					if(vPortName == PortName)
-					{
-						current_com_exist = true;                           //当前串口还在设备列表里
-					}
+                bool current_com_exist = false;
+                string[] strArr = Func_GetHarewareInfo(HardwareEnum.Win32_PnPEntity, "Name");
+                foreach(string vPortName in SerialPort.GetPortNames())
+                {
+                    if(vPortName == PortName)
+                    {
+                        current_com_exist = true;                           //当前串口还在设备列表里
+                    }
 
-					String SerialIn = "";
-					SerialIn += vPortName;
-					SerialIn += ':';
-					foreach(string s in strArr)
-					{
-						if(s.Contains(vPortName))
-						{
-							SerialIn += s;
-						}
-					}
-					Console.WriteLine(SerialIn);
-					this.Invoke((EventHandler)(delegate
-					{
-						comboBox_COMNumber.Items.Add(SerialIn);             //将设备列表里的COM放进下拉菜单上
-					}));
-				}
+                    String SerialIn = "";
+                    SerialIn += vPortName;
+                    SerialIn += ':';
+                    foreach(string s in strArr)
+                    {
+                        if(s.Contains(vPortName))
+                        {
+                            SerialIn += s;
+                        }
+                    }
+                    Console.WriteLine(SerialIn);
+                    this.Invoke((EventHandler)(delegate
+                    {
+                        comboBox_COMNumber.Items.Add(SerialIn);             //将设备列表里的COM放进下拉菜单上
+                    }));
+                }
 
-				//关闭串口时发现正在使用的COM不见了，由于无法调用com.close()，所以只能异常退出了
-				if(current_com_exist == false)
-				{
-					MessageBox.Show("串口已失去连接，程序关闭!!!", "警告");
-					System.Environment.Exit(0);
-				}
-				/****************串口异常断开则直接关闭窗体 End****************/
+                //关闭串口时发现正在使用的COM不见了，由于无法调用com.close()，所以只能异常退出了
+                if(current_com_exist == false)
+                {
+                    MessageBox.Show("COM is lost, KCOM forces to close!!!", "Warning!!!");
+                    System.Environment.Exit(0);
+                }
+                /****************串口异常断开则直接关闭窗体 End****************/
 
-				com_allow_receive = false;//禁止接收数据
-				if(com_is_receiving == true)
-				{
-					Console.WriteLine("COM_IsReceving == true, Get out!");
-					return;
-				}
+                com_allow_receive = false;//禁止接收数据
+                if(com_is_receiving == true)
+                {
+                    Console.WriteLine("COM_IsReceving == true, Get out!");
+                    return;
+                }
 
-				try
-				{
-					com.Close();
-					com_is_open = false;
-					this.Invoke((EventHandler)(delegate
-					{
-						button_COMOpen.Text = "串口已关";
-						button_COMOpen.ForeColor = System.Drawing.Color.Red;
-					}));
-				}
-				catch(Exception ex)
-				{
-					MessageBox.Show(ex.Message, "无法关闭串口");
-				}
-			}
+                try
+                {
+                    com.Close();
+                    this.Invoke((EventHandler)(delegate
+                    {
+                        button_COMOpen.Text = "COM is closed";
+                        button_COMOpen.ForeColor = System.Drawing.Color.Red;
+                    }));
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Can't close the COM port");
+                }
+            }
 
-			if(form_is_closed == true)
-			{
-				Func_PropertiesSettingsSave();
+            if(form_is_closed == true)
+            {
+                Func_PropertiesSettingsSave();
 
-				this.Invoke((EventHandler)(delegate
-				{
-					this.Close();
-				}));
-			}
+                this.Invoke((EventHandler)(delegate
+                {
+                    this.Close();
+                }));
+            }
 
-			if(com_change_baudrate == true)
-			{
-				com_change_baudrate = false;
-				this.Invoke((EventHandler)(delegate
-				{
-					com.BaudRate = Convert.ToInt32(comboBox_COMBaudrate.SelectedItem.ToString());//赋值给串口
-				}));
+            if(com_change_baudrate == true)
+            {
+                com_change_baudrate = false;
+                this.Invoke((EventHandler)(delegate
+                {
+                    com.BaudRate = Convert.ToInt32(comboBox_COMBaudrate.SelectedItem.ToString());//赋值给串口
+                }));
 
-				try
-				{
-					com.Open();
-					this.Invoke((EventHandler)(delegate
-					{
-						button_COMOpen.Text = "串口已开";
-						button_COMOpen.ForeColor = System.Drawing.Color.Green;
-						com_is_open = true;
-						com_allow_receive = true;
-					}));
-				}
-				catch(Exception ex)
-				{
-					MessageBox.Show(ex.Message, "无法打开串口");
-				}
-			}
-		}
+                try
+                {
+                    com.Open();
+                    this.Invoke((EventHandler)(delegate
+                    {
+                        button_COMOpen.Text = "COM is opened";
+                        button_COMOpen.ForeColor = System.Drawing.Color.Green;
+                        com_allow_receive = true;
+                    }));
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Can't Open the COM port");
+                }
+            }
+        }
 
-		public void Func_COM_Open()
-		{
-			if(com_is_open == true)//关闭串口
-			{
-				Func_COM_Close();
-				//comboBox_COMBaudrate.Enabled = true;
-				comboBox_COMCheckBit.Enabled = true;
-				comboBox_COMDataBit.Enabled = true;
-				comboBox_COMNumber.Enabled = true;
-				comboBox_COMStopBit.Enabled = true;
-			}
-			else//打开串口
-			{
-				com.BaudRate = Convert.ToInt32(comboBox_COMBaudrate.SelectedItem.ToString());   //获得波特率
-				//Console.Write("@@@@{0}", com.BaudRate);
-				switch(comboBox_COMCheckBit.SelectedItem.ToString())                           //获得校验位
-				{
-					case "None": com.Parity = Parity.None; break;
-					case "Odd": com.Parity = Parity.Odd; break;
-					case "Even": com.Parity = Parity.Even; break;
-					default: com.Parity = Parity.None; break;
-				}
-				com.DataBits = Convert.ToInt16(comboBox_COMDataBit.SelectedItem.ToString());    //获得数据位
-				switch(comboBox_COMStopBit.SelectedItem.ToString())                            //获得停止位
-				{
-					case "0": com.StopBits = StopBits.None; break;
-					case "1": com.StopBits = StopBits.One; break;
-					case "2": com.StopBits = StopBits.Two; break;
-					case "1.5": com.StopBits = StopBits.OnePointFive; break;
-					default: com.StopBits = StopBits.One; break;
-				}
+        public void Func_Com_Open()
+        {
+            if(com.IsOpen == true)//关闭串口
+            {
+                Func_COM_Close();
+                //comboBox_COMBaudrate.Enabled = true;
+                comboBox_COMCheckBit.Enabled = true;
+                comboBox_COMDataBit.Enabled = true;
+                comboBox_COMNumber.Enabled = true;
+                comboBox_COMStopBit.Enabled = true;
+            }
+            else//打开串口
+            {
+                com.BaudRate = Convert.ToInt32(comboBox_COMBaudrate.SelectedItem.ToString());   //获得波特率
+                //Console.Write("@@@@{0}", com.BaudRate);
+                switch(comboBox_COMCheckBit.SelectedItem.ToString())                            //获得校验位
+                {
+                    case "None": com.Parity = Parity.None; break;
+                    case "Odd": com.Parity = Parity.Odd; break;
+                    case "Even": com.Parity = Parity.Even; break;
+                    default: com.Parity = Parity.None; break;
+                }
+                com.DataBits = Convert.ToInt16(comboBox_COMDataBit.SelectedItem.ToString());    //获得数据位
+                switch(comboBox_COMStopBit.SelectedItem.ToString())                             //获得停止位
+                {
+                    case "0": com.StopBits = StopBits.None; break;
+                    case "1": com.StopBits = StopBits.One; break;
+                    case "2": com.StopBits = StopBits.Two; break;
+                    case "1.5": com.StopBits = StopBits.OnePointFive; break;
+                    default: com.StopBits = StopBits.One; break;
+                }
 
-				if(comboBox_COMNumber.SelectedIndex == -1)
-				{
-					MessageBox.Show("请选择串口", "提示");
-					return;
-				}
+                if(comboBox_COMNumber.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please choose the COM port", "Attention!");
+                    return;
+                }
 
-				String PortName = comboBox_COMNumber.SelectedItem.ToString();
-				Console.WriteLine("Port name:{0}", PortName);
-				int end = PortName.IndexOf(":");
-				com.PortName = PortName.Substring(0, end);                  //获得串口数
-				try
-				{
-					com.Open();
+                String PortName = comboBox_COMNumber.SelectedItem.ToString();
+                Console.WriteLine("Port name:{0}", PortName);
+                int end = PortName.IndexOf(":");
+                com.PortName = PortName.Substring(0, end);                  //获得串口数
+                try
+                {
+                    com.Open();
 
-					com.DiscardInBuffer();
-					com.DiscardOutBuffer();
+                    com.DiscardInBuffer();
+                    com.DiscardOutBuffer();
+                }
+                catch
+                {
+                    MessageBox.Show("Can't open the COM port", "Attention!");
+                }
 
-					com_is_open = true;
-				}
-				catch
-				{
-					com_is_open = false;
-					MessageBox.Show("无法打开串口", "提示");
-				}
+                if(com.IsOpen == true)
+                {
+                    button_COMOpen.Text = "COM is opened";
+                    button_COMOpen.ForeColor = System.Drawing.Color.Green;
 
-				if(com_is_open == true)
-				{
-					button_COMOpen.Text = "串口已开";
-					button_COMOpen.ForeColor = System.Drawing.Color.Green;
+                    com_allow_receive = true;
+                    com_is_receiving = false;
 
-					com_allow_receive = true;
-					com_is_receiving = false;
-
-					//comboBox_COMBaudrate.Enabled = false;
-					comboBox_COMCheckBit.Enabled = false;
-					comboBox_COMDataBit.Enabled = false;
-					comboBox_COMNumber.Enabled = false;
-					comboBox_COMStopBit.Enabled = false;
-				}
-			}		
-		}
+                    //comboBox_COMBaudrate.Enabled = false;
+                    comboBox_COMCheckBit.Enabled = false;
+                    comboBox_COMDataBit.Enabled = false;
+                    comboBox_COMNumber.Enabled = false;
+                    comboBox_COMStopBit.Enabled = false;
+                }
+            }
+        }
 
         private void button_ComOpen_Click(object sender, EventArgs e)
         {
-			Func_COM_Open();
+            Func_Com_Open();
         }
 
         private void comboBox_COMNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default._com_num_select_index = comboBox_COMNumber.SelectedIndex;
+            
         }
 		
         private void Func_COM_DataRec(object sender, SerialDataReceivedEventArgs e)  //串口接受函数
@@ -428,7 +502,7 @@ namespace KMouse
 
                 com_recv_cnt += (u32)com_recv_buff_size;
 
-				if(com_is_open == true)
+                if(com.IsOpen == true)
 				{
 					for(int i = 0; i < com_recv_buff_size; i++)
 					{

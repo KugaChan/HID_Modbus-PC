@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+//#define MODBUS_ERROR_MESSAGE
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -155,17 +158,20 @@ namespace KMouse
                     Console.Write(" {0:X}", modbus_send_data[v]);
                 }
                 Console.Write("\r\n");
-
+                
                 if (checkBox_ShowTxt.Checked == true)
                 {
-                    textBox_ComRec.Text += "Send: ";
+                    String SerialIn = "";
+                    SerialIn += "Send: ";
                     for (u32 i = 0; i < MODBUS_SEND_03_NUM; i++)
                     {
-                        textBox_ComRec.Text += "0x";
-                        textBox_ComRec.Text += Func_GetHexHigh(modbus_send_data[i], 0);
-                        textBox_ComRec.Text += Func_GetHexHigh(modbus_send_data[i], 1) + " ";
+                        SerialIn += "0x";
+                        SerialIn += Func_GetHexHigh(modbus_send_data[i], 0);
+                        SerialIn += Func_GetHexHigh(modbus_send_data[i], 1) + " ";
                     }
-                    textBox_ComRec.Text += "\r\n";              
+                    SerialIn += "\r\n";
+
+                    textBox_ComRec.AppendText(SerialIn);
                 }
 			}
 			catch(Exception ex)
@@ -211,11 +217,6 @@ namespace KMouse
                     this.textBox_ComRec.AppendText("Recv: ");
                     this.textBox_ComRec.AppendText(SerialIn);				//在接收文本中添加串口接收数据
                     this.textBox_ComRec.AppendText("\r\n");
-
-                    if (textBox_ComRec.TextLength > 32768)
-                    {
-                        textBox_ComRec.Text = "";
-                    }
                 }));        
             }
 
@@ -332,7 +333,16 @@ namespace KMouse
 
 							default:
 							{
-								MessageBox.Show("error reg!!!: " + Register_Address.ToString(), "提示");
+                                #if MODBUS_ERROR_MESSAGE
+                                    MessageBox.Show("error reg!!!: " + Register_Address.ToString(), "提示");
+                                #else
+                                    this.Invoke((EventHandler)(delegate
+                                    {
+                                        textBox_ComRec.AppendText("error reg: " + Register_Address.ToString() + "!!!\r\n");
+                                    }));
+                                #endif
+
+                                System.Media.SystemSounds.Hand.Play();								
 								res = false;
 								break;
 							}
@@ -353,7 +363,15 @@ namespace KMouse
 					}
 					else
 					{
-						MessageBox.Show("error crc!!!: " + CRC_Result_Cal.ToString(), "提示");
+                        #if MODBUS_ERROR_MESSAGE
+						    MessageBox.Show("error crc!!!: " + CRC_Result_Cal.ToString(), "提示");
+                        #else
+                            this.Invoke((EventHandler)(delegate
+                            {
+                                textBox_ComRec.AppendText("error crc: " + CRC_Result_Cal.ToString() + "!!!\r\n");
+                            }));
+                        #endif
+                        System.Media.SystemSounds.Hand.Play();	
 						res = false;
 					}
 					break;
@@ -366,7 +384,15 @@ namespace KMouse
 
 				default:
 				{
-					MessageBox.Show("error func!!!: " + modbus_recv_data[1].ToString(), "提示");
+                    #if MODBUS_ERROR_MESSAGE
+					    MessageBox.Show("error func!!!: " + modbus_recv_data[1].ToString(), "提示");
+                    #else
+                        this.Invoke((EventHandler)(delegate
+                        {
+                            textBox_ComRec.AppendText("error func: " + modbus_recv_data[1].ToString() + "!!!\r\n");
+                        })); 
+                    #endif
+                    System.Media.SystemSounds.Hand.Play();
 					res = false;
 					break;
 				}
@@ -387,10 +413,11 @@ namespace KMouse
             }
             this.Invoke((EventHandler)(delegate
             {
-                label_CmdSuccessCnt.Text = "CmdCnt: ";
-                label_CmdSuccessCnt.Text += modbus_success_cnt.ToString();
-                label_CmdSuccessCnt.Text += " | ";
-                label_CmdSuccessCnt.Text += modbus_fail_cnt.ToString();
+                label_SuccessCmdCnt.Text = "Success: ";
+                label_SuccessCmdCnt.Text += modbus_success_cnt.ToString();
+
+                label_FailCmdCnt.Text = "Fail: ";
+                label_FailCmdCnt.Text += modbus_fail_cnt.ToString();
             }));
 
 			return res;
@@ -419,7 +446,6 @@ namespace KMouse
 			}
 
 			Func_Modbus_Send_03((u8)Reg, 1, (u32)Val);
-			//MessageBox.Show(aa.ToString(), "Reg");
 		}
 	}
 }
