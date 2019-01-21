@@ -529,7 +529,8 @@ namespace KMouse
 							res = Func_Modbus_Recv_Handle();
 							if(res == false)
 							{
-								Func_COM_Close();
+								//Func_COM_Close();
+                                Console.WriteLine("Dont close COM A");
 							}
 						}
 					}

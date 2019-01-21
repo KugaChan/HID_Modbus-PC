@@ -25,7 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 13;
+		private const u8 _VersionGit = 14;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
@@ -162,7 +162,8 @@ namespace KMouse
 
                     if (res == false)
                     {
-                        Func_COM_Close();
+                        //Func_COM_Close();
+                        Console.WriteLine("Dont close COM B");
                     }
                 }
             }

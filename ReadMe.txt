@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git14
+1. 出错后不关闭串口，避免错过PC开机时进入BIOS的操作
+
 Git13
 1. 整理Com函数，与KCOM使用的串口模块同步上
 2. Modbus通信出错后，不再使用弹窗的警告，而是使用系统声音报警+文件显示，简化操作
