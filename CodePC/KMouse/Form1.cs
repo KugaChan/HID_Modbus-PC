@@ -25,7 +25,7 @@ namespace KMouse
 	public partial class KMouse : Form
 	{
 		//常量
-		private const u8 _VersionGit = 14;
+		private const u8 _VersionGit = 15;
 
 		//宏
 		const u32 dwAllFF = 0xFFFFFFFF;
@@ -525,6 +525,15 @@ namespace KMouse
             {
                 textBox_eKey.Enabled = true;
             }
+        }
+
+        private void timer_FIFO_Full_Tick(object sender, EventArgs e)
+        {
+            timer_FIFO_Full.Enabled = false;
+            this.Invoke((EventHandler)(delegate
+            {
+                textBox_ComRec.AppendText("FIFO receive recover\r\n");
+            }));
         }
 	}
 }

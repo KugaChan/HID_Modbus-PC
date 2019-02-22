@@ -115,14 +115,22 @@ namespace KMouse
 
 		bool modbus_send_cmd_is_busy = false;
 
-        const u32 MODBUS_KB_WAITING_MAX = 1024;
+        const u32 MODBUS_KB_WAITING_MAX = 8;
 
-        u32[] modbus_kb_fifo = new u32[MODBUS_KB_WAITING_MAX];
+        u32[] modbus_kb_fifo = new u32[1024];//MODBUS_KB_WAITING_MAX
         u32 modbus_kb_input = 0;
         u32 modbus_kb_output = 0;
 
         private bool Func_KB_FIFO_Input(u32 KEY)
         {
+            if(timer_FIFO_Full.Enabled == true)
+            {
+            //    this.Invoke((EventHandler)(delegate
+            //    {
+            //        textBox_ComRec.AppendText("FIFO is full, pause receive!\r\n");
+            //    }));
+                return false;
+            }
             u32 KEY_Add = KEY;
             if (button_Ctrl.BackColor == System.Drawing.Color.Yellow)
             {
@@ -157,7 +165,13 @@ namespace KMouse
             }
             else
             {
-                MessageBox.Show("FIFO已满", "提示");
+                //MessageBox.Show("FIFO已满", "提示");
+                System.Media.SystemSounds.Beep.Play();
+                this.Invoke((EventHandler)(delegate
+                {
+                    textBox_ComRec.AppendText("FIFO is full, pause receive!\r\n");
+                }));
+                timer_FIFO_Full.Enabled = true;
                 return false;
             }
         }

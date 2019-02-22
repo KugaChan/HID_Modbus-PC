@@ -148,9 +148,9 @@
             this.label12 = new System.Windows.Forms.Label();
             this.comboBox_COMDataBit = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.comboBox_COMCheckBit = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comboBox_COMBaudrate = new System.Windows.Forms.ComboBox();
+            this.comboBox_COMCheckBit = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox_COMNumber = new System.Windows.Forms.ComboBox();
             this.button_P_Identify = new System.Windows.Forms.Button();
@@ -160,6 +160,7 @@
             this.timer_FIFO_Snd = new System.Windows.Forms.Timer(this.components);
             this.button_Reconect = new System.Windows.Forms.Button();
             this.label_FailCmdCnt = new System.Windows.Forms.Label();
+            this.timer_FIFO_Full = new System.Windows.Forms.Timer(this.components);
             this.groupBox_Log.SuspendLayout();
             this.groupBox_Mouse.SuspendLayout();
             this.groupBox_Keyboard.SuspendLayout();
@@ -173,7 +174,7 @@
             this.label_ClearRec.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label_ClearRec.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_ClearRec.ForeColor = System.Drawing.Color.Magenta;
-            this.label_ClearRec.Location = new System.Drawing.Point(437, 68);
+            this.label_ClearRec.Location = new System.Drawing.Point(437, 73);
             this.label_ClearRec.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_ClearRec.Name = "label_ClearRec";
             this.label_ClearRec.Size = new System.Drawing.Size(44, 22);
@@ -246,17 +247,17 @@
             // 
             // textBox_eKey
             // 
-            this.textBox_eKey.Location = new System.Drawing.Point(4, 95);
+            this.textBox_eKey.Location = new System.Drawing.Point(4, 98);
             this.textBox_eKey.Multiline = true;
             this.textBox_eKey.Name = "textBox_eKey";
-            this.textBox_eKey.Size = new System.Drawing.Size(477, 38);
+            this.textBox_eKey.Size = new System.Drawing.Size(477, 35);
             this.textBox_eKey.TabIndex = 47;
             this.textBox_eKey.Text = "Hello world";
             // 
             // button_Modbus_Send
             // 
             this.button_Modbus_Send.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_Modbus_Send.Location = new System.Drawing.Point(391, 66);
+            this.button_Modbus_Send.Location = new System.Drawing.Point(391, 71);
             this.button_Modbus_Send.Name = "button_Modbus_Send";
             this.button_Modbus_Send.Size = new System.Drawing.Size(42, 26);
             this.button_Modbus_Send.TabIndex = 43;
@@ -269,7 +270,7 @@
             // 
             this.label_Modbus_Val.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_Modbus_Val.AutoSize = true;
-            this.label_Modbus_Val.Location = new System.Drawing.Point(265, 71);
+            this.label_Modbus_Val.Location = new System.Drawing.Point(265, 76);
             this.label_Modbus_Val.Name = "label_Modbus_Val";
             this.label_Modbus_Val.Size = new System.Drawing.Size(59, 12);
             this.label_Modbus_Val.TabIndex = 46;
@@ -279,7 +280,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(106, 71);
+            this.label5.Location = new System.Drawing.Point(106, 76);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 12);
@@ -289,7 +290,7 @@
             // textBox_Modbus_Val
             // 
             this.textBox_Modbus_Val.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_Modbus_Val.Location = new System.Drawing.Point(330, 68);
+            this.textBox_Modbus_Val.Location = new System.Drawing.Point(330, 73);
             this.textBox_Modbus_Val.Name = "textBox_Modbus_Val";
             this.textBox_Modbus_Val.Size = new System.Drawing.Size(55, 21);
             this.textBox_Modbus_Val.TabIndex = 44;
@@ -299,7 +300,7 @@
             // 
             this.label_Modbus_Reg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_Modbus_Reg.AutoSize = true;
-            this.label_Modbus_Reg.Location = new System.Drawing.Point(158, 71);
+            this.label_Modbus_Reg.Location = new System.Drawing.Point(158, 76);
             this.label_Modbus_Reg.Name = "label_Modbus_Reg";
             this.label_Modbus_Reg.Size = new System.Drawing.Size(59, 12);
             this.label_Modbus_Reg.TabIndex = 45;
@@ -309,7 +310,7 @@
             // 
             this.label_Rec_Bytes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_Rec_Bytes.AutoSize = true;
-            this.label_Rec_Bytes.Location = new System.Drawing.Point(78, 71);
+            this.label_Rec_Bytes.Location = new System.Drawing.Point(78, 76);
             this.label_Rec_Bytes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label_Rec_Bytes.Name = "label_Rec_Bytes";
             this.label_Rec_Bytes.Size = new System.Drawing.Size(11, 12);
@@ -319,7 +320,7 @@
             // textBox_Modbus_Reg
             // 
             this.textBox_Modbus_Reg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_Modbus_Reg.Location = new System.Drawing.Point(218, 68);
+            this.textBox_Modbus_Reg.Location = new System.Drawing.Point(218, 73);
             this.textBox_Modbus_Reg.Name = "textBox_Modbus_Reg";
             this.textBox_Modbus_Reg.Size = new System.Drawing.Size(41, 21);
             this.textBox_Modbus_Reg.TabIndex = 42;
@@ -337,7 +338,7 @@
             this.textBox_ComRec.Name = "textBox_ComRec";
             this.textBox_ComRec.ReadOnly = true;
             this.textBox_ComRec.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_ComRec.Size = new System.Drawing.Size(478, 46);
+            this.textBox_ComRec.Size = new System.Drawing.Size(478, 55);
             this.textBox_ComRec.TabIndex = 0;
             this.textBox_ComRec.TabStop = false;
             // 
@@ -345,7 +346,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 71);
+            this.label3.Location = new System.Drawing.Point(9, 76);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
@@ -1595,17 +1596,6 @@
             this.label11.TabIndex = 15;
             this.label11.Text = "Parity:";
             // 
-            // comboBox_COMCheckBit
-            // 
-            this.comboBox_COMCheckBit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_COMCheckBit.FormattingEnabled = true;
-            this.comboBox_COMCheckBit.Location = new System.Drawing.Point(283, 15);
-            this.comboBox_COMCheckBit.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBox_COMCheckBit.Name = "comboBox_COMCheckBit";
-            this.comboBox_COMCheckBit.Size = new System.Drawing.Size(48, 20);
-            this.comboBox_COMCheckBit.TabIndex = 14;
-            this.comboBox_COMCheckBit.TabStop = false;
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -1627,6 +1617,17 @@
             this.comboBox_COMBaudrate.TabIndex = 12;
             this.comboBox_COMBaudrate.TabStop = false;
             this.comboBox_COMBaudrate.SelectedIndexChanged += new System.EventHandler(this.comboBox_COMBaudrate_SelectedIndexChanged);
+            // 
+            // comboBox_COMCheckBit
+            // 
+            this.comboBox_COMCheckBit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_COMCheckBit.FormattingEnabled = true;
+            this.comboBox_COMCheckBit.Location = new System.Drawing.Point(283, 15);
+            this.comboBox_COMCheckBit.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBox_COMCheckBit.Name = "comboBox_COMCheckBit";
+            this.comboBox_COMCheckBit.Size = new System.Drawing.Size(48, 20);
+            this.comboBox_COMCheckBit.TabIndex = 14;
+            this.comboBox_COMCheckBit.TabStop = false;
             // 
             // label9
             // 
@@ -1716,6 +1717,11 @@
             this.label_FailCmdCnt.Size = new System.Drawing.Size(35, 12);
             this.label_FailCmdCnt.TabIndex = 129;
             this.label_FailCmdCnt.Text = "Fail:";
+            // 
+            // timer_FIFO_Full
+            // 
+            this.timer_FIFO_Full.Interval = 1000;
+            this.timer_FIFO_Full.Tick += new System.EventHandler(this.timer_FIFO_Full_Tick);
             // 
             // KMouse
             // 
@@ -1888,6 +1894,7 @@
 		private System.Windows.Forms.Label label_Status;
 		private System.Windows.Forms.Button button_Reconect;
         private System.Windows.Forms.Label label_FailCmdCnt;
+        private System.Windows.Forms.Timer timer_FIFO_Full;
 	}
 }
 
