@@ -130,7 +130,7 @@ namespace KMouse
 
 		private void Func_Mouse_Press(u32 key, bool is_down)
 		{
-			if(is_down)
+			if(is_down == true)
 			{
 				mouse_press_en[key] = true;
 				Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, key);
@@ -141,62 +141,62 @@ namespace KMouse
 			}
 		}
 
-		private void Func_MoveUp_MouseDown()
+		private void Func_MouseDown_MoveUp()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveUP, true);
 		}
 
-		private void Func_MoveUp_MouseUp()
+		private void Func_MouseUp_MoveUp()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveUP, false);
 		}
 
-		private void Func_MoveDown_MouseDown()
+		private void Func_MouseDown_MoveDown()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveDown, true);
 		}
 
-		private void Func_MoveDown_MouseUp()
+		private void Func_MouseUp_MoveDown()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveDown, false);
 		}
 
-		private void Func_MoveLeft_MouseDown()
+		private void Func_MouseDown_MoveLeft()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveLeft, true);
 		}
 
-		private void Func_MoveLeft_MouseUp()
+		private void Func_MouseUp_MoveLeft()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveLeft, false);
 		}
 
-		private void Func_MoveRight_MouseDown()
+		private void Func_MouseDown_MoveRight()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveRight, true);
 		}
 
-		private void Func_MoveRight_MouseUp()
+		private void Func_MouseUp_MoveRight()
 		{
 			Func_Mouse_Press(KEY_MousePress_MoveRight, false);
 		}
 
-		private void Func_RollUp_MouseDown()
+		private void Func_MouseDown_RollUp()
 		{
 			Func_Mouse_Press(KEY_MousePress_RollUp, true);
 		}
 
-		private void Func_RollUp_MouseUp()
+		private void Func_MouseUp_RollUp()
 		{
 			Func_Mouse_Press(KEY_MousePress_RollUp, false);
 		}
 
-		private void Func_RollDown_MouseDown()
+		private void Func_MouseDown_RollDown()
 		{
 			Func_Mouse_Press(KEY_MousePress_RollDown, true);
 		}
 
-		private void Func_RollDown_MouseUp()
+		private void Func_MouseUp_RollDown()
 		{
 			Func_Mouse_Press(KEY_MousePress_RollDown, false);
 		}
@@ -205,62 +205,62 @@ namespace KMouse
 		/******************************************************************/
 		private void button_MoveUp_MouseDown(object sender, MouseEventArgs e)
 		{
-			Func_MoveUp_MouseDown();
+			Func_MouseDown_MoveUp();
 		}
 
 		private void button_MoveUp_MouseUp(object sender, MouseEventArgs e)
 		{
-			Func_MoveUp_MouseUp();
+			Func_MouseUp_MoveUp();
 		}
 
 		private void button_MoveDown_MouseDown(object sender, MouseEventArgs e)
 		{
-			Func_MoveDown_MouseDown();
+			Func_MouseDown_MoveDown();
 		}
 
 		private void button_MoveDown_MouseUp(object sender, MouseEventArgs e)
 		{
-			Func_MoveDown_MouseUp();
+			Func_MouseUp_MoveDown();
 		}
 
 		private void button_MoveLeft_MouseDown(object sender, MouseEventArgs e)
 		{
-			Func_MoveLeft_MouseDown();
+			Func_MouseDown_MoveLeft();
 		}
 
 		private void button_MoveLeft_MouseUp(object sender, MouseEventArgs e)
 		{
-			Func_MoveLeft_MouseUp();
+			Func_MouseUp_MoveLeft();
 		}
 
 		private void button_MoveRight_MouseDown(object sender, MouseEventArgs e)
 		{
-			Func_MoveRight_MouseDown();
+			Func_MouseDown_MoveRight();
 		}
 
 		private void button_MoveRight_MouseUp(object sender, MouseEventArgs e)
 		{
-			Func_MoveRight_MouseUp();
+			Func_MouseUp_MoveRight();
 		}		
 
 		private void button_RollUp_MouseDown(object sender, MouseEventArgs e)
 		{
-			Func_RollUp_MouseDown();
+			Func_MouseDown_RollUp();
 		}
 
 		private void button_RollUp_MouseUp(object sender, MouseEventArgs e)
 		{
-			Func_RollUp_MouseUp();
+			Func_MouseUp_RollUp();
 		}
 
 		private void button_RollDown_MouseDown(object sender, MouseEventArgs e)
 		{
-			Func_RollDown_MouseDown();
+			Func_MouseDown_RollDown();
 		}
 
 		private void button_RollDown_MouseUp(object sender, MouseEventArgs e)
 		{
-			Func_RollDown_MouseUp();
+			Func_MouseUp_RollDown();
 		}
 		/******************************************************************/
 
@@ -387,8 +387,10 @@ namespace KMouse
             if (KeyCode == Keys.Delete) { Func_KB_Click(KEY_KEYBOARD_Del + key_add); }
 
             bool NumLock = (((ushort)GetKeyState(0x90)) & 0xffff) != 0;
-            if (NumLock == true)
+            if (NumLock == true)//数字键亮起时，当做数字键盘来用，灭时当做操作鼠标来用
             {
+                Console.WriteLine("NumLock High");
+
                 if (KeyCode == Keys.Right) { Func_KB_Click(KEY_KEYBOARD_Right + key_add); }
                 if (KeyCode == Keys.Left) { Func_KB_Click(KEY_KEYBOARD_Left + key_add); }
                 if (KeyCode == Keys.Down) { Func_KB_Click(KEY_KEYBOARD_Down + key_add); }
@@ -404,6 +406,8 @@ namespace KMouse
             }
             else
             {
+                Console.WriteLine("NumLock Low");
+
                 if (KeyCode == Keys.Right) 
                 {
                     Func_Modbus_Send_03(REG_MOUSE_PRESS, 1, KEY_MousePress_MoveRight);
@@ -480,14 +484,15 @@ namespace KMouse
 
 		private void KMouse_KeyUp(object sender, KeyEventArgs e)
 		{
-			//Console.WriteLine("KEYUP>>keycode:{0}", e.KeyCode);
+#if false   //鼠标的动作才需要up和down，因为up时要释放按钮使能
+            Console.WriteLine("KEYUP>>keycode:{0}", e.KeyCode);
 
-			if(e.KeyCode == Keys.NumPad8) { Func_MoveUp_MouseUp(); }
-			if(e.KeyCode == Keys.NumPad2) { Func_MoveDown_MouseUp(); }
-			if(e.KeyCode == Keys.NumPad4) { Func_MoveLeft_MouseUp(); }
-			if(e.KeyCode == Keys.NumPad6) { Func_MoveRight_MouseUp(); }
-			if(e.KeyCode == Keys.NumPad1) { Func_RollUp_MouseUp(); }
-			if(e.KeyCode == Keys.NumPad3) { Func_RollDown_MouseUp(); }
+			if(e.KeyCode == Keys.NumPad8) { Func_MouseUp_MoveUp(); }
+			if(e.KeyCode == Keys.NumPad2) { Func_MouseUp_MoveDown(); }
+			if(e.KeyCode == Keys.NumPad4) { Func_MouseUp_MoveLeft(); }
+			if(e.KeyCode == Keys.NumPad6) { Func_MouseUp_MoveRight(); }
+			if(e.KeyCode == Keys.NumPad1) { Func_MouseUp_RollUp(); }
+			if(e.KeyCode == Keys.NumPad3) { Func_MouseUp_RollDown(); }
 
 			/************************/
 			if(e.KeyCode == Keys.NumPad7)
@@ -506,7 +511,8 @@ namespace KMouse
 			{
 				Func_SpeedDown_Click();
 			}
-			/************************/			
+			/************************/
+#endif
 		}
 	}
 }

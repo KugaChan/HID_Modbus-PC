@@ -6,3 +6,11 @@ D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.Properties.Resource
 D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.csproj.GenerateResource.Cache
 D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.exe
 D:\K\KProjGit\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.pdb
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\bin\Release\KMouse.exe.config
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\bin\Release\KMouse.exe
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\bin\Release\KMouse.pdb
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.KMouse.resources
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.Properties.Resources.resources
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.csproj.GenerateResource.Cache
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.exe
+E:\我的文档\W我的项目\HID\HID_Modbus-PC\CodePC\KMouse\obj\Release\KMouse.pdb
