@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git17
+1. 重构了代码，将模块全部封装成类
+
 Git16
 1. 去掉key up的操作，键盘不需要up逻辑，解决keyup时引起错误动作的问题
 

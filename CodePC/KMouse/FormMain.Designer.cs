@@ -1,6 +1,6 @@
 ﻿namespace KMouse
 {
-	partial class KMouse
+	partial class FormMain
 	{
 		/// <summary>
 		/// 必需的设计器变量。
@@ -29,12 +29,12 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KMouse));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.label_ClearRec = new System.Windows.Forms.Label();
             this.groupBox_Log = new System.Windows.Forms.GroupBox();
             this.checkBox_EKeyEN = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button_eKey = new System.Windows.Forms.Button();
+            this.button_eKeyClear = new System.Windows.Forms.Button();
+            this.button_eKeySnd = new System.Windows.Forms.Button();
             this.textBox_eKey = new System.Windows.Forms.TextBox();
             this.button_Modbus_Send = new System.Windows.Forms.Button();
             this.label_Modbus_Val = new System.Windows.Forms.Label();
@@ -45,7 +45,6 @@
             this.textBox_Modbus_Reg = new System.Windows.Forms.TextBox();
             this.textBox_ComRec = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.timer_recv_timeout = new System.Windows.Forms.Timer(this.components);
             this.button_MoveUp = new System.Windows.Forms.Button();
             this.groupBox_Mouse = new System.Windows.Forms.GroupBox();
             this.label_Status = new System.Windows.Forms.Label();
@@ -157,10 +156,12 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.checkBox_ShowTxt = new System.Windows.Forms.CheckBox();
             this.label_SuccessCmdCnt = new System.Windows.Forms.Label();
-            this.timer_FIFO_Snd = new System.Windows.Forms.Timer(this.components);
             this.button_Reconect = new System.Windows.Forms.Button();
             this.label_FailCmdCnt = new System.Windows.Forms.Label();
-            this.timer_FIFO_Full = new System.Windows.Forms.Timer(this.components);
+            this.timer_background = new System.Windows.Forms.Timer(this.components);
+            this.timer_CloseForm = new System.Windows.Forms.Timer(this.components);
+            this.timer_CloseCom = new System.Windows.Forms.Timer(this.components);
+            this.timer_ReleaseFuncKey = new System.Windows.Forms.Timer(this.components);
             this.groupBox_Log.SuspendLayout();
             this.groupBox_Mouse.SuspendLayout();
             this.groupBox_Keyboard.SuspendLayout();
@@ -186,8 +187,8 @@
             // groupBox_Log
             // 
             this.groupBox_Log.Controls.Add(this.checkBox_EKeyEN);
-            this.groupBox_Log.Controls.Add(this.button1);
-            this.groupBox_Log.Controls.Add(this.button_eKey);
+            this.groupBox_Log.Controls.Add(this.button_eKeyClear);
+            this.groupBox_Log.Controls.Add(this.button_eKeySnd);
             this.groupBox_Log.Controls.Add(this.textBox_eKey);
             this.groupBox_Log.Controls.Add(this.button_Modbus_Send);
             this.groupBox_Log.Controls.Add(this.label_Modbus_Val);
@@ -219,31 +220,31 @@
             this.checkBox_EKeyEN.UseVisualStyleBackColor = true;
             this.checkBox_EKeyEN.CheckedChanged += new System.EventHandler(this.checkBox_EKeyEN_CheckedChanged);
             // 
-            // button1
+            // button_eKeyClear
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.ForeColor = System.Drawing.Color.Red;
-            this.button1.Location = new System.Drawing.Point(391, 138);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(42, 26);
-            this.button1.TabIndex = 49;
-            this.button1.TabStop = false;
-            this.button1.Text = "Clr";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_eKeyClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_eKeyClear.ForeColor = System.Drawing.Color.Red;
+            this.button_eKeyClear.Location = new System.Drawing.Point(391, 138);
+            this.button_eKeyClear.Name = "button_eKeyClear";
+            this.button_eKeyClear.Size = new System.Drawing.Size(42, 26);
+            this.button_eKeyClear.TabIndex = 49;
+            this.button_eKeyClear.TabStop = false;
+            this.button_eKeyClear.Text = "Clr";
+            this.button_eKeyClear.UseVisualStyleBackColor = true;
+            this.button_eKeyClear.Click += new System.EventHandler(this.button_eKeyClear_Click);
             // 
-            // button_eKey
+            // button_eKeySnd
             // 
-            this.button_eKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_eKey.ForeColor = System.Drawing.Color.Blue;
-            this.button_eKey.Location = new System.Drawing.Point(439, 138);
-            this.button_eKey.Name = "button_eKey";
-            this.button_eKey.Size = new System.Drawing.Size(42, 26);
-            this.button_eKey.TabIndex = 48;
-            this.button_eKey.TabStop = false;
-            this.button_eKey.Text = "eKey";
-            this.button_eKey.UseVisualStyleBackColor = true;
-            this.button_eKey.Click += new System.EventHandler(this.button_eKey_Click);
+            this.button_eKeySnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_eKeySnd.ForeColor = System.Drawing.Color.Blue;
+            this.button_eKeySnd.Location = new System.Drawing.Point(439, 138);
+            this.button_eKeySnd.Name = "button_eKeySnd";
+            this.button_eKeySnd.Size = new System.Drawing.Size(42, 26);
+            this.button_eKeySnd.TabIndex = 48;
+            this.button_eKeySnd.TabStop = false;
+            this.button_eKeySnd.Text = "eKey";
+            this.button_eKeySnd.UseVisualStyleBackColor = true;
+            this.button_eKeySnd.Click += new System.EventHandler(this.button_eKey_Click);
             // 
             // textBox_eKey
             // 
@@ -352,12 +353,6 @@
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 6;
             this.label3.Text = "累计接收：";
-            // 
-            // timer_recv_timeout
-            // 
-            this.timer_recv_timeout.Enabled = true;
-            this.timer_recv_timeout.Interval = 10;
-            this.timer_recv_timeout.Tick += new System.EventHandler(this.timer_recv_timeout_Tick);
             // 
             // button_MoveUp
             // 
@@ -1680,6 +1675,7 @@
             this.checkBox_ShowTxt.TabIndex = 126;
             this.checkBox_ShowTxt.Text = "Show_Txt";
             this.checkBox_ShowTxt.UseVisualStyleBackColor = true;
+            this.checkBox_ShowTxt.CheckedChanged += new System.EventHandler(this.checkBox_ShowTxt_CheckedChanged);
             // 
             // label_SuccessCmdCnt
             // 
@@ -1689,12 +1685,6 @@
             this.label_SuccessCmdCnt.Size = new System.Drawing.Size(53, 12);
             this.label_SuccessCmdCnt.TabIndex = 127;
             this.label_SuccessCmdCnt.Text = "Success:";
-            // 
-            // timer_FIFO_Snd
-            // 
-            this.timer_FIFO_Snd.Enabled = true;
-            this.timer_FIFO_Snd.Interval = 1000;
-            this.timer_FIFO_Snd.Tick += new System.EventHandler(this.timer_FIFO_Snd_Tick);
             // 
             // button_Reconect
             // 
@@ -1718,12 +1708,26 @@
             this.label_FailCmdCnt.TabIndex = 129;
             this.label_FailCmdCnt.Text = "Fail:";
             // 
-            // timer_FIFO_Full
+            // timer_background
             // 
-            this.timer_FIFO_Full.Interval = 1000;
-            this.timer_FIFO_Full.Tick += new System.EventHandler(this.timer_FIFO_Full_Tick);
+            this.timer_background.Enabled = true;
+            this.timer_background.Tick += new System.EventHandler(this.timer_background_Tick);
             // 
-            // KMouse
+            // timer_CloseForm
+            // 
+            this.timer_CloseForm.Tick += new System.EventHandler(this.timer_CloseForm_Tick);
+            // 
+            // timer_CloseCom
+            // 
+            this.timer_CloseCom.Interval = 10;
+            this.timer_CloseCom.Tick += new System.EventHandler(this.timer_CloseCom_Tick);
+            // 
+            // timer_ReleaseFuncKey
+            // 
+            this.timer_ReleaseFuncKey.Interval = 200;
+            this.timer_ReleaseFuncKey.Tick += new System.EventHandler(this.timer_ReleaseFuncKey_Tick);
+            // 
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1742,10 +1746,10 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
-            this.Name = "KMouse";
+            this.Name = "FormMain";
             this.Text = "KMouse";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.SizeChanged += new System.EventHandler(this.KMouse_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KMouse_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KMouse_KeyPress);
@@ -1775,7 +1779,6 @@
 		private System.Windows.Forms.TextBox textBox_Modbus_Val;
 		private System.Windows.Forms.Label label_Modbus_Reg;
 		private System.Windows.Forms.TextBox textBox_Modbus_Reg;
-		private System.Windows.Forms.Timer timer_recv_timeout;
 		private System.Windows.Forms.Button button_MoveUp;
 		private System.Windows.Forms.GroupBox groupBox_Mouse;
 		private System.Windows.Forms.Button button_MoveRight;
@@ -1886,15 +1889,17 @@
         private System.Windows.Forms.CheckBox checkBox_ShowTxt;
         private System.Windows.Forms.Label label_SuccessCmdCnt;
         private System.Windows.Forms.TextBox textBox_eKey;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button_eKey;
-        private System.Windows.Forms.Timer timer_FIFO_Snd;
+        private System.Windows.Forms.Button button_eKeyClear;
+        private System.Windows.Forms.Button button_eKeySnd;
 		private System.Windows.Forms.Button button_Reboot;
         private System.Windows.Forms.CheckBox checkBox_EKeyEN;
 		private System.Windows.Forms.Label label_Status;
 		private System.Windows.Forms.Button button_Reconect;
         private System.Windows.Forms.Label label_FailCmdCnt;
-        private System.Windows.Forms.Timer timer_FIFO_Full;
-	}
+        private System.Windows.Forms.Timer timer_background;
+        private System.Windows.Forms.Timer timer_CloseForm;
+        private System.Windows.Forms.Timer timer_CloseCom;
+        private System.Windows.Forms.Timer timer_ReleaseFuncKey;
+    }
 }
 

@@ -16,7 +16,7 @@ namespace KMouse
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new KMouse());
+			Application.Run(new FormMain());
 		}
 	}
 }
