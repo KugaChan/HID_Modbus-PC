@@ -14,124 +14,126 @@ namespace KMouse
 {
 	class keyQ
 	{
-        public struct KEY
+        public enum eKEY : uint    //设定enum的数据类型
         {
-            public const UInt32 A = 0x04;
-		    public const UInt32 B = 0x05;
-		    public const UInt32 C = 0x06;
-		    public const UInt32 D = 0x07;
-		    public const UInt32 E = 0x08;
-		    public const UInt32 F = 0x09;
-		    public const UInt32 G = 0x0A;
-		    public const UInt32 H = 0x0B;
-		    public const UInt32 I = 0x0C;
-		    public const UInt32 J = 0x0D;
-		    public const UInt32 K = 0x0E;
-		    public const UInt32 L = 0x0F;
-		    public const UInt32 M = 0x10;
-		    public const UInt32 N = 0x11;
-		    public const UInt32 O = 0x12;
-		    public const UInt32 P = 0x13;
-		    public const UInt32 Q = 0x14;
-		    public const UInt32 R = 0x15;
-		    public const UInt32 S = 0x16;
-		    public const UInt32 T = 0x17;
-		    public const UInt32 U = 0x18;
-		    public const UInt32 V = 0x19;
-		    public const UInt32 W = 0x1A;
-		    public const UInt32 X = 0x1B;
-		    public const UInt32 Y = 0x1C;
-		    public const UInt32 Z = 0x1D;
+            A = 0x04,
+            B = 0x05,
+            C = 0x06,
+            D = 0x07,
+            E = 0x08,
+            F = 0x09,
+            G = 0x0A,
+            H = 0x0B,
+            I = 0x0C,
+            J = 0x0D,
+            K = 0x0E,
+            L = 0x0F,
+            M = 0x10,
+            N = 0x11,
+            O = 0x12,
+            P = 0x13,
+            Q = 0x14,
+            R = 0x15,
+            S = 0x16,
+            T = 0x17,
+            U = 0x18,
+            V = 0x19,
+            W = 0x1A,
+            X = 0x1B,
+            Y = 0x1C,
+            Z = 0x1D,
 
-		    public const UInt32 NUM1 = 0x1E;
-		    public const UInt32 NUM2 = 0x1F;
-		    public const UInt32 NUM3 = 0x20;
-		    public const UInt32 NUM4 = 0x21;
-		    public const UInt32 NUM5 = 0x22;
-		    public const UInt32 NUM6 = 0x23;
-		    public const UInt32 NUM7 = 0x24;
-		    public const UInt32 NUM8 = 0x25;
-		    public const UInt32 NUM9 = 0x26;
-		    public const UInt32 NUM0 = 0x27;
+            NUM1 = 0x1E,
+            NUM2 = 0x1F,
+            NUM3 = 0x20,
+            NUM4 = 0x21,
+            NUM5 = 0x22,
+            NUM6 = 0x23,
+            NUM7 = 0x24,
+            NUM8 = 0x25,
+            NUM9 = 0x26,
+            NUM0 = 0x27,
 
-            public const UInt32 ENTER = 0x28;
-		    public const UInt32 ESC = 0x29;
-		    public const UInt32 BACK = 0x2A;
-		    public const UInt32 TAB = 0x2B;
-		    public const UInt32 SPACE = 0x2C;
+            ENTER = 0x28,
+            ESC = 0x29,
+            BACK = 0x2A,
+            TAB = 0x2B,
+            SPACE = 0x2C,
 
-		    public const UInt32 MIN = 0x2D;
-		    public const UInt32 ADD = 0x2E;
-		    public const UInt32 KUO1 = 0x2F;
-		    public const UInt32 KUO2 = 0x30;
-		    public const UInt32 OR = 0x31;
-		    public const UInt32 MAO = 0x33;
-		    public const UInt32 FEN = 0x34;
-		    public const UInt32 DOU = 0x35;
-		    public const UInt32 XIAO = 0x36;
-		    public const UInt32 DA = 0x37;
-		    public const UInt32 WEN = 0x38;
+            MIN = 0x2D,
+            ADD = 0x2E,
+            KUO1 = 0x2F,
+            KUO2 = 0x30,
+            OR = 0x31,
+            MAO = 0x33,
+            FEN = 0x34,
+            DOU = 0x35,
+            XIAO = 0x36,
+            DA = 0x37,
+            WEN = 0x38,
 
-		    public const UInt32 CAPS = 0x39;
-		    public const UInt32 F1 = 0x3A;
-		    public const UInt32 F2 = 0x3B;
-		    public const UInt32 F3 = 0x3C;
-		    public const UInt32 F4 = 0x3D;
-		    public const UInt32 F5 = 0x3E;
-		    public const UInt32 F6 = 0x3F;
-		    public const UInt32 F7 = 0x40;
-		    public const UInt32 F8 = 0x41;
-		    public const UInt32 F9 = 0x42;
-		    public const UInt32 F10 = 0x43;
-		    public const UInt32 F11 = 0x44;
-		    public const UInt32 F12 = 0x45;
-		    public const UInt32 PRINTSCREEN = 0x46;
+            CAPS = 0x39,
+            F1 = 0x3A,
+            F2 = 0x3B,
+            F3 = 0x3C,
+            F4 = 0x3D,
+            F5 = 0x3E,
+            F6 = 0x3F,
+            F7 = 0x40,
+            F8 = 0x41,
+            F9 = 0x42,
+            F10 = 0x43,
+            F11 = 0x44,
+            F12 = 0x45,
+            PRINTSCREEN = 0x46,
 
-		    public const UInt32 HOME = 0x4A;
-		    public const UInt32 PAGEUP = 0x4B;
-		    public const UInt32 DEL = 0x4C;
-		    public const UInt32 END = 0x4D;
-		    public const UInt32 PAGEDOWN = 0x4E;
+            HOME = 0x4A,
+            PAGEUP = 0x4B,
+            DEL = 0x4C,
+            END = 0x4D,
+            PAGEDOWN = 0x4E,
 
-		    public const UInt32 RIGHT = 0x4F;
-		    public const UInt32 LEFT = 0x50;
-		    public const UInt32 DOWN = 0x51;
-		    public const UInt32 UP = 0x52;
+            RIGHT = 0x4F,
+            LEFT = 0x50,
+            DOWN = 0x51,
+            UP = 0x52,
 
-            public const UInt32 SHIFT = 1u << 16;
-		    public const UInt32 CTRL = 1u << 17;		
-		    public const UInt32 ALT = 1u << 18;
+            SHIFT = (1u << 16),
+            CTRL = (1u << 17),		
+            ALT = (1u << 18),
 
-            public const UInt16 NULL = 0xFFFF;
+            NULL = 0x0000FFFF,
+
+            INVAILD = Func.dwAllFF,
         }
 
-		public struct MOUSE
+        public struct MOUSE
         {
             public struct PRESS
             {
-     	        public const UInt32 MOVEUP = 2;
-		        public const UInt32 MOVEDOWN = 3;
-		        public const UInt32 MOVELEFT = 4;
-		        public const UInt32 MOVERIGHT = 5;
-		        public const UInt32 ROLLUP = 6;
-		        public const UInt32 ROLLDOWN = 7;
-		        public const UInt32 ALL = 8;
+     	        public const uint MOVEUP = 2;
+		        public const uint MOVEDOWN = 3;
+		        public const uint MOVELEFT = 4;
+		        public const uint MOVERIGHT = 5;
+		        public const uint ROLLUP = 6;
+		        public const uint ROLLDOWN = 7;
+		        public const uint ALL = 8;
             }        
 
 	        public struct CLICK
             {
-     	        public const UInt32 LEFT = 8;
-		        public const UInt32 RIGHT = 9;
+     	        public const uint LEFT = 8;
+		        public const uint RIGHT = 9;
             }
 		
             public struct SPEED
             {
-		        public const UInt32 UP = 0;
-		        public const UInt32 DOWN = 1;
-		        public const UInt32 CHECK = 2;
+		        public const uint UP = 0;
+		        public const uint DOWN = 1;
+		        public const uint CHECK = 2;
             }
 
-		    public const UInt32 LEAVE = 0x0000FFFF;
+		    public const uint LEAVE = 0x0000FFFF;
         }
 
         public bool[] mouse_press_en = new bool[MOUSE.PRESS.ALL];
@@ -139,9 +141,9 @@ namespace KMouse
         public bool mouse_speed_chk = false;
 
 
-        const UInt32 MODBUS_KB_WAITING_MAX = 8;
+        const uint MODBUS_KB_WAITING_MAX = 8;
 
-        public Queue<UInt32> queue_key = new Queue<UInt32>();
+        public Queue<keyQ.eKEY> queue_key = new Queue<keyQ.eKEY>();
 
         public void TimerHandler_QueueFull(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -177,7 +179,7 @@ namespace KMouse
             queue_key.Clear();
         }
 
-        public bool FIFO_Input(UInt32 key)
+        public bool FIFO_Input(keyQ.eKEY key)
         {
             Console.WriteLine("keyQ In:{0}", key);
 
@@ -213,9 +215,9 @@ namespace KMouse
             }
         }
 
-        public UInt32 FIFO_Output()
+        public keyQ.eKEY FIFO_Output()
         {
-            UInt32 key;
+            keyQ.eKEY key;
             if (FIFO_HasData() == true)
             {
                 key = queue_key.Dequeue();
@@ -226,7 +228,7 @@ namespace KMouse
             else
             {
                 MessageBox.Show("###FIFO已空", "提示");
-                return Func.dwAllFF;
+                return keyQ.eKEY.INVAILD;
             }
         }
 	}

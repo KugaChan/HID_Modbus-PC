@@ -11,7 +11,7 @@ namespace KMouse
     class Func
     {
         //宏
-		public const UInt32 dwAllFF = 0xFFFFFFFF;
+		public const uint dwAllFF = 0xFFFFFFFF;
 
         // CRC 高位字节值表 
 		static byte[] auchCRCHi = 
@@ -75,11 +75,11 @@ namespace KMouse
 			0x43, 0x83, 0x41, 0x81, 0x80, 0x40
 		};
 
-		public static UInt16 Get_CRC(byte[] Data, uint DataLen)
+		public static ushort Get_CRC(byte[] Data, uint DataLen)
 		{
 			byte CRCHi = 0xFF;						//高CRC字节初始化 
-			byte CRCLo = 0xFF;						//低CRC 字节初始化  
-			UInt16 Res;
+			byte CRCLo = 0xFF;                      //低CRC 字节初始化  
+            ushort Res;
 			byte uIndex;							//CRC循环中的索引
 			byte i = 0;
 			while(true)
@@ -458,9 +458,9 @@ namespace KMouse
             return str_in;
         }
 
-        public static bool Char_String_compare(char[] spec_key_buff, string str, UInt32 length)
+        public static bool Char_String_compare(char[] spec_key_buff, string str, uint length)
         {
-            UInt32 i;
+            uint i;
 
             char[] char_buffer = str.ToCharArray();
 

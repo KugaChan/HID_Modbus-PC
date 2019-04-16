@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git18
+1. 修改了按键枚举值，默认变量名，结构体名字等
+
 Git17
 1. 重构了代码，将模块全部封装成类
 

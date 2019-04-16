@@ -19,39 +19,38 @@ namespace KMouse
 {
 	class Modbus
 	{
-        public struct REG
+        public enum REG : byte
         {
-            public const Byte IDENTIFY = 1;
-            public const Byte MOUSE_PRESS = 3;
-            public const Byte MOUSE_CLICK = 5;
-            public const Byte MOUSE_SPEED = 7;
-            public const Byte KEYBOARD = 9;
-            public const Byte USB_RECONNECT = 11;
-            public const Byte SYSTEM_REBOOT = 66;
+            IDENTIFY = 1,
+            MOUSE_PRESS = 3,
+            MOUSE_CLICK = 5,
+            MOUSE_SPEED = 7,
+            KEYBOARD = 9,
+            USB_RECONNECT = 11,
+            SYSTEM_REBOOT = 66,
         }
 
 		//Modbus使用的变量
 		public const int SEND_MAX_LEN = 12;
 		public const int RECV_MAX_LEN = 8;
 
-		byte[] modbus_send_data = new byte[Modbus.SEND_MAX_LEN];
-		byte[] modbus_recv_data = new byte[Modbus.RECV_MAX_LEN];
-		private UInt32 modbus_recv_cnt = 0;
-		private UInt32 modbus_recv_num = 8;
-		private UInt32 modbus_recv_timeout = Func.dwAllFF;
+		byte[] modbus_send_data = new byte[SEND_MAX_LEN];
+		byte[] modbus_recv_data = new byte[RECV_MAX_LEN];
+		private uint modbus_recv_cnt = 0;
+		private uint modbus_recv_num = 8;
+		private uint modbus_recv_timeout = Func.dwAllFF;
         private bool is_busy = false;
-        private UInt32 modbus_respone_timeout = 0;
+        private uint modbus_respone_timeout = 0;
         private bool is_handling = false;
 
-        public UInt32 success_cnt;
-        public UInt32 fail_cnt;
-
+        public uint success_cnt;
+        public uint fail_cnt;
 		
         public bool echo_en = false;    //是否回显命令
         public bool send_cmd_is_busy = false;
 
         public Action Action_UpdateModbussState;
-        public delegate void Delegate_ModbusCallBack(UInt32 value);
+        public delegate void Delegate_ModbusCallBack(uint value);
         public Delegate_ModbusCallBack Delegate_ModbusCallBack_Identify;
         public Delegate_ModbusCallBack Delegate_ModbusCallBack_Click;
         public Delegate_ModbusCallBack Delegate_ModbusCallBack_Speed;
@@ -97,22 +96,22 @@ namespace KMouse
         }
 
 		//reg: 要读的寄存器, num: 要读的WORD数, val: 传递的参数)
-		public void Send_03(Byte Register, Byte Number, UInt32 val)
+		public void Send_03(REG Register, byte Number, uint val)
 		{
 			const Int32 MODBUS_SEND_03_NUM = 10;
 			UInt16 crc_val;
 
 			modbus_send_data[0] = 0x01;
 			modbus_send_data[1] = 0x03;
-			modbus_send_data[2] = Register;
+			modbus_send_data[2] = (byte)Register;
 			modbus_send_data[3] = Number;
-			modbus_send_data[4] = (Byte)((val & 0xFF000000) >> 24);
-			modbus_send_data[5] = (Byte)((val & 0x00FF0000) >> 16);
-			modbus_send_data[6] = (Byte)((val & 0x0000FF00) >> 8);
-			modbus_send_data[7] = (Byte)((val & 0x000000FF) >> 0);
+			modbus_send_data[4] = (byte)((val & 0xFF000000) >> 24);
+			modbus_send_data[5] = (byte)((val & 0x00FF0000) >> 16);
+			modbus_send_data[6] = (byte)((val & 0x0000FF00) >> 8);
+			modbus_send_data[7] = (byte)((val & 0x000000FF) >> 0);
 			crc_val = Func.Get_CRC(modbus_send_data, 8);
-			modbus_send_data[8] = (Byte)((crc_val & 0xFF00) >> 8);
-			modbus_send_data[9] = (Byte)((crc_val & 0x00FF) >> 0);
+			modbus_send_data[8] = (byte)((crc_val & 0xFF00) >> 8);
+			modbus_send_data[9] = (byte)((crc_val & 0x00FF) >> 0);
 
 			try
 			{
@@ -132,7 +131,7 @@ namespace KMouse
                 {
                     String SerialIn = "";
                     SerialIn += "Send: ";
-                    for (UInt32 i = 0; i < MODBUS_SEND_03_NUM; i++)
+                    for (uint i = 0; i < MODBUS_SEND_03_NUM; i++)
                     {
                         SerialIn += "0x";
                         SerialIn += Func.GetHexHighLow(modbus_send_data[i], 0);
@@ -152,7 +151,7 @@ namespace KMouse
             if ((send_cmd_is_busy == false) && (kq.FIFO_HasData() == true))
             {
                 send_cmd_is_busy = true;
-                Send_03(Modbus.REG.KEYBOARD, 1, kq.FIFO_Output());
+                Send_03(Modbus.REG.KEYBOARD, 1, (uint)kq.FIFO_Output());
             }
         }
 
@@ -220,7 +219,7 @@ namespace KMouse
 
             if((com.IsOpen == true) && (is_busy == false))
 			{
-				for(UInt32 i = 0; i < keyQ.MOUSE.PRESS.ALL; i++)
+				for(uint i = 0; i < keyQ.MOUSE.PRESS.ALL; i++)
 				{
 					if(kq.mouse_press_en[i] == true)
 					{
@@ -244,7 +243,7 @@ namespace KMouse
 
             for(int i = 0; i < len; i++)
 			{
-				Byte a = buffer[i];
+				byte a = buffer[i];
 				modbus_recv_data[modbus_recv_cnt] = a;
 				if((modbus_recv_cnt == 1) && (modbus_recv_data[modbus_recv_cnt] == 0x03))
 				{
@@ -332,9 +331,9 @@ namespace KMouse
 
 			//send:01 03 01 01 00 00 00 01 4F 16->received:01 03 01 01 55 AA AA D9//读故障报警状态 
 
-			UInt16 CRC_Result_Cal = 0;
-			UInt16 CRC_Result_Trans = 0;
-			Byte Register_Address = 0;
+			ushort CRC_Result_Cal = 0;
+            ushort CRC_Result_Trans = 0;
+			byte Register_Address = 0;
 
 			is_busy = false;
             switch (modbus_recv_data[1])									//功能码
@@ -342,20 +341,20 @@ namespace KMouse
 				case 0x03:													//读寄存器的值(WORD)
 				{
 					CRC_Result_Cal = Func.Get_CRC(modbus_recv_data, 6);		//CRC校验正确则发送数据给主站，否则等待主站再次发送数据
-					CRC_Result_Trans = (UInt16)((((UInt16)modbus_recv_data[6]) << 8) | ((UInt16)modbus_recv_data[7]));
+					CRC_Result_Trans = (ushort)((((ushort)modbus_recv_data[6]) << 8) | ((ushort)modbus_recv_data[7]));
 					if(CRC_Result_Cal == CRC_Result_Trans)
 					{
-						Byte Need_Read_WORD_Num;
-						UInt32 Func_Val = 0;
+						byte Need_Read_WORD_Num;
+						uint Func_Val = 0;
 
 						Register_Address = modbus_recv_data[2];				//寄存器值
 						Need_Read_WORD_Num = modbus_recv_data[3];			//要读的WORD数
-						Func_Val = ((((UInt32)modbus_recv_data[4]) << 8) |
-									(((UInt32)modbus_recv_data[5]) << 0));
+						Func_Val = ((((uint)modbus_recv_data[4]) << 8) |
+									(((uint)modbus_recv_data[5]) << 0));
 
 						Console.WriteLine("MBI Reg:{0} Num:{1} Val:{2}", Register_Address, Need_Read_WORD_Num, Func_Val);
 
-						switch(Register_Address)
+						switch((REG)Register_Address)
 						{
 							case REG.IDENTIFY:								//测试modbus通信是否正常
 							{
@@ -409,7 +408,7 @@ namespace KMouse
                         if(kq.FIFO_HasData() == true)
                         {
                             send_cmd_is_busy = true;
-                            Send_03(Modbus.REG.KEYBOARD, 1, kq.FIFO_Output());
+                            Send_03(Modbus.REG.KEYBOARD, 1, (uint)kq.FIFO_Output());
                         }
                         else
                         {

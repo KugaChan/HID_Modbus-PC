@@ -20,7 +20,7 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const Byte _VersionGit = 17;
+		private const byte _VersionGit = 18;
 
         Modbus mdbs = new Modbus();
 
@@ -36,11 +36,13 @@ namespace KMouse
             textBox_eKey.Enabled = false;
             textBox_eKey.Text = Properties.Settings.Default.eKey_string;
 
-            com.Init( mdbs,     comboBox_COMNumber, 
-                                comboBox_COMBaudrate, 
-                                comboBox_COMCheckBit, 
-                                comboBox_COMDataBit, 
-                                comboBox_COMStopBit);
+            com.me.comboBox_COMNumber = comboBox_COMNumber;
+            com.me.comboBox_COMBaudrate = comboBox_COMBaudrate;
+            com.me.comboBox_COMCheckBit = comboBox_COMCheckBit;
+            com.me.comboBox_COMDataBit = comboBox_COMDataBit;
+            com.me.comboBox_COMStopBit = comboBox_COMStopBit;
+
+            com.Init(mdbs);
             bool res = com.Open();         
             if(res == true)
             {
@@ -138,8 +140,8 @@ namespace KMouse
 
         private void button_Modbus_Send_Click(object sender, EventArgs e)
 		{
-			Byte Reg;
-			UInt32 Val;
+			byte Reg;
+			uint Val;
 
 			if(textBox_Modbus_Reg.Text.Length == 0)
 			{
@@ -158,7 +160,7 @@ namespace KMouse
 				Val = Convert.ToUInt32(textBox_Modbus_Val.Text);
 			}
 
-			mdbs.Send_03(Reg, 1, Val);
+			mdbs.Send_03((Modbus.REG)Reg, 1, Val);
 		}
 
         private void timer_background_Tick(object sender, EventArgs e)
@@ -181,7 +183,7 @@ namespace KMouse
             }));
         }
 
-        void Delegate_ModbusCallBack_Identify(UInt32 value)
+        void Delegate_ModbusCallBack_Identify(uint value)
         {
             this.Invoke((EventHandler)(delegate
             {
@@ -189,7 +191,7 @@ namespace KMouse
             }));
         }
 
-        void Delegate_ModbusCallBack_Click(UInt32 value)
+        void Delegate_ModbusCallBack_Click(uint value)
         {
             this.Invoke((EventHandler)(delegate
             {
@@ -204,7 +206,7 @@ namespace KMouse
             }));
         }
 
-        void Delegate_ModbusCallBack_Speed(UInt32 value)
+        void Delegate_ModbusCallBack_Speed(uint value)
         {
             this.Invoke((EventHandler)(delegate
             {
