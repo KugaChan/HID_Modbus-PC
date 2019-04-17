@@ -1,5 +1,9 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git19
+1. 将com类的下来菜单才封装到类里
+2. 修改上版本modbus接收错误后，无法关闭串口的问题
+
 Git18
 1. 修改了按键枚举值，默认变量名，结构体名字等
 

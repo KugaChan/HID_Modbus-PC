@@ -1559,6 +1559,7 @@
             this.comboBox_COMStopBit.Size = new System.Drawing.Size(46, 20);
             this.comboBox_COMStopBit.TabIndex = 18;
             this.comboBox_COMStopBit.TabStop = false;
+            this.comboBox_COMStopBit.SelectedIndexChanged += new System.EventHandler(this.comboBox_COMStopBit_SelectedIndexChanged);
             // 
             // label12
             // 
@@ -1580,6 +1581,7 @@
             this.comboBox_COMDataBit.Size = new System.Drawing.Size(46, 20);
             this.comboBox_COMDataBit.TabIndex = 16;
             this.comboBox_COMDataBit.TabStop = false;
+            this.comboBox_COMDataBit.SelectedIndexChanged += new System.EventHandler(this.comboBox_COMDataBit_SelectedIndexChanged);
             // 
             // label11
             // 
@@ -1623,6 +1625,7 @@
             this.comboBox_COMCheckBit.Size = new System.Drawing.Size(48, 20);
             this.comboBox_COMCheckBit.TabIndex = 14;
             this.comboBox_COMCheckBit.TabStop = false;
+            this.comboBox_COMCheckBit.SelectedIndexChanged += new System.EventHandler(this.comboBox_COMCheckBit_SelectedIndexChanged);
             // 
             // label9
             // 

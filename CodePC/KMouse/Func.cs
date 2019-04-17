@@ -78,8 +78,8 @@ namespace KMouse
 		public static ushort Get_CRC(byte[] Data, uint DataLen)
 		{
 			byte CRCHi = 0xFF;						//高CRC字节初始化 
-			byte CRCLo = 0xFF;                      //低CRC 字节初始化  
-            ushort Res;
+			byte CRCLo = 0xFF;						//低CRC 字节初始化  
+			ushort Res;
 			byte uIndex;							//CRC循环中的索引
 			byte i = 0;
 			while(true)

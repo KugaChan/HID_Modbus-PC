@@ -48,8 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="COM_Op.cs" />
     <Compile Include="Dbg.cs" />
-    <Compile Include="FormCom.cs" />
+    <Compile Include="COM.cs" />
     <Compile Include="FormControl.cs">
       <SubType>Form</SubType>
     </Compile>

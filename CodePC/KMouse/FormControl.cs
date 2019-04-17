@@ -931,7 +931,7 @@ namespace KMouse
 				        case 'i': {KB_EnterKey(keyQ.eKEY.I); break; }
 				        case 'o': {KB_EnterKey(keyQ.eKEY.O); break; }
 				        case 'p': {KB_EnterKey(keyQ.eKEY.P); break; }
-                        //case '[': {KB_EnterKey(keyQ.eKEY.KUO1); break; }
+                        		//case '[': {KB_EnterKey(keyQ.eKEY.KUO1); break; }
 				        case ']': {KB_EnterKey(keyQ.eKEY.KUO2); break; }
 				        case '\\': {KB_EnterKey(keyQ.eKEY.OR); break; }
 
@@ -1031,7 +1031,7 @@ namespace KMouse
 		        {
 			        if(char_buffer[i] == '[')
 			        {
-                        KB_EnterKey(keyQ.eKEY.KUO1);
+                        		KB_EnterKey(keyQ.eKEY.KUO1);
 				        special_key_step = SPEC_KEY_NONE;
 			        }
 			        else

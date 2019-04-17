@@ -20,7 +20,7 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const byte _VersionGit = 18;
+		private const byte _VersionGit = 19;
 
         Modbus mdbs = new Modbus();
 
@@ -36,14 +36,10 @@ namespace KMouse
             textBox_eKey.Enabled = false;
             textBox_eKey.Text = Properties.Settings.Default.eKey_string;
 
-            com.me.comboBox_COMNumber = comboBox_COMNumber;
-            com.me.comboBox_COMBaudrate = comboBox_COMBaudrate;
-            com.me.comboBox_COMCheckBit = comboBox_COMCheckBit;
-            com.me.comboBox_COMDataBit = comboBox_COMDataBit;
-            com.me.comboBox_COMStopBit = comboBox_COMStopBit;
-
+            com.ControlModule_Init(comboBox_COMNumber, comboBox_COMBaudrate,
+                comboBox_COMCheckBit, comboBox_COMDataBit, comboBox_COMStopBit);
             com.Init(mdbs);
-            bool res = com.Open();         
+            bool res = com.Open();
             if(res == true)
             {
                 button_COMOpen.Text = "COM is opened";
@@ -240,44 +236,39 @@ namespace KMouse
             com.recv_cnt = 0;
         }
 
-        private void comboBox_COMBaudrate_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(com.serialport.IsOpen == false)
-            {
-                return;
-            }
-
-            bool res;
-
-            res = com.Close();
-            if(res == true)
-            {
-                button_COMOpen.Text = "COM is closed";
-                button_COMOpen.ForeColor = System.Drawing.Color.Red;            
-            }
-
-            res = com.Open();         
-            if(res == true)
-            {
-                button_COMOpen.Text = "COM is opened";
-                button_COMOpen.ForeColor = System.Drawing.Color.Green;             
-            }
-        }
-
         private void comboBox_COMNumber_DropDown(object sender, EventArgs e)
         {
-            com.build_com_list(comboBox_COMNumber);
-            comboBox_COMNumber.SelectedIndex = -1;
+            com.comboBox_COMNumber_DropDown(sender, e);
         }
 
         private void comboBox_COMNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            com.comboBox_COMNumber_SelectedIndexChanged(sender, e);
+        }
+
+        private void comboBox_COMBaudrate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            com.comboBox_COMBaudrate_SelectedIndexChanged(sender, e);
+        }
+
+        private void comboBox_COMDataBit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            com.comboBox_COMDataBit_SelectedIndexChanged(sender, e);
+        }
+
+        private void comboBox_COMCheckBit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            com.comboBox_COMCheckBit_SelectedIndexChanged(sender, e);
+        }
+
+        private void comboBox_COMStopBit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            com.comboBox_COMStopBit_SelectedIndexChanged(sender, e);
         }
 
         private void button_ComOpen_Click(object sender, EventArgs e)
         {
-            if(com.serialport.IsOpen == true)
+            if(com.serialport.IsOpen == true)       //通过定时器来关闭串口
             {   
                 button_COMOpen.Enabled = false;
                 timer_CloseCom.Enabled = true;
@@ -288,7 +279,13 @@ namespace KMouse
                 if(res == true)
                 {
                     button_COMOpen.Text = "COM is opened";
-                    button_COMOpen.ForeColor = System.Drawing.Color.Green;             
+                    button_COMOpen.ForeColor = System.Drawing.Color.Green;
+
+                    //comboBox_COMBaudrate.Enabled = false;
+                    comboBox_COMCheckBit.Enabled = false;
+                    comboBox_COMDataBit.Enabled = false;
+                    comboBox_COMNumber.Enabled = false;
+                    comboBox_COMStopBit.Enabled = false;
                 }
             }
         }
@@ -303,6 +300,11 @@ namespace KMouse
 
                 button_COMOpen.Text = "COM is closed";
                 button_COMOpen.ForeColor = System.Drawing.Color.Red;
+
+                comboBox_COMCheckBit.Enabled = true;
+                comboBox_COMDataBit.Enabled = true;
+                comboBox_COMNumber.Enabled = true;
+                comboBox_COMStopBit.Enabled = true;
             }
             else
             {
