@@ -125,6 +125,7 @@ namespace KMouse
             _comboBox_COMDataBit.Items.Add("5");
 
             //停止位
+            _comboBox_COMStopBit.Items.Add("0");
             _comboBox_COMStopBit.Items.Add("1");
             _comboBox_COMStopBit.Items.Add("2");
             _comboBox_COMStopBit.Items.Add("1.5");

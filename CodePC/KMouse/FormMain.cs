@@ -20,7 +20,7 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const byte _VersionGit = 19;
+		private const byte _VersionGit = 20;
 
         Modbus mdbs = new Modbus();
 
