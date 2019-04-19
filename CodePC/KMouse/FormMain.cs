@@ -20,7 +20,7 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const byte _VersionGit = 20;
+		private const byte _VersionGit = 21;
 
         Modbus mdbs = new Modbus();
 
@@ -43,7 +43,13 @@ namespace KMouse
             if(res == true)
             {
                 button_COMOpen.Text = "COM is opened";
-                button_COMOpen.ForeColor = System.Drawing.Color.Green;             
+                button_COMOpen.ForeColor = System.Drawing.Color.Green;
+
+                //comboBox_COMBaudrate.Enabled = false;
+                comboBox_COMCheckBit.Enabled = false;
+                comboBox_COMDataBit.Enabled = false;
+                comboBox_COMNumber.Enabled = false;
+                comboBox_COMStopBit.Enabled = false;
             }
 
             kq.Init(queue_message);
@@ -266,50 +272,36 @@ namespace KMouse
             com.comboBox_COMStopBit_SelectedIndexChanged(sender, e);
         }
 
-        private void button_ComOpen_Click(object sender, EventArgs e)
+        public void SetComStatus(bool IsRunning)
         {
-            if(com.serialport.IsOpen == true)       //通过定时器来关闭串口
-            {   
-                button_COMOpen.Enabled = false;
-                timer_CloseCom.Enabled = true;
+            if(IsRunning == true)
+            {
+                button_COMOpen.Text = "COM is opened";
+                button_COMOpen.ForeColor = Color.Green;
+                comboBox_COMCheckBit.Enabled = false;
+                comboBox_COMDataBit.Enabled = false;
+                comboBox_COMNumber.Enabled = false;
+                comboBox_COMStopBit.Enabled = false;
             }
             else
             {
-                bool res = com.Open();
-                if(res == true)
-                {
-                    button_COMOpen.Text = "COM is opened";
-                    button_COMOpen.ForeColor = System.Drawing.Color.Green;
-
-                    //comboBox_COMBaudrate.Enabled = false;
-                    comboBox_COMCheckBit.Enabled = false;
-                    comboBox_COMDataBit.Enabled = false;
-                    comboBox_COMNumber.Enabled = false;
-                    comboBox_COMStopBit.Enabled = false;
-                }
-            }
-        }
-
-        private void timer_CloseCom_Tick(object sender, EventArgs e)
-        {
-            bool res = com.Close();
-            if(res == true)
-            {
-                button_COMOpen.Enabled = true;
-                timer_CloseCom.Enabled = false;
-
                 button_COMOpen.Text = "COM is closed";
-                button_COMOpen.ForeColor = System.Drawing.Color.Red;
-
+                button_COMOpen.ForeColor = Color.Red;
                 comboBox_COMCheckBit.Enabled = true;
                 comboBox_COMDataBit.Enabled = true;
                 comboBox_COMNumber.Enabled = true;
                 comboBox_COMStopBit.Enabled = true;
+
+                if(button_COMOpen.Enabled == false)
+                {
+                    button_COMOpen.Enabled = true;
+                }
             }
-            else
-            {
-                Console.WriteLine("#Close COM fail, try again!\n");
-            }
+        }
+
+        private void button_ComOpen_Click(object sender, EventArgs e)
+        {
+            com.button_ComOpen_Click(sender, e, this);
         }
         /********************与串口控制相关的 End***************************/
     }

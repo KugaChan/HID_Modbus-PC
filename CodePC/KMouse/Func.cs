@@ -624,6 +624,16 @@ namespace KMouse
                 }
             }
         }
-    /***************************eFIFO End**********************************/
+        /***************************eFIFO End**********************************/
+    }
+
+    
+    class MyTimer : System.Timers.Timer //集成Timer，可以传递其他参数
+    {
+        public delegate void tyDelegate_Callback(bool en);
+
+        public FormMain fm;
+        public tyDelegate_Callback delegate_callback;
+        //public Action action_callback;
     }
 }

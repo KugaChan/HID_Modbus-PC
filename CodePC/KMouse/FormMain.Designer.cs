@@ -160,7 +160,6 @@
             this.label_FailCmdCnt = new System.Windows.Forms.Label();
             this.timer_background = new System.Windows.Forms.Timer(this.components);
             this.timer_CloseForm = new System.Windows.Forms.Timer(this.components);
-            this.timer_CloseCom = new System.Windows.Forms.Timer(this.components);
             this.timer_ReleaseFuncKey = new System.Windows.Forms.Timer(this.components);
             this.groupBox_Log.SuspendLayout();
             this.groupBox_Mouse.SuspendLayout();
@@ -1720,11 +1719,6 @@
             // 
             this.timer_CloseForm.Tick += new System.EventHandler(this.timer_CloseForm_Tick);
             // 
-            // timer_CloseCom
-            // 
-            this.timer_CloseCom.Interval = 10;
-            this.timer_CloseCom.Tick += new System.EventHandler(this.timer_CloseCom_Tick);
-            // 
             // timer_ReleaseFuncKey
             // 
             this.timer_ReleaseFuncKey.Interval = 200;
@@ -1901,7 +1895,6 @@
         private System.Windows.Forms.Label label_FailCmdCnt;
         private System.Windows.Forms.Timer timer_background;
         private System.Windows.Forms.Timer timer_CloseForm;
-        private System.Windows.Forms.Timer timer_CloseCom;
         private System.Windows.Forms.Timer timer_ReleaseFuncKey;
     }
 }

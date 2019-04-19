@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git21
+1. 修改上版本在串口持续接收数据的时候无法关闭串口的问题
+
 Git20
 1. 修改上版本停止位空间少加一项导致通讯错误的问题
 

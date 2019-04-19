@@ -17,6 +17,7 @@ namespace KMouse
         public SerialPort serialport = new SerialPort();
 
         private bool com_is_receiving = false;
+        private MyTimer timer_CloseSerialPort;
 
         int[] badurate_array = 
 		{
@@ -42,6 +43,12 @@ namespace KMouse
             serialport.DataReceived += Func_COM_DataRec;//指定串口接收函数
             serialport.ReadBufferSize = COM_BUFFER_SIZE_MAX;
             serialport.WriteBufferSize = COM_BUFFER_SIZE_MAX;
+
+            timer_CloseSerialPort = new MyTimer();
+            timer_CloseSerialPort.Elapsed += new System.Timers.ElapsedEventHandler(timer_CloseSerialPort_ticks);
+            timer_CloseSerialPort.AutoReset = true;
+            timer_CloseSerialPort.Enabled = false;
+            timer_CloseSerialPort.Interval = 500;
         }
 
         public void Rebulid_BaudrateList(ComboBox _comboBox_COMBaudrate)
@@ -159,6 +166,12 @@ namespace KMouse
 		
         private void Func_COM_DataRec(object sender, SerialDataReceivedEventArgs e)  //串口接受函数
 		{
+            Console.WriteLine("en:{0}", timer_CloseSerialPort.Enabled);
+            if(timer_CloseSerialPort.Enabled == true)
+            {
+                return;
+            }
+
             Dbg.Assert(serialport.IsOpen == true, "###serial port is closed, can recv data!");
 
             com_is_receiving = true;
@@ -171,6 +184,11 @@ namespace KMouse
             for(int v = 0; v < com_recv_buff_size; v++)
             {
                 Console.Write(" {0:X}", com_recv_buffer[v]);
+                if(com_recv_buff_size > 20)
+                {
+                    Console.Write("...");
+                    break;
+                }
             }
             Console.Write("\r\n");
 
@@ -187,5 +205,26 @@ namespace KMouse
             com_is_receiving = false;
             return;
         }
-	}
+
+        void timer_CloseSerialPort_ticks(object sender, EventArgs e)
+        {
+            bool res = Close();
+
+            Console.WriteLine("Close COM:{0}\n", res);
+
+            if(res == true)
+            {
+                timer_CloseSerialPort.Enabled = false;
+
+                timer_CloseSerialPort.fm.Invoke((EventHandler)(delegate
+                {
+                    timer_CloseSerialPort.delegate_callback(false);
+                }));
+            }
+            else
+            {
+                Console.WriteLine("#Close COM fail, try again:{0}\n", timer_CloseSerialPort.Enabled);
+            }
+        }
+    }
 }

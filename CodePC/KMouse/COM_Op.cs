@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;//使用串口
+using System.ComponentModel;
 
 namespace KMouse
 {
@@ -215,6 +216,29 @@ namespace KMouse
         {
             ComboBox _comboBox_COMStopBit = sender as ComboBox;
             Update_SerialStopBit(_comboBox_COMStopBit);
+        }
+
+
+        public void button_ComOpen_Click(object sender, EventArgs e, FormMain fm)
+        {
+            //timer_CloseSerialPort.SynchronizingObject = Callback_CloseCOM;//跨线程访问的控件
+
+            Console.WriteLine("COM open or close:{0}", serialport.IsOpen);
+
+            Button _button_ComOpen = sender as Button;
+
+            if(serialport.IsOpen == true)       //通过定时器来关闭串口
+            {
+                _button_ComOpen.Enabled = false;
+
+                timer_CloseSerialPort.Enabled = true;
+                timer_CloseSerialPort.fm = fm;
+                timer_CloseSerialPort.delegate_callback = fm.SetComStatus;
+            }
+            else
+            {
+                fm.SetComStatus(Open());
+            }
         }
     }
 }
