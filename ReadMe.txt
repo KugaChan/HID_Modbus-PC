@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git22
+1. 修改之前版本由于FIFO太短导致eKey无法发全的问题
+
 Git21
 1. 修改上版本在串口持续接收数据的时候无法关闭串口的问题
 

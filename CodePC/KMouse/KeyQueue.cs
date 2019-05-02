@@ -141,7 +141,9 @@ namespace KMouse
         public bool mouse_speed_chk = false;
 
 
-        const uint MODBUS_KB_WAITING_MAX = 8;
+        public const int MODBUS_KB_WAITING_NORMAL = 8;
+        public const int MODBUS_KB_WAITING_EKEY = 1024;
+        public int modbus_kb_waiting_max = MODBUS_KB_WAITING_NORMAL;
 
         public Queue<keyQ.eKEY> queue_key = new Queue<keyQ.eKEY>();
 
@@ -188,7 +190,7 @@ namespace KMouse
                 return false;
             }
 
-            if (queue_key.Count < MODBUS_KB_WAITING_MAX)
+            if (queue_key.Count < modbus_kb_waiting_max)
             {
                 queue_key.Enqueue(key);
                 return true;

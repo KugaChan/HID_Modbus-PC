@@ -20,7 +20,7 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const byte _VersionGit = 21;
+		private const byte _VersionGit = 22;
 
         Modbus mdbs = new Modbus();
 
@@ -130,13 +130,15 @@ namespace KMouse
 
         private void checkBox_EKeyEN_CheckedChanged(object sender, EventArgs e)
         {
+            textBox_eKey.Enabled = !textBox_eKey.Enabled;
+
             if (textBox_eKey.Enabled == true)
             {
-                textBox_eKey.Enabled = false;
+                kq.modbus_kb_waiting_max = keyQ.MODBUS_KB_WAITING_EKEY;
             }
             else
             {
-                textBox_eKey.Enabled = true;
+                kq.modbus_kb_waiting_max = keyQ.MODBUS_KB_WAITING_NORMAL;
             }
         }
 
