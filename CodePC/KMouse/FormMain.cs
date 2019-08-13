@@ -20,7 +20,7 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const byte _VersionGit = 22;
+		private const byte _VersionGit = 23;
 
         Modbus mdbs = new Modbus();
 
@@ -173,6 +173,8 @@ namespace KMouse
             {
                 textBox_ComRec.AppendText("\r\n" + queue_message.Dequeue());
             }
+            
+            label_Rcv.Text = "Received:" + com.recv_cnt.ToString() + "(Bytes)";
         }
 
         void Action_UpdateModbussState()
@@ -240,7 +242,6 @@ namespace KMouse
         private void label_ClearRec_DoubleClick(object sender, EventArgs e)
         {
             textBox_ComRec.Text = "";
-            label_Rec_Bytes.Text = "0";
             com.recv_cnt = 0;
         }
 

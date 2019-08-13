@@ -133,7 +133,7 @@ namespace KMouse
                     SerialIn += "Send: ";
                     for (uint i = 0; i < MODBUS_SEND_03_NUM; i++)
                     {
-                        SerialIn += "0x";
+                        //SerialIn += "0x";
                         SerialIn += Func.GetHexHighLow(modbus_send_data[i], 0);
                         SerialIn += Func.GetHexHighLow(modbus_send_data[i], 1) + " ";
                     }
@@ -291,12 +291,13 @@ namespace KMouse
 				//SerialIn += modbus_recv_data[i].ToString();
 				if(modbus_recv_data[i] < 0x0f)
 				{
-					SerialIn += "0x0";
-					SerialIn += Convert.ToString(modbus_recv_data[i], 16);
+					//SerialIn += "0x0";
+                    SerialIn += "0";
+                    SerialIn += Convert.ToString(modbus_recv_data[i], 16);
 				}
 				else
 				{
-					SerialIn += "0x";
+					//SerialIn += "0x";
 					SerialIn += Convert.ToString(modbus_recv_data[i], 16);
 				}
 
@@ -305,7 +306,7 @@ namespace KMouse
 
             if (echo_en == true)
             {
-                queue_message.Enqueue("Recv: " + SerialIn);
+                queue_message.Enqueue("Received: " + SerialIn);
             }
 
 			/*

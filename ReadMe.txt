@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git23
+1. 优化了UI
+
 Git22
 1. 修改之前版本由于FIFO太短导致eKey无法发全的问题
 
