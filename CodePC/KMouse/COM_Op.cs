@@ -155,14 +155,13 @@ namespace KMouse
             Update_SerialStopBit(_comboBox_COMStopBit);
         }
 
-        public const int BAUDRATE_WITH_SHOW = 91;
-        public const int BAUDRATE_WITH_SELECT = 320;
-
+        int combobox_comnumber_width_bak = 0;
         public void comboBox_COMNumber_DropDown(object sender, EventArgs e)
         {
             ComboBox _comboBox_COMNumber = sender as ComboBox;
 
-            _comboBox_COMNumber.Width = COM.BAUDRATE_WITH_SELECT;
+            combobox_comnumber_width_bak = _comboBox_COMNumber.Width;
+            _comboBox_COMNumber.Width = 320;
 
             Ruild_ComNumberList(_comboBox_COMNumber);
 
@@ -175,8 +174,13 @@ namespace KMouse
             ComboBox _comboBox_COMNumber = sender as ComboBox;
 
             Update_SerialPortName(_comboBox_COMNumber);
+        }
 
-            _comboBox_COMNumber.Width = COM.BAUDRATE_WITH_SHOW;
+        public void comboBox_COMNumber_DropDownClosed(object sender, EventArgs e)
+        {
+            ComboBox _comboBox_COMNumber = sender as ComboBox;
+
+            _comboBox_COMNumber.Width = combobox_comnumber_width_bak;
         }
 
         public void comboBox_COMBaudrate_SelectedIndexChanged(object sender, EventArgs e)

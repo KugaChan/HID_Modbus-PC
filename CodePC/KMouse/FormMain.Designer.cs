@@ -32,10 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.label_ClearRec = new System.Windows.Forms.Label();
             this.groupBox_Log = new System.Windows.Forms.GroupBox();
+            this.label_FailCmdCnt = new System.Windows.Forms.Label();
             this.checkBox_EKeyEN = new System.Windows.Forms.CheckBox();
             this.button_eKeyClear = new System.Windows.Forms.Button();
+            this.checkBox_ShowTxt = new System.Windows.Forms.CheckBox();
             this.button_eKeySnd = new System.Windows.Forms.Button();
             this.textBox_eKey = new System.Windows.Forms.TextBox();
+            this.label_SuccessCmdCnt = new System.Windows.Forms.Label();
             this.button_Modbus_Send = new System.Windows.Forms.Button();
             this.label_Modbus_Val = new System.Windows.Forms.Label();
             this.textBox_Modbus_Val = new System.Windows.Forms.TextBox();
@@ -152,10 +155,7 @@
             this.comboBox_COMNumber = new System.Windows.Forms.ComboBox();
             this.button_P_Identify = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.checkBox_ShowTxt = new System.Windows.Forms.CheckBox();
-            this.label_SuccessCmdCnt = new System.Windows.Forms.Label();
             this.button_Reconect = new System.Windows.Forms.Button();
-            this.label_FailCmdCnt = new System.Windows.Forms.Label();
             this.timer_background = new System.Windows.Forms.Timer(this.components);
             this.timer_CloseForm = new System.Windows.Forms.Timer(this.components);
             this.timer_ReleaseFuncKey = new System.Windows.Forms.Timer(this.components);
@@ -207,6 +207,15 @@
             this.groupBox_Log.TabStop = false;
             this.groupBox_Log.Text = "Log";
             // 
+            // label_FailCmdCnt
+            // 
+            this.label_FailCmdCnt.AutoSize = true;
+            this.label_FailCmdCnt.Location = new System.Drawing.Point(149, 155);
+            this.label_FailCmdCnt.Name = "label_FailCmdCnt";
+            this.label_FailCmdCnt.Size = new System.Drawing.Size(51, 13);
+            this.label_FailCmdCnt.TabIndex = 129;
+            this.label_FailCmdCnt.Text = "Fail:0000";
+            // 
             // checkBox_EKeyEN
             // 
             this.checkBox_EKeyEN.AutoSize = true;
@@ -231,6 +240,17 @@
             this.button_eKeyClear.UseVisualStyleBackColor = true;
             this.button_eKeyClear.Click += new System.EventHandler(this.button_eKeyClear_Click);
             // 
+            // checkBox_ShowTxt
+            // 
+            this.checkBox_ShowTxt.AutoSize = true;
+            this.checkBox_ShowTxt.Location = new System.Drawing.Point(4, 154);
+            this.checkBox_ShowTxt.Name = "checkBox_ShowTxt";
+            this.checkBox_ShowTxt.Size = new System.Drawing.Size(70, 17);
+            this.checkBox_ShowTxt.TabIndex = 126;
+            this.checkBox_ShowTxt.Text = "Show_Txt";
+            this.checkBox_ShowTxt.UseVisualStyleBackColor = true;
+            this.checkBox_ShowTxt.CheckedChanged += new System.EventHandler(this.checkBox_ShowTxt_CheckedChanged);
+            // 
             // button_eKeySnd
             // 
             this.button_eKeySnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -252,6 +272,15 @@
             this.textBox_eKey.Size = new System.Drawing.Size(364, 38);
             this.textBox_eKey.TabIndex = 47;
             this.textBox_eKey.Text = "Hello world";
+            // 
+            // label_SuccessCmdCnt
+            // 
+            this.label_SuccessCmdCnt.AutoSize = true;
+            this.label_SuccessCmdCnt.Location = new System.Drawing.Point(74, 155);
+            this.label_SuccessCmdCnt.Name = "label_SuccessCmdCnt";
+            this.label_SuccessCmdCnt.Size = new System.Drawing.Size(71, 13);
+            this.label_SuccessCmdCnt.TabIndex = 127;
+            this.label_SuccessCmdCnt.Text = "Success:0000";
             // 
             // button_Modbus_Send
             // 
@@ -1627,6 +1656,7 @@
             this.comboBox_COMNumber.TabStop = false;
             this.comboBox_COMNumber.DropDown += new System.EventHandler(this.comboBox_COMNumber_DropDown);
             this.comboBox_COMNumber.SelectedIndexChanged += new System.EventHandler(this.comboBox_COMNumber_SelectedIndexChanged);
+            this.comboBox_COMNumber.DropDownClosed += new System.EventHandler(this.comboBox_COMNumber_DropDownClosed);
             // 
             // button_P_Identify
             // 
@@ -1647,26 +1677,6 @@
             this.notifyIcon.Text = "notifyIcon";
             this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
             // 
-            // checkBox_ShowTxt
-            // 
-            this.checkBox_ShowTxt.AutoSize = true;
-            this.checkBox_ShowTxt.Location = new System.Drawing.Point(4, 154);
-            this.checkBox_ShowTxt.Name = "checkBox_ShowTxt";
-            this.checkBox_ShowTxt.Size = new System.Drawing.Size(70, 17);
-            this.checkBox_ShowTxt.TabIndex = 126;
-            this.checkBox_ShowTxt.Text = "Show_Txt";
-            this.checkBox_ShowTxt.UseVisualStyleBackColor = true;
-            this.checkBox_ShowTxt.CheckedChanged += new System.EventHandler(this.checkBox_ShowTxt_CheckedChanged);
-            // 
-            // label_SuccessCmdCnt
-            // 
-            this.label_SuccessCmdCnt.AutoSize = true;
-            this.label_SuccessCmdCnt.Location = new System.Drawing.Point(74, 155);
-            this.label_SuccessCmdCnt.Name = "label_SuccessCmdCnt";
-            this.label_SuccessCmdCnt.Size = new System.Drawing.Size(71, 13);
-            this.label_SuccessCmdCnt.TabIndex = 127;
-            this.label_SuccessCmdCnt.Text = "Success:0000";
-            // 
             // button_Reconect
             // 
             this.button_Reconect.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1679,15 +1689,6 @@
             this.button_Reconect.Text = "Reconect";
             this.button_Reconect.UseVisualStyleBackColor = true;
             this.button_Reconect.Click += new System.EventHandler(this.button_Reconect_Click);
-            // 
-            // label_FailCmdCnt
-            // 
-            this.label_FailCmdCnt.AutoSize = true;
-            this.label_FailCmdCnt.Location = new System.Drawing.Point(149, 155);
-            this.label_FailCmdCnt.Name = "label_FailCmdCnt";
-            this.label_FailCmdCnt.Size = new System.Drawing.Size(51, 13);
-            this.label_FailCmdCnt.TabIndex = 129;
-            this.label_FailCmdCnt.Text = "Fail:0000";
             // 
             // timer_background
             // 

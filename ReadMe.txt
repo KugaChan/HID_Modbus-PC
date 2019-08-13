@@ -1,5 +1,8 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git24
+1. 修改串口下来菜单显示异常的问题
+
 Git23
 1. 优化了UI
 

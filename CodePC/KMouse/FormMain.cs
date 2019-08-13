@@ -20,7 +20,7 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const byte _VersionGit = 23;
+		private const byte _VersionGit = 24;
 
         Modbus mdbs = new Modbus();
 
@@ -305,6 +305,11 @@ namespace KMouse
         private void button_ComOpen_Click(object sender, EventArgs e)
         {
             com.button_ComOpen_Click(sender, e, this);
+        }
+
+        private void comboBox_COMNumber_DropDownClosed(object sender, EventArgs e)
+        {
+            com.comboBox_COMNumber_DropDownClosed(sender, e);
         }
         /********************与串口控制相关的 End***************************/
     }
