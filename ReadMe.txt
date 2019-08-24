@@ -1,5 +1,11 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git25
+1. 增加COMList功能，可以通过命令列表做一些事情，目前仅支持IO的跳动
+2. 支持命令行参数的输入，执行对应的功能
+3. Modbus增加STM32端IO动作的命令
+4. 增加按键会闪光的特效，提示当前哪个按键被点击
+
 Git24
 1. 修改串口下来菜单显示异常的问题
 

@@ -32,12 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.label_ClearRec = new System.Windows.Forms.Label();
             this.groupBox_Log = new System.Windows.Forms.GroupBox();
+            this.textBox_EKey = new System.Windows.Forms.TextBox();
+            this.button_Func = new System.Windows.Forms.Button();
             this.label_FailCmdCnt = new System.Windows.Forms.Label();
-            this.checkBox_EKeyEN = new System.Windows.Forms.CheckBox();
             this.button_eKeyClear = new System.Windows.Forms.Button();
-            this.checkBox_ShowTxt = new System.Windows.Forms.CheckBox();
-            this.button_eKeySnd = new System.Windows.Forms.Button();
-            this.textBox_eKey = new System.Windows.Forms.TextBox();
+            this.checkBox_ShowUart = new System.Windows.Forms.CheckBox();
+            this.button_Run = new System.Windows.Forms.Button();
             this.label_SuccessCmdCnt = new System.Windows.Forms.Label();
             this.button_Modbus_Send = new System.Windows.Forms.Button();
             this.label_Modbus_Val = new System.Windows.Forms.Label();
@@ -46,6 +46,8 @@
             this.textBox_Modbus_Reg = new System.Windows.Forms.TextBox();
             this.textBox_ComRec = new System.Windows.Forms.TextBox();
             this.label_Rcv = new System.Windows.Forms.Label();
+            this.label_Cycle = new System.Windows.Forms.Label();
+            this.textBox_Cmdlist = new System.Windows.Forms.TextBox();
             this.button_MoveUp = new System.Windows.Forms.Button();
             this.groupBox_Mouse = new System.Windows.Forms.GroupBox();
             this.label_Status = new System.Windows.Forms.Label();
@@ -66,7 +68,7 @@
             this.button_End = new System.Windows.Forms.Button();
             this.button_Home = new System.Windows.Forms.Button();
             this.button_Del = new System.Windows.Forms.Button();
-            this.button_PageDwon = new System.Windows.Forms.Button();
+            this.button_PageDown = new System.Windows.Forms.Button();
             this.button_Alt = new System.Windows.Forms.Button();
             this.button_Screen = new System.Windows.Forms.Button();
             this.button_Null = new System.Windows.Forms.Button();
@@ -141,7 +143,7 @@
             this.button_F2 = new System.Windows.Forms.Button();
             this.button_F1 = new System.Windows.Forms.Button();
             this.button_ESC = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox_COM = new System.Windows.Forms.GroupBox();
             this.button_COMOpen = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.comboBox_COMStopBit = new System.Windows.Forms.ComboBox();
@@ -159,10 +161,14 @@
             this.timer_background = new System.Windows.Forms.Timer(this.components);
             this.timer_CloseForm = new System.Windows.Forms.Timer(this.components);
             this.timer_ReleaseFuncKey = new System.Windows.Forms.Timer(this.components);
+            this.groupBox_Ctrl = new System.Windows.Forms.GroupBox();
+            this.textBox_Point = new System.Windows.Forms.TextBox();
+            this.textBox_Cycle = new System.Windows.Forms.TextBox();
             this.groupBox_Log.SuspendLayout();
             this.groupBox_Mouse.SuspendLayout();
             this.groupBox_Keyboard.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.groupBox_COM.SuspendLayout();
+            this.groupBox_Ctrl.SuspendLayout();
             this.SuspendLayout();
             // 
             // label_ClearRec
@@ -183,12 +189,12 @@
             // 
             // groupBox_Log
             // 
+            this.groupBox_Log.Controls.Add(this.textBox_EKey);
+            this.groupBox_Log.Controls.Add(this.button_Func);
             this.groupBox_Log.Controls.Add(this.label_FailCmdCnt);
-            this.groupBox_Log.Controls.Add(this.checkBox_EKeyEN);
             this.groupBox_Log.Controls.Add(this.button_eKeyClear);
-            this.groupBox_Log.Controls.Add(this.checkBox_ShowTxt);
-            this.groupBox_Log.Controls.Add(this.button_eKeySnd);
-            this.groupBox_Log.Controls.Add(this.textBox_eKey);
+            this.groupBox_Log.Controls.Add(this.checkBox_ShowUart);
+            this.groupBox_Log.Controls.Add(this.button_Run);
             this.groupBox_Log.Controls.Add(this.label_SuccessCmdCnt);
             this.groupBox_Log.Controls.Add(this.button_Modbus_Send);
             this.groupBox_Log.Controls.Add(this.label_Modbus_Val);
@@ -198,7 +204,7 @@
             this.groupBox_Log.Controls.Add(this.label_ClearRec);
             this.groupBox_Log.Controls.Add(this.textBox_ComRec);
             this.groupBox_Log.Controls.Add(this.label_Rcv);
-            this.groupBox_Log.Location = new System.Drawing.Point(11, 6);
+            this.groupBox_Log.Location = new System.Drawing.Point(2, 6);
             this.groupBox_Log.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox_Log.Name = "groupBox_Log";
             this.groupBox_Log.Padding = new System.Windows.Forms.Padding(2);
@@ -207,76 +213,78 @@
             this.groupBox_Log.TabStop = false;
             this.groupBox_Log.Text = "Log";
             // 
+            // textBox_EKey
+            // 
+            this.textBox_EKey.Location = new System.Drawing.Point(4, 107);
+            this.textBox_EKey.Multiline = true;
+            this.textBox_EKey.Name = "textBox_EKey";
+            this.textBox_EKey.Size = new System.Drawing.Size(364, 47);
+            this.textBox_EKey.TabIndex = 131;
+            this.textBox_EKey.Text = "Hello world";
+            // 
+            // button_Func
+            // 
+            this.button_Func.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Func.ForeColor = System.Drawing.Color.Black;
+            this.button_Func.Location = new System.Drawing.Point(207, 154);
+            this.button_Func.Name = "button_Func";
+            this.button_Func.Size = new System.Drawing.Size(50, 22);
+            this.button_Func.TabIndex = 129;
+            this.button_Func.TabStop = false;
+            this.button_Func.Text = "Null";
+            this.button_Func.UseVisualStyleBackColor = true;
+            this.button_Func.Click += new System.EventHandler(this.button_Func_Click);
+            // 
             // label_FailCmdCnt
             // 
             this.label_FailCmdCnt.AutoSize = true;
-            this.label_FailCmdCnt.Location = new System.Drawing.Point(149, 155);
+            this.label_FailCmdCnt.Location = new System.Drawing.Point(82, 167);
             this.label_FailCmdCnt.Name = "label_FailCmdCnt";
             this.label_FailCmdCnt.Size = new System.Drawing.Size(51, 13);
             this.label_FailCmdCnt.TabIndex = 129;
             this.label_FailCmdCnt.Text = "Fail:0000";
             // 
-            // checkBox_EKeyEN
-            // 
-            this.checkBox_EKeyEN.AutoSize = true;
-            this.checkBox_EKeyEN.Location = new System.Drawing.Point(213, 154);
-            this.checkBox_EKeyEN.Name = "checkBox_EKeyEN";
-            this.checkBox_EKeyEN.Size = new System.Drawing.Size(63, 17);
-            this.checkBox_EKeyEN.TabIndex = 50;
-            this.checkBox_EKeyEN.Text = "eKey EN";
-            this.checkBox_EKeyEN.UseVisualStyleBackColor = true;
-            this.checkBox_EKeyEN.CheckedChanged += new System.EventHandler(this.checkBox_EKeyEN_CheckedChanged);
-            // 
             // button_eKeyClear
             // 
             this.button_eKeyClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_eKeyClear.ForeColor = System.Drawing.Color.Red;
-            this.button_eKeyClear.Location = new System.Drawing.Point(326, 150);
+            this.button_eKeyClear.Location = new System.Drawing.Point(318, 154);
             this.button_eKeyClear.Name = "button_eKeyClear";
-            this.button_eKeyClear.Size = new System.Drawing.Size(42, 22);
+            this.button_eKeyClear.Size = new System.Drawing.Size(50, 22);
             this.button_eKeyClear.TabIndex = 49;
             this.button_eKeyClear.TabStop = false;
             this.button_eKeyClear.Text = "Clr";
             this.button_eKeyClear.UseVisualStyleBackColor = true;
             this.button_eKeyClear.Click += new System.EventHandler(this.button_eKeyClear_Click);
             // 
-            // checkBox_ShowTxt
+            // checkBox_ShowUart
             // 
-            this.checkBox_ShowTxt.AutoSize = true;
-            this.checkBox_ShowTxt.Location = new System.Drawing.Point(4, 154);
-            this.checkBox_ShowTxt.Name = "checkBox_ShowTxt";
-            this.checkBox_ShowTxt.Size = new System.Drawing.Size(70, 17);
-            this.checkBox_ShowTxt.TabIndex = 126;
-            this.checkBox_ShowTxt.Text = "Show_Txt";
-            this.checkBox_ShowTxt.UseVisualStyleBackColor = true;
-            this.checkBox_ShowTxt.CheckedChanged += new System.EventHandler(this.checkBox_ShowTxt_CheckedChanged);
+            this.checkBox_ShowUart.AutoSize = true;
+            this.checkBox_ShowUart.Location = new System.Drawing.Point(5, 160);
+            this.checkBox_ShowUart.Name = "checkBox_ShowUart";
+            this.checkBox_ShowUart.Size = new System.Drawing.Size(72, 17);
+            this.checkBox_ShowUart.TabIndex = 126;
+            this.checkBox_ShowUart.Text = "ShowUart";
+            this.checkBox_ShowUart.UseVisualStyleBackColor = true;
+            this.checkBox_ShowUart.CheckedChanged += new System.EventHandler(this.checkBox_ShowTxt_CheckedChanged);
             // 
-            // button_eKeySnd
+            // button_Run
             // 
-            this.button_eKeySnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_eKeySnd.ForeColor = System.Drawing.Color.Blue;
-            this.button_eKeySnd.Location = new System.Drawing.Point(279, 150);
-            this.button_eKeySnd.Name = "button_eKeySnd";
-            this.button_eKeySnd.Size = new System.Drawing.Size(42, 22);
-            this.button_eKeySnd.TabIndex = 48;
-            this.button_eKeySnd.TabStop = false;
-            this.button_eKeySnd.Text = "eKey";
-            this.button_eKeySnd.UseVisualStyleBackColor = true;
-            this.button_eKeySnd.Click += new System.EventHandler(this.button_eKey_Click);
-            // 
-            // textBox_eKey
-            // 
-            this.textBox_eKey.Location = new System.Drawing.Point(4, 106);
-            this.textBox_eKey.Multiline = true;
-            this.textBox_eKey.Name = "textBox_eKey";
-            this.textBox_eKey.Size = new System.Drawing.Size(364, 38);
-            this.textBox_eKey.TabIndex = 47;
-            this.textBox_eKey.Text = "Hello world";
+            this.button_Run.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_Run.ForeColor = System.Drawing.Color.Blue;
+            this.button_Run.Location = new System.Drawing.Point(263, 154);
+            this.button_Run.Name = "button_Run";
+            this.button_Run.Size = new System.Drawing.Size(50, 22);
+            this.button_Run.TabIndex = 48;
+            this.button_Run.TabStop = false;
+            this.button_Run.Text = "Run";
+            this.button_Run.UseVisualStyleBackColor = true;
+            this.button_Run.Click += new System.EventHandler(this.button_Run_Click);
             // 
             // label_SuccessCmdCnt
             // 
             this.label_SuccessCmdCnt.AutoSize = true;
-            this.label_SuccessCmdCnt.Location = new System.Drawing.Point(74, 155);
+            this.label_SuccessCmdCnt.Location = new System.Drawing.Point(82, 154);
             this.label_SuccessCmdCnt.Name = "label_SuccessCmdCnt";
             this.label_SuccessCmdCnt.Size = new System.Drawing.Size(71, 13);
             this.label_SuccessCmdCnt.TabIndex = 127;
@@ -345,7 +353,7 @@
             this.textBox_ComRec.Multiline = true;
             this.textBox_ComRec.Name = "textBox_ComRec";
             this.textBox_ComRec.ReadOnly = true;
-            this.textBox_ComRec.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox_ComRec.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox_ComRec.Size = new System.Drawing.Size(364, 59);
             this.textBox_ComRec.TabIndex = 0;
             this.textBox_ComRec.TabStop = false;
@@ -360,6 +368,24 @@
             this.label_Rcv.Size = new System.Drawing.Size(121, 13);
             this.label_Rcv.TabIndex = 6;
             this.label_Rcv.Text = "Received:000000(Bytes)";
+            // 
+            // label_Cycle
+            // 
+            this.label_Cycle.AutoSize = true;
+            this.label_Cycle.Location = new System.Drawing.Point(708, 337);
+            this.label_Cycle.Name = "label_Cycle";
+            this.label_Cycle.Size = new System.Drawing.Size(63, 13);
+            this.label_Cycle.TabIndex = 130;
+            this.label_Cycle.Text = "Cycle:0000/";
+            // 
+            // textBox_Cmdlist
+            // 
+            this.textBox_Cmdlist.Location = new System.Drawing.Point(711, 12);
+            this.textBox_Cmdlist.Multiline = true;
+            this.textBox_Cmdlist.Name = "textBox_Cmdlist";
+            this.textBox_Cmdlist.Size = new System.Drawing.Size(69, 318);
+            this.textBox_Cmdlist.TabIndex = 47;
+            this.textBox_Cmdlist.Text = "Shutdown()";
             // 
             // button_MoveUp
             // 
@@ -387,9 +413,9 @@
             this.groupBox_Mouse.Controls.Add(this.button_MoveDown);
             this.groupBox_Mouse.Controls.Add(this.button_ClickLeft);
             this.groupBox_Mouse.Controls.Add(this.button_MoveUp);
-            this.groupBox_Mouse.Location = new System.Drawing.Point(398, 104);
+            this.groupBox_Mouse.Location = new System.Drawing.Point(378, 106);
             this.groupBox_Mouse.Name = "groupBox_Mouse";
-            this.groupBox_Mouse.Size = new System.Drawing.Size(317, 84);
+            this.groupBox_Mouse.Size = new System.Drawing.Size(328, 84);
             this.groupBox_Mouse.TabIndex = 43;
             this.groupBox_Mouse.TabStop = false;
             this.groupBox_Mouse.Text = "Mouse";
@@ -399,7 +425,7 @@
             this.label_Status.AutoSize = true;
             this.label_Status.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Status.ForeColor = System.Drawing.Color.Blue;
-            this.label_Status.Location = new System.Drawing.Point(245, 63);
+            this.label_Status.Location = new System.Drawing.Point(252, 62);
             this.label_Status.Name = "label_Status";
             this.label_Status.Size = new System.Drawing.Size(50, 16);
             this.label_Status.TabIndex = 53;
@@ -411,7 +437,7 @@
             this.label_MouseSpeed.AutoSize = true;
             this.label_MouseSpeed.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_MouseSpeed.ForeColor = System.Drawing.Color.Red;
-            this.label_MouseSpeed.Location = new System.Drawing.Point(101, 63);
+            this.label_MouseSpeed.Location = new System.Drawing.Point(104, 39);
             this.label_MouseSpeed.Name = "label_MouseSpeed";
             this.label_MouseSpeed.Size = new System.Drawing.Size(36, 16);
             this.label_MouseSpeed.TabIndex = 52;
@@ -501,7 +527,7 @@
             // 
             // button_MoveDown
             // 
-            this.button_MoveDown.Location = new System.Drawing.Point(82, 36);
+            this.button_MoveDown.Location = new System.Drawing.Point(82, 59);
             this.button_MoveDown.Name = "button_MoveDown";
             this.button_MoveDown.Size = new System.Drawing.Size(75, 22);
             this.button_MoveDown.TabIndex = 44;
@@ -527,9 +553,9 @@
             this.button_Reboot.BackColor = System.Drawing.Color.Silver;
             this.button_Reboot.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Reboot.ForeColor = System.Drawing.Color.Red;
-            this.button_Reboot.Location = new System.Drawing.Point(636, 78);
+            this.button_Reboot.Location = new System.Drawing.Point(4, 64);
             this.button_Reboot.Name = "button_Reboot";
-            this.button_Reboot.Size = new System.Drawing.Size(75, 25);
+            this.button_Reboot.Size = new System.Drawing.Size(75, 22);
             this.button_Reboot.TabIndex = 53;
             this.button_Reboot.TabStop = false;
             this.button_Reboot.Text = "Reboot";
@@ -543,7 +569,7 @@
             this.groupBox_Keyboard.Controls.Add(this.button_End);
             this.groupBox_Keyboard.Controls.Add(this.button_Home);
             this.groupBox_Keyboard.Controls.Add(this.button_Del);
-            this.groupBox_Keyboard.Controls.Add(this.button_PageDwon);
+            this.groupBox_Keyboard.Controls.Add(this.button_PageDown);
             this.groupBox_Keyboard.Controls.Add(this.button_Alt);
             this.groupBox_Keyboard.Controls.Add(this.button_Screen);
             this.groupBox_Keyboard.Controls.Add(this.button_Null);
@@ -618,7 +644,7 @@
             this.groupBox_Keyboard.Controls.Add(this.button_F2);
             this.groupBox_Keyboard.Controls.Add(this.button_F1);
             this.groupBox_Keyboard.Controls.Add(this.button_ESC);
-            this.groupBox_Keyboard.Location = new System.Drawing.Point(11, 190);
+            this.groupBox_Keyboard.Location = new System.Drawing.Point(2, 190);
             this.groupBox_Keyboard.Name = "groupBox_Keyboard";
             this.groupBox_Keyboard.Size = new System.Drawing.Size(704, 167);
             this.groupBox_Keyboard.TabIndex = 124;
@@ -681,16 +707,16 @@
             this.button_Del.UseVisualStyleBackColor = true;
             this.button_Del.Click += new System.EventHandler(this.button_Del_Click);
             // 
-            // button_PageDwon
+            // button_PageDown
             // 
-            this.button_PageDwon.Location = new System.Drawing.Point(504, 137);
-            this.button_PageDwon.Name = "button_PageDwon";
-            this.button_PageDwon.Size = new System.Drawing.Size(46, 22);
-            this.button_PageDwon.TabIndex = 198;
-            this.button_PageDwon.TabStop = false;
-            this.button_PageDwon.Text = "PageDown";
-            this.button_PageDwon.UseVisualStyleBackColor = true;
-            this.button_PageDwon.Click += new System.EventHandler(this.button_PageDwon_Click);
+            this.button_PageDown.Location = new System.Drawing.Point(504, 137);
+            this.button_PageDown.Name = "button_PageDown";
+            this.button_PageDown.Size = new System.Drawing.Size(46, 22);
+            this.button_PageDown.TabIndex = 198;
+            this.button_PageDown.TabStop = false;
+            this.button_PageDown.Text = "PageDown";
+            this.button_PageDown.UseVisualStyleBackColor = true;
+            this.button_PageDown.Click += new System.EventHandler(this.button_PageDwon_Click);
             // 
             // button_Alt
             // 
@@ -725,7 +751,7 @@
             this.button_Null.TabStop = false;
             this.button_Null.Text = "Null";
             this.button_Null.UseVisualStyleBackColor = true;
-            this.button_Null.Click += new System.EventHandler(this.button_Win_Click);
+            this.button_Null.Click += new System.EventHandler(this.button_Fn_Click);
             // 
             // button_PageUp
             // 
@@ -1049,7 +1075,7 @@
             // 
             // button_Caps
             // 
-            this.button_Caps.ForeColor = System.Drawing.Color.Blue;
+            this.button_Caps.ForeColor = System.Drawing.Color.Black;
             this.button_Caps.Location = new System.Drawing.Point(4, 89);
             this.button_Caps.Name = "button_Caps";
             this.button_Caps.Size = new System.Drawing.Size(46, 22);
@@ -1510,27 +1536,27 @@
             this.button_ESC.UseVisualStyleBackColor = true;
             this.button_ESC.Click += new System.EventHandler(this.button_ESC_Click);
             // 
-            // groupBox3
+            // groupBox_COM
             // 
-            this.groupBox3.Controls.Add(this.button_COMOpen);
-            this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.comboBox_COMStopBit);
-            this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.comboBox_COMDataBit);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.comboBox_COMBaudrate);
-            this.groupBox3.Controls.Add(this.comboBox_COMCheckBit);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.comboBox_COMNumber);
-            this.groupBox3.Location = new System.Drawing.Point(398, 11);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(235, 95);
-            this.groupBox3.TabIndex = 125;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "COM Setup";
+            this.groupBox_COM.Controls.Add(this.button_COMOpen);
+            this.groupBox_COM.Controls.Add(this.label13);
+            this.groupBox_COM.Controls.Add(this.comboBox_COMStopBit);
+            this.groupBox_COM.Controls.Add(this.label12);
+            this.groupBox_COM.Controls.Add(this.comboBox_COMDataBit);
+            this.groupBox_COM.Controls.Add(this.label11);
+            this.groupBox_COM.Controls.Add(this.label10);
+            this.groupBox_COM.Controls.Add(this.comboBox_COMBaudrate);
+            this.groupBox_COM.Controls.Add(this.comboBox_COMCheckBit);
+            this.groupBox_COM.Controls.Add(this.label9);
+            this.groupBox_COM.Controls.Add(this.comboBox_COMNumber);
+            this.groupBox_COM.Location = new System.Drawing.Point(378, 12);
+            this.groupBox_COM.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox_COM.Name = "groupBox_COM";
+            this.groupBox_COM.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox_COM.Size = new System.Drawing.Size(235, 95);
+            this.groupBox_COM.TabIndex = 125;
+            this.groupBox_COM.TabStop = false;
+            this.groupBox_COM.Text = "COM Setup";
             // 
             // button_COMOpen
             // 
@@ -1662,9 +1688,9 @@
             // 
             this.button_P_Identify.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_P_Identify.ForeColor = System.Drawing.Color.Blue;
-            this.button_P_Identify.Location = new System.Drawing.Point(636, 24);
+            this.button_P_Identify.Location = new System.Drawing.Point(4, 16);
             this.button_P_Identify.Name = "button_P_Identify";
-            this.button_P_Identify.Size = new System.Drawing.Size(75, 24);
+            this.button_P_Identify.Size = new System.Drawing.Size(75, 22);
             this.button_P_Identify.TabIndex = 42;
             this.button_P_Identify.TabStop = false;
             this.button_P_Identify.Text = "Identify";
@@ -1681,9 +1707,9 @@
             // 
             this.button_Reconect.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Reconect.ForeColor = System.Drawing.Color.Purple;
-            this.button_Reconect.Location = new System.Drawing.Point(636, 51);
+            this.button_Reconect.Location = new System.Drawing.Point(4, 40);
             this.button_Reconect.Name = "button_Reconect";
-            this.button_Reconect.Size = new System.Drawing.Size(75, 24);
+            this.button_Reconect.Size = new System.Drawing.Size(75, 22);
             this.button_Reconect.TabIndex = 128;
             this.button_Reconect.TabStop = false;
             this.button_Reconect.Text = "Reconect";
@@ -1704,18 +1730,49 @@
             this.timer_ReleaseFuncKey.Interval = 200;
             this.timer_ReleaseFuncKey.Tick += new System.EventHandler(this.timer_ReleaseFuncKey_Tick);
             // 
+            // groupBox_Ctrl
+            // 
+            this.groupBox_Ctrl.Controls.Add(this.button_Reboot);
+            this.groupBox_Ctrl.Controls.Add(this.button_Reconect);
+            this.groupBox_Ctrl.Controls.Add(this.button_P_Identify);
+            this.groupBox_Ctrl.Location = new System.Drawing.Point(618, 12);
+            this.groupBox_Ctrl.Name = "groupBox_Ctrl";
+            this.groupBox_Ctrl.Size = new System.Drawing.Size(87, 93);
+            this.groupBox_Ctrl.TabIndex = 129;
+            this.groupBox_Ctrl.TabStop = false;
+            this.groupBox_Ctrl.Text = "Ctrl";
+            // 
+            // textBox_Point
+            // 
+            this.textBox_Point.Location = new System.Drawing.Point(780, 12);
+            this.textBox_Point.Multiline = true;
+            this.textBox_Point.Name = "textBox_Point";
+            this.textBox_Point.Size = new System.Drawing.Size(21, 318);
+            this.textBox_Point.TabIndex = 131;
+            // 
+            // textBox_Cycle
+            // 
+            this.textBox_Cycle.Location = new System.Drawing.Point(769, 333);
+            this.textBox_Cycle.Name = "textBox_Cycle";
+            this.textBox_Cycle.Size = new System.Drawing.Size(32, 21);
+            this.textBox_Cycle.TabIndex = 132;
+            this.textBox_Cycle.Text = "5000";
+            this.textBox_Cycle.TextChanged += new System.EventHandler(this.textBox_Cycle_TextChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(719, 358);
-            this.Controls.Add(this.button_Reconect);
-            this.Controls.Add(this.button_Reboot);
-            this.Controls.Add(this.button_P_Identify);
-            this.Controls.Add(this.groupBox3);
+            this.ClientSize = new System.Drawing.Size(803, 358);
+            this.Controls.Add(this.textBox_Cycle);
+            this.Controls.Add(this.textBox_Point);
+            this.Controls.Add(this.label_Cycle);
+            this.Controls.Add(this.groupBox_Ctrl);
+            this.Controls.Add(this.groupBox_COM);
             this.Controls.Add(this.groupBox_Keyboard);
             this.Controls.Add(this.groupBox_Mouse);
             this.Controls.Add(this.groupBox_Log);
+            this.Controls.Add(this.textBox_Cmdlist);
             this.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1727,16 +1784,17 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.SizeChanged += new System.EventHandler(this.KMouse_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KMouse_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KMouse_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KMouse_KeyUp);
             this.groupBox_Log.ResumeLayout(false);
             this.groupBox_Log.PerformLayout();
             this.groupBox_Mouse.ResumeLayout(false);
             this.groupBox_Mouse.PerformLayout();
             this.groupBox_Keyboard.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.groupBox_COM.ResumeLayout(false);
+            this.groupBox_COM.PerformLayout();
+            this.groupBox_Ctrl.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
@@ -1769,7 +1827,7 @@
 		private System.Windows.Forms.Button button_End;
 		private System.Windows.Forms.Button button_Home;
 		private System.Windows.Forms.Button button_Del;
-		private System.Windows.Forms.Button button_PageDwon;
+		private System.Windows.Forms.Button button_PageDown;
 		private System.Windows.Forms.Button button_PageUp;
 		private System.Windows.Forms.Button button_Space;
 		private System.Windows.Forms.Button button_Alt;
@@ -1844,7 +1902,7 @@
 		private System.Windows.Forms.Button button_F2;
 		private System.Windows.Forms.Button button_F1;
 		private System.Windows.Forms.Button button_ESC;
-		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.GroupBox groupBox_COM;
 		private System.Windows.Forms.Button button_P_Identify;
 		private System.Windows.Forms.Button button_COMOpen;
 		private System.Windows.Forms.Label label13;
@@ -1858,19 +1916,24 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.ComboBox comboBox_COMNumber;
 		private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.CheckBox checkBox_ShowTxt;
+        private System.Windows.Forms.CheckBox checkBox_ShowUart;
         private System.Windows.Forms.Label label_SuccessCmdCnt;
-        private System.Windows.Forms.TextBox textBox_eKey;
+        private System.Windows.Forms.TextBox textBox_Cmdlist;
         private System.Windows.Forms.Button button_eKeyClear;
-        private System.Windows.Forms.Button button_eKeySnd;
+        private System.Windows.Forms.Button button_Run;
 		private System.Windows.Forms.Button button_Reboot;
-        private System.Windows.Forms.CheckBox checkBox_EKeyEN;
 		private System.Windows.Forms.Label label_Status;
 		private System.Windows.Forms.Button button_Reconect;
         private System.Windows.Forms.Label label_FailCmdCnt;
         private System.Windows.Forms.Timer timer_background;
         private System.Windows.Forms.Timer timer_CloseForm;
         private System.Windows.Forms.Timer timer_ReleaseFuncKey;
+        private System.Windows.Forms.GroupBox groupBox_Ctrl;
+        private System.Windows.Forms.Button button_Func;
+        private System.Windows.Forms.Label label_Cycle;
+        private System.Windows.Forms.TextBox textBox_EKey;
+        private System.Windows.Forms.TextBox textBox_Point;
+        private System.Windows.Forms.TextBox textBox_Cycle;
     }
 }
 

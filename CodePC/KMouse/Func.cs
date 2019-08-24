@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Management;
+using System.Drawing;
 
 namespace KMouse
 {
@@ -632,6 +633,7 @@ namespace KMouse
     {
         public delegate void tyDelegate_Callback(bool en);
 
+        public object context;
         public FormMain fm;
         public tyDelegate_Callback delegate_callback;
         //public Action action_callback;

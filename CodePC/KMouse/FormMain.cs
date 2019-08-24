@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO.Ports;//使用串口
 using System.Runtime.InteropServices;//隐藏光标的
 using System.Collections.Concurrent;    //使用ConcurrentQueue
+using System.Threading;
 
 namespace KMouse
 {
@@ -20,9 +21,19 @@ namespace KMouse
         COM com = new COM();
 
 		//常量
-		private const byte _VersionGit = 24;
+		private const byte _VersionGit = 25;
+
+        public enum eFunc_OP : int    //设定enum的数据类型
+        {
+            NULL = 0x00,
+            EKEY = 0x01,
+            CMDLIST = 0x02,
+        }
+
+        private eFunc_OP func_op;
 
         Modbus mdbs = new Modbus();
+        Cmdlist cmd_list = new Cmdlist();
 
 		public FormMain()
 		{
@@ -33,8 +44,10 @@ namespace KMouse
 		{
             this.Text = "KMouse Git" + _VersionGit.ToString();
 
-            textBox_eKey.Enabled = false;
-            textBox_eKey.Text = Properties.Settings.Default.eKey_string;
+            textBox_Cycle.Text = Properties.Settings.Default._cmdlist_cycle;
+            textBox_EKey.Text = Properties.Settings.Default._eKey_string;
+            textBox_Cmdlist.Text = Properties.Settings.Default._cmdlist_string;
+            func_op = (eFunc_OP)Properties.Settings.Default._func_op;
 
             com.ControlModule_Init(comboBox_COMNumber, comboBox_COMBaudrate,
                 comboBox_COMCheckBit, comboBox_COMDataBit, comboBox_COMStopBit);
@@ -55,12 +68,18 @@ namespace KMouse
             kq.Init(queue_message);
 
             mdbs.Init(kq, com.serialport, queue_message,
-                Action_UpdateModbussState,
                 Delegate_ModbusCallBack_Identify,
                 Delegate_ModbusCallBack_Click,
                 Delegate_ModbusCallBack_Speed);
-            mdbs.echo_en = checkBox_ShowTxt.Checked;
-		}
+            mdbs.echo_en = checkBox_ShowUart.Checked;
+            
+            Update_Func_OP_State();
+            button_Space.Focus();
+                  
+            cmd_list.Init(button_Run, textBox_Cmdlist, textBox_Point, mdbs, this);
+            cmd_list.BatCall(textBox_ComRec, com.serialport);
+            cmd_list.cycle_total = int.Parse(textBox_Cycle.Text);
+        }
 
         private void timer_CloseForm_Tick(object sender, EventArgs e)
         {
@@ -91,16 +110,16 @@ namespace KMouse
 
         private void Func_PropertiesSettingsSave()
         {
+            Properties.Settings.Default._cmdlist_cycle = textBox_Cycle.Text;
+            Properties.Settings.Default._eKey_string = textBox_EKey.Text;
+            Properties.Settings.Default._cmdlist_string = textBox_Cmdlist.Text;
+            Properties.Settings.Default._func_op = (int)func_op;
+
             Properties.Settings.Default._baudrate_select_index = comboBox_COMBaudrate.SelectedIndex;
-            Properties.Settings.Default.eKey_string = textBox_eKey.Text;
             Properties.Settings.Default._com_num_select_index = comboBox_COMNumber.SelectedIndex;
 
             Properties.Settings.Default.Save();       
         }
-
-		private void KMouse_KeyPress(object sender, KeyPressEventArgs e)
-		{
-		}
 
 		private void KMouse_SizeChanged(object sender, EventArgs e)
 		{
@@ -125,20 +144,69 @@ namespace KMouse
 
         private void button_eKeyClear_Click(object sender, EventArgs e)
         {
-            textBox_eKey.Text = "";
+            textBox_Cmdlist.Text = "";
+            mdbs.success_cnt = 0;
         }
 
-        private void checkBox_EKeyEN_CheckedChanged(object sender, EventArgs e)
+        private void button_Func_Click(object sender, EventArgs e)
         {
-            textBox_eKey.Enabled = !textBox_eKey.Enabled;
-
-            if (textBox_eKey.Enabled == true)
+            if(func_op == eFunc_OP.EKEY)
             {
-                kq.modbus_kb_waiting_max = keyQ.MODBUS_KB_WAITING_EKEY;
+                func_op = eFunc_OP.CMDLIST;
+            }
+            else if(func_op == eFunc_OP.CMDLIST)
+            {
+                func_op = eFunc_OP.NULL;
             }
             else
             {
+                func_op = eFunc_OP.EKEY;
+            }
+
+            Update_Func_OP_State();
+        }
+
+        private void textBox_Cycle_TextChanged(object sender, EventArgs e)
+        {
+            cmd_list.cycle_total = int.Parse(textBox_Cycle.Text);
+        }
+
+        private void Update_Func_OP_State()
+        {
+            if(func_op == eFunc_OP.EKEY)
+            {
+                kq.modbus_kb_waiting_max = keyQ.MODBUS_KB_WAITING_EKEY;
+                textBox_Cmdlist.Enabled = false;
+                textBox_EKey.Enabled = true;
+                button_Func.Text = "eKey";
+
+                groupBox_Keyboard.Enabled = true;
+                groupBox_COM.Enabled = true;
+                groupBox_Ctrl.Enabled = true;
+                groupBox_Mouse.Enabled = true;
+            }
+            else if(func_op == eFunc_OP.CMDLIST)
+            {
                 kq.modbus_kb_waiting_max = keyQ.MODBUS_KB_WAITING_NORMAL;
+                textBox_Cmdlist.Enabled = true;                
+                textBox_EKey.Enabled = false;
+                button_Func.Text = "CList";
+
+                groupBox_Keyboard.Enabled = false;
+                groupBox_COM.Enabled = false;
+                groupBox_Ctrl.Enabled = false;
+                groupBox_Mouse.Enabled = false;
+            }
+            else
+            {
+                textBox_Cmdlist.Enabled = false;
+                textBox_EKey.Enabled = false;
+                button_Func.Text = "Null";
+
+                groupBox_Keyboard.Enabled = true;
+                groupBox_COM.Enabled = true;
+                groupBox_Ctrl.Enabled = true;
+                groupBox_Mouse.Enabled = true;
             }
         }
 
@@ -169,24 +237,35 @@ namespace KMouse
 
         private void timer_background_Tick(object sender, EventArgs e)
         {
+            this.Invoke((EventHandler)(delegate
+            {
+                label_SuccessCmdCnt.Text = "Success: " + mdbs.success_cnt.ToString();
+                label_FailCmdCnt.Text = "Fail: " + mdbs.fail_cnt.ToString();
+
+                if(textBox_Cmdlist.Enabled == true)
+                {
+                    label_Cycle.Text = "Cycle: " + cmd_list.cycle_cnt.ToString() + " / ";
+                }
+                else
+                {
+                    label_Cycle.Text = "Cycle: " + (cmd_list.cycle_cnt + 1).ToString() + " / ";
+                }
+            }));
+
+            if(checkBox_ShowUart.Checked == false)
+            {
+                if(queue_key_str.Count > 0)
+                {
+                    textBox_ComRec.AppendText(queue_key_str.Dequeue());
+                }
+            }
+
             if(queue_message.Count > 0)
             {
                 textBox_ComRec.AppendText("\r\n" + queue_message.Dequeue());
             }
             
             label_Rcv.Text = "Received:" + com.recv_cnt.ToString() + "(Bytes)";
-        }
-
-        void Action_UpdateModbussState()
-        {
-            this.Invoke((EventHandler)(delegate
-            {
-                label_SuccessCmdCnt.Text = "Success: ";
-                label_SuccessCmdCnt.Text += mdbs.success_cnt.ToString();
-
-                label_FailCmdCnt.Text = "Fail: ";
-                label_FailCmdCnt.Text += mdbs.fail_cnt.ToString();
-            }));
         }
 
         void Delegate_ModbusCallBack_Identify(uint value)
@@ -234,7 +313,9 @@ namespace KMouse
 
         private void checkBox_ShowTxt_CheckedChanged(object sender, EventArgs e)
         {
-            mdbs.echo_en = checkBox_ShowTxt.Checked;
+            mdbs.echo_en = checkBox_ShowUart.Checked;
+
+            textBox_ComRec.Text = "";
         }
 
 

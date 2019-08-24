@@ -41,6 +41,7 @@ namespace KMouse
                 }
 
                 kq.FIFO_Input(key_add);
+                QueueAddStr(key);
             }
             else
             {
@@ -54,8 +55,341 @@ namespace KMouse
             }
         }
 
+        public Queue<string> queue_key_str = new Queue<string>();
+        private void QueueAddStr(keyQ.eKEY key)
+        {
+            switch(key)
+            {
+                case keyQ.eKEY.A:
+                queue_key_str.Enqueue("[A]");
+                Button_Blink_Start(button_A);
+                break;
+
+                case keyQ.eKEY.B:
+                queue_key_str.Enqueue("[B]");
+                Button_Blink_Start(button_B);
+                break;
+
+                case keyQ.eKEY.C:
+                queue_key_str.Enqueue("[C]");
+                Button_Blink_Start(button_C);
+                break;
+                case keyQ.eKEY.D:
+                queue_key_str.Enqueue("[D]");
+                Button_Blink_Start(button_D);
+                break;
+                case keyQ.eKEY.E:
+                queue_key_str.Enqueue("[E]");
+                Button_Blink_Start(button_E);
+                break;
+                case keyQ.eKEY.F:
+                queue_key_str.Enqueue("[F]");
+                Button_Blink_Start(button_F);
+                break;
+                case keyQ.eKEY.G:
+                queue_key_str.Enqueue("[G]");
+                Button_Blink_Start(button_G);
+                break;
+                case keyQ.eKEY.H:
+                queue_key_str.Enqueue("[H]");
+                Button_Blink_Start(button_H);
+                break;
+                case keyQ.eKEY.I:
+                queue_key_str.Enqueue("[I]");
+                Button_Blink_Start(button_I);
+                break;
+                case keyQ.eKEY.J:
+                queue_key_str.Enqueue("[J]");
+                Button_Blink_Start(button_J);
+                break;
+                case keyQ.eKEY.K:
+                queue_key_str.Enqueue("[K]");
+                Button_Blink_Start(button_K);
+                break;
+                case keyQ.eKEY.L:
+                queue_key_str.Enqueue("[L]");
+                Button_Blink_Start(button_L);
+                break;
+                case keyQ.eKEY.M:
+                queue_key_str.Enqueue("[M]");
+                Button_Blink_Start(button_M);
+                break;
+                case keyQ.eKEY.N:
+                queue_key_str.Enqueue("[N]");
+                Button_Blink_Start(button_N);
+                break;
+                case keyQ.eKEY.O:
+                queue_key_str.Enqueue("[O]");
+                Button_Blink_Start(button_O);
+                break;
+                case keyQ.eKEY.P:
+                queue_key_str.Enqueue("[P]");
+                Button_Blink_Start(button_P);
+                break;
+                case keyQ.eKEY.Q:
+                queue_key_str.Enqueue("[Q]");
+                Button_Blink_Start(button_Q);
+                break;
+                case keyQ.eKEY.R:
+                queue_key_str.Enqueue("[R]");
+                Button_Blink_Start(button_R);
+                break;
+                case keyQ.eKEY.S:
+                queue_key_str.Enqueue("[S]");
+                Button_Blink_Start(button_S);
+                break;
+                case keyQ.eKEY.T:
+                queue_key_str.Enqueue("[T]");
+                Button_Blink_Start(button_T);
+                break;
+                case keyQ.eKEY.U:
+                queue_key_str.Enqueue("[U]");
+                Button_Blink_Start(button_U);
+                break;
+                case keyQ.eKEY.V:
+                queue_key_str.Enqueue("[V]");
+                Button_Blink_Start(button_V);
+                break;
+                case keyQ.eKEY.W:
+                queue_key_str.Enqueue("[W]");
+                Button_Blink_Start(button_W);
+                break;
+                case keyQ.eKEY.X:
+                queue_key_str.Enqueue("[X]");
+                Button_Blink_Start(button_X);
+                break;
+                case keyQ.eKEY.Y:
+                queue_key_str.Enqueue("[Y]");
+                Button_Blink_Start(button_Y);
+                break;
+                case keyQ.eKEY.Z:
+                queue_key_str.Enqueue("[Z]");
+                Button_Blink_Start(button_Z);
+                break;
+
+                case keyQ.eKEY.NUM1:
+                queue_key_str.Enqueue("[NUM1]");
+                Button_Blink_Start(button_Num1);
+                break;
+                case keyQ.eKEY.NUM2:
+                queue_key_str.Enqueue("[NUM2]");
+                Button_Blink_Start(button_Num2);
+                break;
+                case keyQ.eKEY.NUM3:
+                queue_key_str.Enqueue("[NUM3]");
+                Button_Blink_Start(button_Num3);
+                break;
+                case keyQ.eKEY.NUM4:
+                queue_key_str.Enqueue("[NUM4]");
+                Button_Blink_Start(button_Num4);
+                break;
+                case keyQ.eKEY.NUM5:
+                queue_key_str.Enqueue("[NUM5]");
+                Button_Blink_Start(button_Num5);
+                break;
+                case keyQ.eKEY.NUM6:
+                queue_key_str.Enqueue("[NUM6]");
+                Button_Blink_Start(button_Num6);
+                break;
+                case keyQ.eKEY.NUM7:
+                queue_key_str.Enqueue("[NUM7]");
+                Button_Blink_Start(button_Num7);
+                break;
+                case keyQ.eKEY.NUM8:
+                queue_key_str.Enqueue("[NUM8]");
+                Button_Blink_Start(button_Num8);
+                break;
+                case keyQ.eKEY.NUM9:
+                queue_key_str.Enqueue("[NUM9]");
+                Button_Blink_Start(button_Num9);
+                break;
+                case keyQ.eKEY.NUM0:
+                queue_key_str.Enqueue("[NUM0]");
+                Button_Blink_Start(button_Num0);
+                break;
+
+                case keyQ.eKEY.ENTER:
+                queue_key_str.Enqueue("[ENTER]");
+                Button_Blink_Start(button_Enter);
+                break;
+                case keyQ.eKEY.ESC:
+                queue_key_str.Enqueue("[ESC]");
+                Button_Blink_Start(button_ESC);
+                break;
+                case keyQ.eKEY.BACK:
+                queue_key_str.Enqueue("[BACK]");
+                Button_Blink_Start(button_BackSpace);
+                break;
+                case keyQ.eKEY.TAB:
+                queue_key_str.Enqueue("[TAB]");
+                Button_Blink_Start(button_Tab);
+                break;
+                case keyQ.eKEY.SPACE:
+                queue_key_str.Enqueue("[SPACE]");
+                Button_Blink_Start(button_Space);
+                break;
+
+                case keyQ.eKEY.MIN:
+                queue_key_str.Enqueue("[MIN]");
+                Button_Blink_Start(button_VV_Min);
+                break;
+                case keyQ.eKEY.ADD:
+                queue_key_str.Enqueue("[ADD]");
+                Button_Blink_Start(button_VV_Add);
+                break;
+                case keyQ.eKEY.KUO1:
+                queue_key_str.Enqueue("[KUO1]");
+                Button_Blink_Start(button_VV_kuo);
+                break;
+                case keyQ.eKEY.KUO2:
+                queue_key_str.Enqueue("[KUO2]");
+                Button_Blink_Start(button_VV_Kuo2);
+                break;
+                case keyQ.eKEY.OR:
+                queue_key_str.Enqueue("[OR]");
+                Button_Blink_Start(button_VV_Or);
+                break;
+                case keyQ.eKEY.MAO:
+                queue_key_str.Enqueue("[MAO]");
+                Button_Blink_Start(button_VV_Mao);
+                break;
+                case keyQ.eKEY.FEN:
+                queue_key_str.Enqueue("[FEN]");
+                Button_Blink_Start(button_VV_Fen);
+                break;
+                case keyQ.eKEY.DOU:
+                queue_key_str.Enqueue("[DOU]");
+                Button_Blink_Start(button_VV_Dou);
+                break;
+                case keyQ.eKEY.XIAO:
+                queue_key_str.Enqueue("[XIAO]");
+                Button_Blink_Start(button_VV_Xiaoyu);
+                break;
+                case keyQ.eKEY.DA:
+                queue_key_str.Enqueue("[DA]");
+                Button_Blink_Start(button_VV_Dayu);
+                break;
+                case keyQ.eKEY.WEN:
+                queue_key_str.Enqueue("[WEN]");
+                Button_Blink_Start(button_WenHao);
+                break;
+
+                case keyQ.eKEY.CAPS:
+                queue_key_str.Enqueue("[CAPS]");
+                Button_Blink_Start(button_Caps);
+                break;
+                case keyQ.eKEY.F1:
+                queue_key_str.Enqueue("[F1]");
+                Button_Blink_Start(button_F1);
+                break;
+                case keyQ.eKEY.F2:
+                queue_key_str.Enqueue("[F2]");
+                Button_Blink_Start(button_F2);
+                break;
+                case keyQ.eKEY.F3:
+                queue_key_str.Enqueue("[F3]");
+                Button_Blink_Start(button_F3);
+                break;
+                case keyQ.eKEY.F4:
+                queue_key_str.Enqueue("[F4]");
+                Button_Blink_Start(button_F4);
+                break;
+                case keyQ.eKEY.F5:
+                queue_key_str.Enqueue("[F5]");
+                Button_Blink_Start(button_F5);
+                break;
+                case keyQ.eKEY.F6:
+                queue_key_str.Enqueue("[F6]");
+                Button_Blink_Start(button_F6);
+                break;
+                case keyQ.eKEY.F7:
+                queue_key_str.Enqueue("[F7]");
+                Button_Blink_Start(button_F7);
+                break;
+                case keyQ.eKEY.F8:
+                queue_key_str.Enqueue("[F8]");
+                Button_Blink_Start(button_F8);
+                break;
+                case keyQ.eKEY.F9:
+                queue_key_str.Enqueue("[F9]");
+                Button_Blink_Start(button_F9);
+                break;
+                case keyQ.eKEY.F10:
+                queue_key_str.Enqueue("[F10]");
+                Button_Blink_Start(button_F10);
+                break;
+                case keyQ.eKEY.F11:
+                queue_key_str.Enqueue("[F11]");
+                Button_Blink_Start(button_F11);
+                break;
+                case keyQ.eKEY.F12:
+                queue_key_str.Enqueue("[F12]");
+                Button_Blink_Start(button_F12);
+                break;
+                case keyQ.eKEY.PRINTSCREEN:
+                queue_key_str.Enqueue("[PRINTSCREEN]");
+                Button_Blink_Start(button_Screen);
+                break;
+
+                case keyQ.eKEY.HOME:
+                queue_key_str.Enqueue("[HOME]");
+                Button_Blink_Start(button_Home);
+                break;
+                case keyQ.eKEY.PAGEUP:
+                queue_key_str.Enqueue("[PAGEUP]");
+                Button_Blink_Start(button_PageUp);
+                break;
+                case keyQ.eKEY.DEL:
+                queue_key_str.Enqueue("[DEL]");
+                Button_Blink_Start(button_Del);
+                break;
+                case keyQ.eKEY.END:
+                queue_key_str.Enqueue("[END]");
+                Button_Blink_Start(button_End);
+                break;
+                case keyQ.eKEY.PAGEDOWN:
+                queue_key_str.Enqueue("[PAGEDOWN]");
+                Button_Blink_Start(button_PageDown);
+                break;
+
+                case keyQ.eKEY.RIGHT:
+                queue_key_str.Enqueue("[RIGHT]");
+                Button_Blink_Start(button_Right);
+                break;
+                case keyQ.eKEY.LEFT:
+                queue_key_str.Enqueue("[LEFT]");
+                Button_Blink_Start(button_Left);
+                break;
+                case keyQ.eKEY.DOWN:
+                queue_key_str.Enqueue("[DOWN]");
+                Button_Blink_Start(button_Down);
+                break;
+                case keyQ.eKEY.UP:
+                queue_key_str.Enqueue("[UP]");
+                Button_Blink_Start(button_Up);
+                break;
+
+                case keyQ.eKEY.SHIFT:
+                queue_key_str.Enqueue("[SHIFT]");
+                Button_Blink_Start(button_Shift);
+                break;
+                case keyQ.eKEY.CTRL:
+                queue_key_str.Enqueue("[CTRL]");
+                Button_Blink_Start(button_Ctrl);
+                break;
+                case keyQ.eKEY.ALT:
+                queue_key_str.Enqueue("[ALT]");
+                Button_Blink_Start(button_Alt);
+                break;
+                case keyQ.eKEY.NULL:
+                queue_key_str.Enqueue("[NULL]");
+                Button_Blink_Start(button_Fn);
+                break;
+            }
+        }
+
         /**********************鼠标单击键盘按钮，用得少，主要用热键***********************/
-		private void button_Ctrl_Click(object sender, EventArgs e)
+        private void button_Ctrl_Click(object sender, EventArgs e)
 		{
             if (button_Ctrl.BackColor == System.Drawing.Color.Yellow)
             {
@@ -97,7 +431,7 @@ namespace KMouse
             }
 		}
 		
-        private void button_Win_Click(object sender, EventArgs e)
+        private void button_Fn_Click(object sender, EventArgs e)
         {
             KB_EnterKey(keyQ.eKEY.NULL);
         }
@@ -840,9 +1174,14 @@ namespace KMouse
 			//Func_KMouse_KeyDown();
 		}
 
-		protected override bool ProcessDialogKey(Keys keyData)		        //所有默认热键的keydown入口在这里
-		{
-			Func_KMouse_KeyDown(keyData);
+        protected override bool ProcessDialogKey(Keys keyData)              //所有默认热键的keydown入口在这里
+        {
+            if(func_op == eFunc_OP.CMDLIST)
+            {
+                return false;
+            }
+
+            Func_KMouse_KeyDown(keyData);
 			return true;
 		}
 
@@ -881,236 +1220,279 @@ namespace KMouse
 
         /**************************键盘热键 END******************************/
 
-
-        /**************************EKey Start******************************/
-        private void button_eKey_Click(object sender, EventArgs e)
+        private void Send_eKey()
         {
-	        uint i;
+            uint i;
 
-	        const byte SPEC_KEY_NONE = 0;
+            const byte SPEC_KEY_NONE = 0;
             const byte SPEC_KEY_CHK = 1;
             const byte SPEC_KEY_ING = 2;
 
             char[] spec_key_buff = new char[32];
 
-	        uint special_key_cnt = 0;
-	        byte special_key_step = SPEC_KEY_NONE;
-            
-            char[] char_buffer = textBox_eKey.Text.ToCharArray();
+            uint special_key_cnt = 0;
+            byte special_key_step = SPEC_KEY_NONE;
 
-	        for(i = 0; i < textBox_eKey.TextLength; i++)
-	        {
+            char[] char_buffer = textBox_EKey.Text.ToCharArray();
+
+            for(i = 0; i < textBox_EKey.TextLength; i++)
+            {
                 Console.WriteLine("c:{0}\n", char_buffer[i]);
 
-		        if(special_key_step == SPEC_KEY_NONE)
-		        {                    
-			        /**********************************将基本按键解释 Start*********************************/
-			        switch(char_buffer[i])
-			        {
-				        case '`': {KB_EnterKey(keyQ.eKEY.DOU); break; }
-				        case '1': {KB_EnterKey(keyQ.eKEY.NUM1); break; }
-				        case '2': {KB_EnterKey(keyQ.eKEY.NUM2); break; }
-				        case '3': {KB_EnterKey(keyQ.eKEY.NUM3); break; }
-				        case '4': {KB_EnterKey(keyQ.eKEY.NUM4); break; }
-				        case '5': {KB_EnterKey(keyQ.eKEY.NUM5); break; }
-				        case '6': {KB_EnterKey(keyQ.eKEY.NUM6); break; }
-				        case '7': {KB_EnterKey(keyQ.eKEY.NUM7); break; }
-				        case '8': {KB_EnterKey(keyQ.eKEY.NUM8); break; }
-				        case '9': {KB_EnterKey(keyQ.eKEY.NUM9); break; }
-				        case '0': {KB_EnterKey(keyQ.eKEY.NUM0); break; }
-				        case '-': {KB_EnterKey(keyQ.eKEY.MIN); break; }
-				        case '=': {KB_EnterKey(keyQ.eKEY.ADD); break; }
+                if(special_key_step == SPEC_KEY_NONE)
+                {
+                    /**********************************将基本按键解释 Start*********************************/
+                    switch(char_buffer[i])
+                    {
+                        case '`': { KB_EnterKey(keyQ.eKEY.DOU); break; }
+                        case '1': { KB_EnterKey(keyQ.eKEY.NUM1); break; }
+                        case '2': { KB_EnterKey(keyQ.eKEY.NUM2); break; }
+                        case '3': { KB_EnterKey(keyQ.eKEY.NUM3); break; }
+                        case '4': { KB_EnterKey(keyQ.eKEY.NUM4); break; }
+                        case '5': { KB_EnterKey(keyQ.eKEY.NUM5); break; }
+                        case '6': { KB_EnterKey(keyQ.eKEY.NUM6); break; }
+                        case '7': { KB_EnterKey(keyQ.eKEY.NUM7); break; }
+                        case '8': { KB_EnterKey(keyQ.eKEY.NUM8); break; }
+                        case '9': { KB_EnterKey(keyQ.eKEY.NUM9); break; }
+                        case '0': { KB_EnterKey(keyQ.eKEY.NUM0); break; }
+                        case '-': { KB_EnterKey(keyQ.eKEY.MIN); break; }
+                        case '=': { KB_EnterKey(keyQ.eKEY.ADD); break; }
 
-				        case 'q': {KB_EnterKey(keyQ.eKEY.Q); break; }
-				        case 'w': {KB_EnterKey(keyQ.eKEY.W); break; }
-				        case 'e': {KB_EnterKey(keyQ.eKEY.E); break; }
-				        case 'r': {KB_EnterKey(keyQ.eKEY.R); break; }
-				        case 't': {KB_EnterKey(keyQ.eKEY.T); break; }
-				        case 'y': {KB_EnterKey(keyQ.eKEY.Y); break; }
-				        case 'u': {KB_EnterKey(keyQ.eKEY.U); break; }
-				        case 'i': {KB_EnterKey(keyQ.eKEY.I); break; }
-				        case 'o': {KB_EnterKey(keyQ.eKEY.O); break; }
-				        case 'p': {KB_EnterKey(keyQ.eKEY.P); break; }
-                        		//case '[': {KB_EnterKey(keyQ.eKEY.KUO1); break; }
-				        case ']': {KB_EnterKey(keyQ.eKEY.KUO2); break; }
-				        case '\\': {KB_EnterKey(keyQ.eKEY.OR); break; }
+                        case 'q': { KB_EnterKey(keyQ.eKEY.Q); break; }
+                        case 'w': { KB_EnterKey(keyQ.eKEY.W); break; }
+                        case 'e': { KB_EnterKey(keyQ.eKEY.E); break; }
+                        case 'r': { KB_EnterKey(keyQ.eKEY.R); break; }
+                        case 't': { KB_EnterKey(keyQ.eKEY.T); break; }
+                        case 'y': { KB_EnterKey(keyQ.eKEY.Y); break; }
+                        case 'u': { KB_EnterKey(keyQ.eKEY.U); break; }
+                        case 'i': { KB_EnterKey(keyQ.eKEY.I); break; }
+                        case 'o': { KB_EnterKey(keyQ.eKEY.O); break; }
+                        case 'p': { KB_EnterKey(keyQ.eKEY.P); break; }
+                        //case '[': {KB_EnterKey(keyQ.eKEY.KUO1); break; }
+                        case ']': { KB_EnterKey(keyQ.eKEY.KUO2); break; }
+                        case '\\': { KB_EnterKey(keyQ.eKEY.OR); break; }
 
-				        case 'a': {KB_EnterKey(keyQ.eKEY.A); break; }
-				        case 's': {KB_EnterKey(keyQ.eKEY.S); break; }
-				        case 'd': {KB_EnterKey(keyQ.eKEY.D); break; }
-				        case 'f': {KB_EnterKey(keyQ.eKEY.F); break; }
-				        case 'g': {KB_EnterKey(keyQ.eKEY.G); break; }
-				        case 'h': {KB_EnterKey(keyQ.eKEY.H); break; }
-				        case 'j': {KB_EnterKey(keyQ.eKEY.J); break; }
-				        case 'k': {KB_EnterKey(keyQ.eKEY.K); break; }
-				        case 'l': {KB_EnterKey(keyQ.eKEY.L); break; }
-				        case ';': {KB_EnterKey(keyQ.eKEY.MAO); break; }
-				        case '\'':{KB_EnterKey(keyQ.eKEY.FEN); break; }
+                        case 'a': { KB_EnterKey(keyQ.eKEY.A); break; }
+                        case 's': { KB_EnterKey(keyQ.eKEY.S); break; }
+                        case 'd': { KB_EnterKey(keyQ.eKEY.D); break; }
+                        case 'f': { KB_EnterKey(keyQ.eKEY.F); break; }
+                        case 'g': { KB_EnterKey(keyQ.eKEY.G); break; }
+                        case 'h': { KB_EnterKey(keyQ.eKEY.H); break; }
+                        case 'j': { KB_EnterKey(keyQ.eKEY.J); break; }
+                        case 'k': { KB_EnterKey(keyQ.eKEY.K); break; }
+                        case 'l': { KB_EnterKey(keyQ.eKEY.L); break; }
+                        case ';': { KB_EnterKey(keyQ.eKEY.MAO); break; }
+                        case '\'': { KB_EnterKey(keyQ.eKEY.FEN); break; }
 
-				        case 'z': {KB_EnterKey(keyQ.eKEY.Z); break; }
-				        case 'x': {KB_EnterKey(keyQ.eKEY.X); break; }
-				        case 'c': {KB_EnterKey(keyQ.eKEY.C); break; }
-				        case 'v': {KB_EnterKey(keyQ.eKEY.V); break; }
-				        case 'b': {KB_EnterKey(keyQ.eKEY.B); break; }
-				        case 'n': {KB_EnterKey(keyQ.eKEY.N); break; }
-				        case 'm': {KB_EnterKey(keyQ.eKEY.M); break; }
-				        case ',': {KB_EnterKey(keyQ.eKEY.XIAO); break; }
-				        case '.': {KB_EnterKey(keyQ.eKEY.DA); break; }
-				        case '/': {KB_EnterKey(keyQ.eKEY.WEN); break; }
-				        case ' ': {KB_EnterKey(keyQ.eKEY.SPACE); break; }
-				        /**********************************将基本按键解释 END*********************************/
+                        case 'z': { KB_EnterKey(keyQ.eKEY.Z); break; }
+                        case 'x': { KB_EnterKey(keyQ.eKEY.X); break; }
+                        case 'c': { KB_EnterKey(keyQ.eKEY.C); break; }
+                        case 'v': { KB_EnterKey(keyQ.eKEY.V); break; }
+                        case 'b': { KB_EnterKey(keyQ.eKEY.B); break; }
+                        case 'n': { KB_EnterKey(keyQ.eKEY.N); break; }
+                        case 'm': { KB_EnterKey(keyQ.eKEY.M); break; }
+                        case ',': { KB_EnterKey(keyQ.eKEY.XIAO); break; }
+                        case '.': { KB_EnterKey(keyQ.eKEY.DA); break; }
+                        case '/': { KB_EnterKey(keyQ.eKEY.WEN); break; }
+                        case ' ': { KB_EnterKey(keyQ.eKEY.SPACE); break; }
+                        /**********************************将基本按键解释 END*********************************/
 
-				        /**********************************将上档按键解释 Start*********************************/
-				        case '~': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.DOU);break;}
-				        case '!': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM1);break;}
-				        case '@': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM2);break;}
-				        case '#': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM3);break;}
-				        case '$': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM4);break;}
-				        case '%': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM5);break;}
-				        case '^': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM6);break;}
-				        case '&': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM7);break;}
-				        case '*': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM8);break;}
-				        case '(': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM9);break;}
-				        case ')': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.NUM0);break;}
-				        case '_': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.MIN);break;}
-				        case '+': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.ADD);break;}
+                        /**********************************将上档按键解释 Start*********************************/
+                        case '~': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.DOU); break; }
+                        case '!': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM1); break; }
+                        case '@': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM2); break; }
+                        case '#': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM3); break; }
+                        case '$': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM4); break; }
+                        case '%': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM5); break; }
+                        case '^': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM6); break; }
+                        case '&': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM7); break; }
+                        case '*': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM8); break; }
+                        case '(': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM9); break; }
+                        case ')': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.NUM0); break; }
+                        case '_': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.MIN); break; }
+                        case '+': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.ADD); break; }
 
-				        case 'Q': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.Q);break;}
-				        case 'W': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.W);break;}
-				        case 'E': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.E);break;}
-				        case 'R': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.R);break;}
-				        case 'T': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.T);break;}
-				        case 'Y': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.Y);break;}
-				        case 'U': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.U);break;}
-				        case 'I': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.I);break;}
-				        case 'O': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.O);break;}
-				        case 'P': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.P);break;}
-				        case '{': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.KUO1);break;}
-				        case '}': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.KUO2);break;}
-				        case '|': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.OR);break;}
+                        case 'Q': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.Q); break; }
+                        case 'W': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.W); break; }
+                        case 'E': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.E); break; }
+                        case 'R': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.R); break; }
+                        case 'T': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.T); break; }
+                        case 'Y': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.Y); break; }
+                        case 'U': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.U); break; }
+                        case 'I': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.I); break; }
+                        case 'O': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.O); break; }
+                        case 'P': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.P); break; }
+                        case '{': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.KUO1); break; }
+                        case '}': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.KUO2); break; }
+                        case '|': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.OR); break; }
 
-				        case 'A': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.A);break;}
-				        case 'S': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.S);break;}
-				        case 'D': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.D);break;}
-				        case 'F': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.F);break;}
-				        case 'G': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.G);break;}
-				        case 'H': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.H);break;}
-				        case 'J': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.J);break;}
-				        case 'K': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.K);break;}
-				        case 'L': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.L);break;}
-				        case ':': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.MAO);break;}
-				        case '"': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.FEN);break;}
+                        case 'A': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.A); break; }
+                        case 'S': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.S); break; }
+                        case 'D': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.D); break; }
+                        case 'F': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.F); break; }
+                        case 'G': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.G); break; }
+                        case 'H': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.H); break; }
+                        case 'J': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.J); break; }
+                        case 'K': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.K); break; }
+                        case 'L': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.L); break; }
+                        case ':': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.MAO); break; }
+                        case '"': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.FEN); break; }
 
-				        case 'Z': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.Z);break;}
-				        case 'X': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.X);break;}
-				        case 'C': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.C);break;}
-				        case 'V': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.V);break;}
-				        case 'B': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.B);break;}
-				        case 'N': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.N);break;}
-				        case 'M': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.M);break;}
-				        case '<': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.XIAO);break;}
-				        case '>': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.DA);break;}
-				        case '?': {button_Shift.BackColor = System.Drawing.Color.Yellow;KB_EnterKey(keyQ.eKEY.WEN);break;}
-				        /**********************************将上档按键解释 END*********************************/
+                        case 'Z': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.Z); break; }
+                        case 'X': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.X); break; }
+                        case 'C': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.C); break; }
+                        case 'V': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.V); break; }
+                        case 'B': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.B); break; }
+                        case 'N': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.N); break; }
+                        case 'M': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.M); break; }
+                        case '<': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.XIAO); break; }
+                        case '>': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.DA); break; }
+                        case '?': { button_Shift.BackColor = System.Drawing.Color.Yellow; KB_EnterKey(keyQ.eKEY.WEN); break; }
+                        /**********************************将上档按键解释 END*********************************/
 
-				        //触发特殊按键
-				        case '[':
-				        {
-					        special_key_step = SPEC_KEY_CHK;
-					        continue;
-				        }
+                        //触发特殊按键
+                        case '[':
+                            {
+                                special_key_step = SPEC_KEY_CHK;
+                                continue;
+                            }
 
-				        default:
-                        {
-                            MessageBox.Show("无效的输入字符" + char_buffer[i].ToString(), "错误");
-                            break;
-                        }                        
-			        }
-		        }
-		        else if(special_key_step == SPEC_KEY_CHK)
-		        {
-			        if(char_buffer[i] == '[')
-			        {
-                        		KB_EnterKey(keyQ.eKEY.KUO1);
-				        special_key_step = SPEC_KEY_NONE;
-			        }
-			        else
-			        {
-				        spec_key_buff[special_key_cnt++] = char_buffer[i];
-				        special_key_step = SPEC_KEY_ING;
-			        }
-		        }
-		        else if(special_key_step == SPEC_KEY_ING)
-		        {
-			        if(char_buffer[i] == ']')
-			        {
-                        if (Func.Char_String_compare(spec_key_buff, "shift", 5) == true)	//Shift
-				        {
-                            button_Shift.BackColor = System.Drawing.Color.Yellow;
-				        }
-                        else if (Func.Char_String_compare(spec_key_buff, "ctrl", 4) == true)//Ctrl	
-				        {
-                            button_Ctrl.BackColor = System.Drawing.Color.Yellow;
-				        }
-                        else if (Func.Char_String_compare(spec_key_buff, "alt", 3) == true)	//Alt
-				        {
-                            button_Alt.BackColor = System.Drawing.Color.Yellow;
-				        }
-				        else
-				        {
-
-                            if (Func.Char_String_compare(spec_key_buff, "esc", 3) == true) { KB_EnterKey(keyQ.eKEY.ESC); }//ESC
-                            else if (Func.Char_String_compare(spec_key_buff, "f1", 2) == true) { KB_EnterKey(keyQ.eKEY.F1); }//F1
-                            else if (Func.Char_String_compare(spec_key_buff, "f2", 2) == true) { KB_EnterKey(keyQ.eKEY.F2); }//F2
-                            else if (Func.Char_String_compare(spec_key_buff, "f3", 2) == true) { KB_EnterKey(keyQ.eKEY.F3); }//F3
-                            else if (Func.Char_String_compare(spec_key_buff, "f4", 2) == true) { KB_EnterKey(keyQ.eKEY.F4); }//F4
-                            else if (Func.Char_String_compare(spec_key_buff, "f5", 2) == true) { KB_EnterKey(keyQ.eKEY.F5); }//F5
-                            else if (Func.Char_String_compare(spec_key_buff, "f6", 2) == true) { KB_EnterKey(keyQ.eKEY.F6); }//F6
-                            else if (Func.Char_String_compare(spec_key_buff, "f7", 2) == true) { KB_EnterKey(keyQ.eKEY.F7); }//F7
-                            else if (Func.Char_String_compare(spec_key_buff, "f8", 2) == true) { KB_EnterKey(keyQ.eKEY.F8); }//F8
-                            else if (Func.Char_String_compare(spec_key_buff, "f9", 2) == true) { KB_EnterKey(keyQ.eKEY.F9); }//F9
-                            else if (Func.Char_String_compare(spec_key_buff, "f10", 3) == true) { KB_EnterKey(keyQ.eKEY.F10); }//F10
-                            else if (Func.Char_String_compare(spec_key_buff, "f11", 3) == true) { KB_EnterKey(keyQ.eKEY.F11); }//F11
-                            else if (Func.Char_String_compare(spec_key_buff, "f12", 3) == true) { KB_EnterKey(keyQ.eKEY.F12); }//F12
-                            else if (Func.Char_String_compare(spec_key_buff, "del", 3) == true) { KB_EnterKey(keyQ.eKEY.DEL); }//Del
-                            else if (Func.Char_String_compare(spec_key_buff, "bp", 2) == true) { KB_EnterKey(keyQ.eKEY.BACK); }//BP
-                            else if (Func.Char_String_compare(spec_key_buff, "tab", 3) == true) { KB_EnterKey(keyQ.eKEY.TAB); ; }//Tab
-                            else if (Func.Char_String_compare(spec_key_buff, "caps", 4) == true) { KB_EnterKey(keyQ.eKEY.CAPS); ; }//Caps
-                            else if (Func.Char_String_compare(spec_key_buff, "enter", 5) == true) { KB_EnterKey(keyQ.eKEY.ENTER); ; }//Enter
-                            else if (Func.Char_String_compare(spec_key_buff, "home", 4) == true) { KB_EnterKey(keyQ.eKEY.HOME); ; }//Home
-                            else if (Func.Char_String_compare(spec_key_buff, "psc", 3) == true) { KB_EnterKey(keyQ.eKEY.PRINTSCREEN); ; }//PrintScreen
-                            else if (Func.Char_String_compare(spec_key_buff, "up", 2) == true) { KB_EnterKey(keyQ.eKEY.UP); ; }//Up
-                            else if (Func.Char_String_compare(spec_key_buff, "end", 2) == true) { KB_EnterKey(keyQ.eKEY.END); ; }//End				
-                            else if (Func.Char_String_compare(spec_key_buff, "pageup", 6) == true) { KB_EnterKey(keyQ.eKEY.PAGEUP); ; }//Page Up
-                            else if (Func.Char_String_compare(spec_key_buff, "pagedown", 8) == true) { KB_EnterKey(keyQ.eKEY.PAGEDOWN); ; }//Page Down
-                            else if (Func.Char_String_compare(spec_key_buff, "left", 4) == true) { KB_EnterKey(keyQ.eKEY.LEFT); ; }//Left
-                            else if (Func.Char_String_compare(spec_key_buff, "down", 4) == true) { KB_EnterKey(keyQ.eKEY.DOWN); ; }//Down
-                            else if (Func.Char_String_compare(spec_key_buff, "right", 5) == true) { KB_EnterKey(keyQ.eKEY.RIGHT); ; }//Right
-                            else if (Func.Char_String_compare(spec_key_buff, "null", 4) == true) { KB_EnterKey(keyQ.eKEY.NULL); ; }//空按键，触发组合键
-                            //else if(Func.Char_String_compare(spec_key_buff, "fn", 2) == true){KB_EnterKey(keyQ.eKEY.NULL);}//fn
-                            //else if(Func.Char_String_compare(spec_key_buff, "win", 3) == true){KB_EnterKey(keyQ.eKEY.NULL);}//win
-					        else
-					        {
-                                MessageBox.Show("无效的特殊字符" + char_buffer[i].ToString(), "错误");
-					        }
-				        }
-
-				        //特殊件处理结束
-				        special_key_cnt = 0;
-				        special_key_step = SPEC_KEY_NONE;
-			        }
-			        else
-			        {
+                        default:
+                            {
+                                MessageBox.Show("无效的输入字符" + char_buffer[i].ToString(), "错误");
+                                break;
+                            }
+                    }
+                }
+                else if(special_key_step == SPEC_KEY_CHK)
+                {
+                    if(char_buffer[i] == '[')
+                    {
+                        KB_EnterKey(keyQ.eKEY.KUO1);
+                        special_key_step = SPEC_KEY_NONE;
+                    }
+                    else
+                    {
                         spec_key_buff[special_key_cnt++] = char_buffer[i];
-			        }
-		        }
-		        else
-		        {
+                        special_key_step = SPEC_KEY_ING;
+                    }
+                }
+                else if(special_key_step == SPEC_KEY_ING)
+                {
+                    if(char_buffer[i] == ']')
+                    {
+                        if(Func.Char_String_compare(spec_key_buff, "shift", 5) == true) //Shift
+                        {
+                            button_Shift.BackColor = System.Drawing.Color.Yellow;
+                        }
+                        else if(Func.Char_String_compare(spec_key_buff, "ctrl", 4) == true)//Ctrl	
+                        {
+                            button_Ctrl.BackColor = System.Drawing.Color.Yellow;
+                        }
+                        else if(Func.Char_String_compare(spec_key_buff, "alt", 3) == true)  //Alt
+                        {
+                            button_Alt.BackColor = System.Drawing.Color.Yellow;
+                        }
+                        else
+                        {
+
+                            if(Func.Char_String_compare(spec_key_buff, "esc", 3) == true) { KB_EnterKey(keyQ.eKEY.ESC); }//ESC
+                            else if(Func.Char_String_compare(spec_key_buff, "f1", 2) == true) { KB_EnterKey(keyQ.eKEY.F1); }//F1
+                            else if(Func.Char_String_compare(spec_key_buff, "f2", 2) == true) { KB_EnterKey(keyQ.eKEY.F2); }//F2
+                            else if(Func.Char_String_compare(spec_key_buff, "f3", 2) == true) { KB_EnterKey(keyQ.eKEY.F3); }//F3
+                            else if(Func.Char_String_compare(spec_key_buff, "f4", 2) == true) { KB_EnterKey(keyQ.eKEY.F4); }//F4
+                            else if(Func.Char_String_compare(spec_key_buff, "f5", 2) == true) { KB_EnterKey(keyQ.eKEY.F5); }//F5
+                            else if(Func.Char_String_compare(spec_key_buff, "f6", 2) == true) { KB_EnterKey(keyQ.eKEY.F6); }//F6
+                            else if(Func.Char_String_compare(spec_key_buff, "f7", 2) == true) { KB_EnterKey(keyQ.eKEY.F7); }//F7
+                            else if(Func.Char_String_compare(spec_key_buff, "f8", 2) == true) { KB_EnterKey(keyQ.eKEY.F8); }//F8
+                            else if(Func.Char_String_compare(spec_key_buff, "f9", 2) == true) { KB_EnterKey(keyQ.eKEY.F9); }//F9
+                            else if(Func.Char_String_compare(spec_key_buff, "f10", 3) == true) { KB_EnterKey(keyQ.eKEY.F10); }//F10
+                            else if(Func.Char_String_compare(spec_key_buff, "f11", 3) == true) { KB_EnterKey(keyQ.eKEY.F11); }//F11
+                            else if(Func.Char_String_compare(spec_key_buff, "f12", 3) == true) { KB_EnterKey(keyQ.eKEY.F12); }//F12
+                            else if(Func.Char_String_compare(spec_key_buff, "del", 3) == true) { KB_EnterKey(keyQ.eKEY.DEL); }//Del
+                            else if(Func.Char_String_compare(spec_key_buff, "bp", 2) == true) { KB_EnterKey(keyQ.eKEY.BACK); }//BP
+                            else if(Func.Char_String_compare(spec_key_buff, "tab", 3) == true) { KB_EnterKey(keyQ.eKEY.TAB); ; }//Tab
+                            else if(Func.Char_String_compare(spec_key_buff, "caps", 4) == true) { KB_EnterKey(keyQ.eKEY.CAPS); ; }//Caps
+                            else if(Func.Char_String_compare(spec_key_buff, "enter", 5) == true) { KB_EnterKey(keyQ.eKEY.ENTER); ; }//Enter
+                            else if(Func.Char_String_compare(spec_key_buff, "home", 4) == true) { KB_EnterKey(keyQ.eKEY.HOME); ; }//Home
+                            else if(Func.Char_String_compare(spec_key_buff, "psc", 3) == true) { KB_EnterKey(keyQ.eKEY.PRINTSCREEN); ; }//PrintScreen
+                            else if(Func.Char_String_compare(spec_key_buff, "up", 2) == true) { KB_EnterKey(keyQ.eKEY.UP); ; }//Up
+                            else if(Func.Char_String_compare(spec_key_buff, "end", 2) == true) { KB_EnterKey(keyQ.eKEY.END); ; }//End				
+                            else if(Func.Char_String_compare(spec_key_buff, "pageup", 6) == true) { KB_EnterKey(keyQ.eKEY.PAGEUP); ; }//Page Up
+                            else if(Func.Char_String_compare(spec_key_buff, "pagedown", 8) == true) { KB_EnterKey(keyQ.eKEY.PAGEDOWN); ; }//Page Down
+                            else if(Func.Char_String_compare(spec_key_buff, "left", 4) == true) { KB_EnterKey(keyQ.eKEY.LEFT); ; }//Left
+                            else if(Func.Char_String_compare(spec_key_buff, "down", 4) == true) { KB_EnterKey(keyQ.eKEY.DOWN); ; }//Down
+                            else if(Func.Char_String_compare(spec_key_buff, "right", 5) == true) { KB_EnterKey(keyQ.eKEY.RIGHT); ; }//Right
+                            else if(Func.Char_String_compare(spec_key_buff, "null", 4) == true) { KB_EnterKey(keyQ.eKEY.NULL); ; }//空按键，触发组合键
+                                                                                                                                  //else if(Func.Char_String_compare(spec_key_buff, "fn", 2) == true){KB_EnterKey(keyQ.eKEY.NULL);}//fn
+                                                                                                                                  //else if(Func.Char_String_compare(spec_key_buff, "win", 3) == true){KB_EnterKey(keyQ.eKEY.NULL);}//win
+                            else
+                            {
+                                MessageBox.Show("无效的特殊字符" + char_buffer[i].ToString(), "错误");
+                            }
+                        }
+
+                        //特殊件处理结束
+                        special_key_cnt = 0;
+                        special_key_step = SPEC_KEY_NONE;
+                    }
+                    else
+                    {
+                        spec_key_buff[special_key_cnt++] = char_buffer[i];
+                    }
+                }
+                else
+                {
                     MessageBox.Show("无效的处理流程" + char_buffer[i].ToString(), "错误");
-		        }
-	        }
+                }
+            }
+        }
+        /**************************EKey Start******************************/
+        private void button_Run_Click(object sender, EventArgs e)
+        {
+            if(func_op == eFunc_OP.EKEY)
+            {
+                Send_eKey();
+            }
+            else if(func_op == eFunc_OP.CMDLIST)
+            {
+                cmd_list.Run(textBox_Cmdlist);
+            }
+            else
+            {
+
+            }
         }
         /***************************EKey End*******************************/
-	}
+
+        void timer_ButtonBlink_ticks(object sender, EventArgs e)
+        {
+            MyTimer _MyTimer = sender as MyTimer;
+
+            Button _button = _MyTimer.context as Button;
+
+            this.Invoke((EventHandler)(delegate
+            {
+                _button.BackColor = Color.Gainsboro;
+            }));
+
+            _MyTimer.Close();
+        }
+
+        void Button_Blink_Start(object sender)
+        {
+            Button _button = sender as Button;
+            
+            MyTimer timer_button_blink = new MyTimer();
+            timer_button_blink.Elapsed += new System.Timers.ElapsedEventHandler(timer_ButtonBlink_ticks);
+            timer_button_blink.AutoReset = false;
+            timer_button_blink.Interval = 100;
+            timer_button_blink.context = _button;
+            
+            _button.BackColor = Color.Yellow;
+
+            timer_button_blink.Enabled = true;
+        }
+    }
 }
 

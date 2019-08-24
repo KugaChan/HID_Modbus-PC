@@ -27,6 +27,7 @@ namespace KMouse
             MOUSE_SPEED = 7,
             KEYBOARD = 9,
             USB_RECONNECT = 11,
+            MOVEMENT = 13,
             SYSTEM_REBOOT = 66,
         }
 
@@ -49,7 +50,6 @@ namespace KMouse
         public bool echo_en = false;    //是否回显命令
         public bool send_cmd_is_busy = false;
 
-        public Action Action_UpdateModbussState;
         public delegate void Delegate_ModbusCallBack(uint value);
         public Delegate_ModbusCallBack Delegate_ModbusCallBack_Identify;
         public Delegate_ModbusCallBack Delegate_ModbusCallBack_Click;
@@ -63,7 +63,6 @@ namespace KMouse
         Queue<string> queue_message;
 
         public void Init(keyQ _kq, SerialPort _com, Queue<string> _queue_message,
-            Action _Action_UpdateModbussState,
             Delegate_ModbusCallBack _Delegate_ModbusCallBack_Identify,
             Delegate_ModbusCallBack _Delegate_ModbusCallBack_Click,
             Delegate_ModbusCallBack _Delegate_ModbusCallBack_Speed)
@@ -71,7 +70,6 @@ namespace KMouse
             kq = _kq;
             com = _com;
             queue_message = _queue_message;
-            Action_UpdateModbussState = _Action_UpdateModbussState;
             Delegate_ModbusCallBack_Identify = _Delegate_ModbusCallBack_Identify;
             Delegate_ModbusCallBack_Click = _Delegate_ModbusCallBack_Click;
             Delegate_ModbusCallBack_Speed = _Delegate_ModbusCallBack_Speed;
@@ -336,7 +334,7 @@ namespace KMouse
             ushort CRC_Result_Trans = 0;
 			byte Register_Address = 0;
 
-			is_busy = false;
+            is_busy = false;
             switch (modbus_recv_data[1])									//功能码
 			{
 				case 0x03:													//读寄存器的值(WORD)
@@ -386,7 +384,8 @@ namespace KMouse
 
 							case REG.KEYBOARD:
 							case REG.SYSTEM_REBOOT:
-							case REG.USB_RECONNECT:
+                            case REG.MOVEMENT:
+                            case REG.USB_RECONNECT:
 							{
 								break;
 							}
@@ -461,7 +460,6 @@ namespace KMouse
                 fail_cnt++;
                 send_cmd_is_busy = false;
             }
-            Action_UpdateModbussState.Invoke();
 
             Console.Write("\r\n");
 

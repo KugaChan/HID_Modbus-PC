@@ -133,7 +133,15 @@ namespace KMouse
 		        public const uint CHECK = 2;
             }
 
-		    public const uint LEAVE = 0x0000FFFF;
+            public struct MOVEMENT
+            {
+                public const uint BOOT = 0;
+                public const uint SHUTDOWN = 1;
+                public const uint IO_High = 2;
+                public const uint IO_Low = 3;
+            }
+
+            public const uint LEAVE = 0x0000FFFF;
         }
 
         public bool[] mouse_press_en = new bool[MOUSE.PRESS.ALL];
@@ -145,7 +153,7 @@ namespace KMouse
         public const int MODBUS_KB_WAITING_EKEY = 1024;
         public int modbus_kb_waiting_max = MODBUS_KB_WAITING_NORMAL;
 
-        public Queue<keyQ.eKEY> queue_key = new Queue<keyQ.eKEY>();
+        public Queue<keyQ.eKEY> queue_key = new Queue<keyQ.eKEY>();        
 
         public void TimerHandler_QueueFull(object source, System.Timers.ElapsedEventArgs e)
         {
@@ -180,10 +188,11 @@ namespace KMouse
         {
             queue_key.Clear();
         }
+        
 
         public bool FIFO_Input(keyQ.eKEY key)
         {
-            Console.WriteLine("keyQ In:{0}", key);
+            Console.WriteLine("keyQ In:{0}", key);            
 
             if(timer_queue_full.Enabled == true)
             {

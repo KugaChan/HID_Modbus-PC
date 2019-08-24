@@ -8,8 +8,17 @@
     <Setting Name="_com_num_select_index" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
-    <Setting Name="eKey_string" Type="System.String" Scope="User">
+    <Setting Name="_eKey_string" Type="System.String" Scope="User">
       <Value Profile="(Default)">Hello world!</Value>
+    </Setting>
+    <Setting Name="_func_op" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="_cmdlist_string" Type="System.String" Scope="User">
+      <Value Profile="(Default)">identify()</Value>
+    </Setting>
+    <Setting Name="_cmdlist_cycle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

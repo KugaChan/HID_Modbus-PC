@@ -12,7 +12,7 @@ namespace KMouse.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -50,12 +50,48 @@ namespace KMouse.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Hello world!")]
-        public string eKey_string {
+        public string _eKey_string {
             get {
-                return ((string)(this["eKey_string"]));
+                return ((string)(this["_eKey_string"]));
             }
             set {
-                this["eKey_string"] = value;
+                this["_eKey_string"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int _func_op {
+            get {
+                return ((int)(this["_func_op"]));
+            }
+            set {
+                this["_func_op"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("identify()")]
+        public string _cmdlist_string {
+            get {
+                return ((string)(this["_cmdlist_string"]));
+            }
+            set {
+                this["_cmdlist_string"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5000")]
+        public string _cmdlist_cycle {
+            get {
+                return ((string)(this["_cmdlist_cycle"]));
+            }
+            set {
+                this["_cmdlist_cycle"] = value;
             }
         }
     }
