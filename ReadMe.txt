@@ -1,5 +1,10 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git26
+1. 变量不在通过windows program data保存，而是使用本地的ini文件
+2. 加入了鼠标移动命令和自动超稳命令
+3. 可以通过命令行带参数输入地执行指定动作
+
 Git25
 1. 增加COMList功能，可以通过命令列表做一些事情，目前仅支持IO的跳动
 2. 支持命令行参数的输入，执行对应的功能

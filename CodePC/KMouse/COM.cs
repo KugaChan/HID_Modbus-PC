@@ -77,7 +77,7 @@ namespace KMouse
                         SerialIn += s;
                     }
                 }
-                Console.WriteLine(SerialIn);
+                Dbg.WriteLine(SerialIn);
                 _comboBox_COMNumber.Items.Add(SerialIn);                    //将设备列表里的COM放进下拉菜单上
             }
         }
@@ -107,7 +107,7 @@ namespace KMouse
             recv_cnt = 0;
             if(com_is_receiving == true)
             {
-                Console.WriteLine("COM is receving data, Wait...");
+                Dbg.WriteLine("COM is receving data, Wait...");
                 return false;
             }
 
@@ -125,11 +125,11 @@ namespace KMouse
 
         public bool Open()
         {
-            Console.WriteLine("PortName:{0}", serialport.PortName);
-            Console.WriteLine("Baudrate:{0}", serialport.BaudRate);
-            Console.WriteLine("Parity:{0}", serialport.Parity);
-            Console.WriteLine("Data:{0}", serialport.DataBits);
-            Console.WriteLine("Stop:{0}", serialport.StopBits);
+            Dbg.WriteLine("PortName:{0}", serialport.PortName);
+            Dbg.WriteLine("Baudrate:{0}", serialport.BaudRate);
+            Dbg.WriteLine("Parity:{0}", serialport.Parity);
+            Dbg.WriteLine("Data:{0}", serialport.DataBits);
+            Dbg.WriteLine("Stop:{0}", serialport.StopBits);
 
             if((serialport.PortName == "null") ||
                 (serialport.BaudRate == 1) ||
@@ -166,7 +166,7 @@ namespace KMouse
 		
         private void Func_COM_DataRec(object sender, SerialDataReceivedEventArgs e)  //串口接受函数
 		{
-            Console.WriteLine("en:{0}", timer_CloseSerialPort.Enabled);
+            Dbg.WriteLine("en:{0}", timer_CloseSerialPort.Enabled);
             if(timer_CloseSerialPort.Enabled == true)
             {
                 return;
@@ -210,7 +210,7 @@ namespace KMouse
         {
             bool res = Close();
 
-            Console.WriteLine("Close COM:{0}\n", res);
+            Dbg.WriteLine("Close COM:{0}\n", res);
 
             if(res == true)
             {
@@ -223,7 +223,7 @@ namespace KMouse
             }
             else
             {
-                Console.WriteLine("#Close COM fail, try again:{0}\n", timer_CloseSerialPort.Enabled);
+                Dbg.WriteLine("#Close COM fail, try again:{0}\n", timer_CloseSerialPort.Enabled);
             }
         }
     }

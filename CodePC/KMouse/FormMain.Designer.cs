@@ -386,6 +386,7 @@
             this.textBox_Cmdlist.Size = new System.Drawing.Size(69, 318);
             this.textBox_Cmdlist.TabIndex = 47;
             this.textBox_Cmdlist.Text = "Shutdown()";
+            this.textBox_Cmdlist.WordWrap = false;
             // 
             // button_MoveUp
             // 

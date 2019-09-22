@@ -155,8 +155,8 @@ namespace KMouse
 
         private void timer_rcv_timeout_Tick(object sender, EventArgs e)	//10ms
 		{
-			//Console.WriteLine(DateTime.Now.ToString("yy/MM/dd HH:mm:ss"));
-			//Console.WriteLine("modbus_recv_timeout:{0}", modbus_recv_timeout);
+			//Dbg.WriteLine(DateTime.Now.ToString("yy/MM/dd HH:mm:ss"));
+			//Dbg.WriteLine("modbus_recv_timeout:{0}", modbus_recv_timeout);
 
             //发了命令，但是1s内都没有回复
             if (is_busy == true)
@@ -177,7 +177,7 @@ namespace KMouse
                     if (res == false)
                     {
                         //Func_COM_Close();
-                        Console.WriteLine("Dont close COM B");
+                        Dbg.WriteLine("Dont close COM B");
                     }
                 }
             }
@@ -256,7 +256,7 @@ namespace KMouse
 					//modbus_recv_num = 8;
 				}
 				modbus_recv_cnt++;
-				Console.WriteLine("     modbus_recv_cnt:{0}({1})", modbus_recv_cnt, modbus_recv_num);
+				Dbg.WriteLine("     modbus_recv_cnt:{0}({1})", modbus_recv_cnt, modbus_recv_num);
 				if(modbus_recv_cnt == modbus_recv_num)
 				{
 					bool res;
@@ -264,7 +264,7 @@ namespace KMouse
 					if(res == false)
 					{
 						//Func_COM_Close();
-                        Console.WriteLine("Dont close COM A");
+                        Dbg.WriteLine("Dont close COM A");
 					}
 				}
 			}
@@ -351,13 +351,13 @@ namespace KMouse
 						Func_Val = ((((uint)modbus_recv_data[4]) << 8) |
 									(((uint)modbus_recv_data[5]) << 0));
 
-						Console.WriteLine("MBI Reg:{0} Num:{1} Val:{2}", Register_Address, Need_Read_WORD_Num, Func_Val);
+						Dbg.WriteLine("MBI Reg:{0} Num:{1} Val:{2}", Register_Address, Need_Read_WORD_Num, Func_Val);
 
 						switch((REG)Register_Address)
 						{
 							case REG.IDENTIFY:								//测试modbus通信是否正常
 							{
-								//Console.WriteLine("IDENTIFY:{0:X}", Func_Val);
+								//Dbg.WriteLine("IDENTIFY:{0:X}", Func_Val);
 								Delegate_ModbusCallBack_Identify(Func_Val);
 								
 								break;
@@ -365,7 +365,7 @@ namespace KMouse
 
 							case REG.MOUSE_PRESS:
 							{
-								//Console.WriteLine("MOUSE_PRESS:{0:X}", Func_Val);
+								//Dbg.WriteLine("MOUSE_PRESS:{0:X}", Func_Val);
 								break;
 							}
 
@@ -377,7 +377,7 @@ namespace KMouse
 
 							case REG.MOUSE_SPEED:
 							{
-                                //Console.WriteLine("MOUSE_SPEED:{0:X}", Func_Val);
+                                //Dbg.WriteLine("MOUSE_SPEED:{0:X}", Func_Val);
 								Delegate_ModbusCallBack_Speed(Func_Val);
 								break;
 							}

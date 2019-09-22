@@ -20,9 +20,6 @@ namespace KMouse
         keyQ kq = new keyQ();
         COM com = new COM();
 
-		//常量
-		private const byte _VersionGit = 25;
-
         public enum eFunc_OP : int    //设定enum的数据类型
         {
             NULL = 0x00,
@@ -42,12 +39,14 @@ namespace KMouse
 
 		private void FormMain_Load(object sender, EventArgs e)
 		{
-            this.Text = "KMouse Git" + _VersionGit.ToString();
+            this.Text = "KMouse Git" + Param._VersionGit.ToString();
 
-            textBox_Cycle.Text = Properties.Settings.Default._cmdlist_cycle;
-            textBox_EKey.Text = Properties.Settings.Default._eKey_string;
-            textBox_Cmdlist.Text = Properties.Settings.Default._cmdlist_string;
-            func_op = (eFunc_OP)Properties.Settings.Default._func_op;
+            Param.LoadIniParameter();
+
+            textBox_EKey.Text = Param.ini.eKey_String;
+            textBox_Cycle.Text = Param.ini.cmdlist_cycle.ToString();
+            textBox_Cmdlist.Text = Param.ini.cmdlist_string;
+            func_op = (eFunc_OP)Param.ini.func_op;
 
             com.ControlModule_Init(comboBox_COMNumber, comboBox_COMBaudrate,
                 comboBox_COMCheckBit, comboBox_COMDataBit, comboBox_COMStopBit);
@@ -95,7 +94,10 @@ namespace KMouse
             kq.Close();
             mdbs.Close();
 
-            Func_PropertiesSettingsSave();  //关闭的时候保存参数
+            if(Program.call_from_cmd == false)  //命令行调用的话，窗体可能被异常关闭，此时不能去编译ini
+            {
+                Func_PropertiesSettingsSave();  //关闭的时候保存参数
+            }
 
 			notifyIcon.Dispose();
             this.Close();
@@ -107,18 +109,18 @@ namespace KMouse
             e.Cancel = true;//取消窗体的关闭
             timer_CloseForm.Enabled = true;
 		}
-
+                
         private void Func_PropertiesSettingsSave()
-        {
-            Properties.Settings.Default._cmdlist_cycle = textBox_Cycle.Text;
-            Properties.Settings.Default._eKey_string = textBox_EKey.Text;
-            Properties.Settings.Default._cmdlist_string = textBox_Cmdlist.Text;
-            Properties.Settings.Default._func_op = (int)func_op;
+        {   
+            Param.ini.cmdlist_cycle = int.Parse(textBox_Cycle.Text);
+            Param.ini.eKey_String = textBox_EKey.Text;
+            Param.ini.cmdlist_string = textBox_Cmdlist.Text;
+            Param.ini.func_op = (int)func_op;
 
-            Properties.Settings.Default._baudrate_select_index = comboBox_COMBaudrate.SelectedIndex;
-            Properties.Settings.Default._com_num_select_index = comboBox_COMNumber.SelectedIndex;
+            Param.ini.baudrate_select = comboBox_COMBaudrate.SelectedIndex;
+            Param.ini.com_select = comboBox_COMNumber.SelectedIndex;
 
-            Properties.Settings.Default.Save();       
+            Param.SaveIniParam();
         }
 
 		private void KMouse_SizeChanged(object sender, EventArgs e)
@@ -328,32 +330,32 @@ namespace KMouse
 
         private void comboBox_COMNumber_DropDown(object sender, EventArgs e)
         {
-            com.comboBox_COMNumber_DropDown(sender, e);
+            com.comboBox_COMNumber_DropDown(sender);
         }
 
         private void comboBox_COMNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
-            com.comboBox_COMNumber_SelectedIndexChanged(sender, e);
+            com.comboBox_COMNumber_SelectedIndexChanged(sender);
         }
 
         private void comboBox_COMBaudrate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            com.comboBox_COMBaudrate_SelectedIndexChanged(sender, e);
+            com.comboBox_COMBaudrate_SelectedIndexChanged(sender);
         }
 
         private void comboBox_COMDataBit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            com.comboBox_COMDataBit_SelectedIndexChanged(sender, e);
+            com.comboBox_COMDataBit_SelectedIndexChanged(sender);
         }
 
         private void comboBox_COMCheckBit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            com.comboBox_COMCheckBit_SelectedIndexChanged(sender, e);
+            com.comboBox_COMCheckBit_SelectedIndexChanged(sender);
         }
 
         private void comboBox_COMStopBit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            com.comboBox_COMStopBit_SelectedIndexChanged(sender, e);
+            com.comboBox_COMStopBit_SelectedIndexChanged(sender);
         }
 
         public void SetComStatus(bool IsRunning)
@@ -385,12 +387,12 @@ namespace KMouse
 
         private void button_ComOpen_Click(object sender, EventArgs e)
         {
-            com.button_ComOpen_Click(sender, e, this);
+            com.button_ComOpen_Click(sender, this);
         }
 
         private void comboBox_COMNumber_DropDownClosed(object sender, EventArgs e)
         {
-            com.comboBox_COMNumber_DropDownClosed(sender, e);
+            com.comboBox_COMNumber_DropDownClosed(sender);
         }
         /********************与串口控制相关的 End***************************/
     }

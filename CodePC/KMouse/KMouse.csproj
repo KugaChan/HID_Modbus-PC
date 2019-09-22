@@ -67,6 +67,8 @@
     <Compile Include="Func.cs" />
     <Compile Include="KeyQueue.cs" />
     <Compile Include="Modbus.cs" />
+    <Compile Include="MoveCursor.cs" />
+    <Compile Include="Param.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">

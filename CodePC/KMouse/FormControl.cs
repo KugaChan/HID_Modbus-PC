@@ -955,7 +955,7 @@ namespace KMouse
                 (last_key_code == Keys.ShiftKey)||
                 (last_key_code == Keys.Menu) )
             {
-                Console.WriteLine("release the func key:{0}", last_key_code);
+                Dbg.WriteLine("release the func key:{0}", last_key_code);
                 last_key_code = Keys.None;
                 KB_EnterKey(keyQ.eKEY.NULL);
                 return;
@@ -973,7 +973,7 @@ namespace KMouse
 			uint key_func = (uint)KeyCode >> 16;
 			KeyCode = (Keys)((uint)KeyCode & (0x0000FFFFu));
 
-			Console.WriteLine("KEYDOWN>> code:{0} func:{1} last:{2}", KeyCode, key_func, last_key_code);
+			Dbg.WriteLine("KEYDOWN>> code:{0} func:{1} last:{2}", KeyCode, key_func, last_key_code);
                         
             if( ((last_key_code == Keys.ControlKey) && (KeyCode == Keys.ControlKey)) ||
                 ((last_key_code == Keys.ShiftKey) && (KeyCode == Keys.ShiftKey)) ||
@@ -982,7 +982,7 @@ namespace KMouse
                 timer_ReleaseFuncKey.Enabled = false;//释放定时器重新计时
                 timer_ReleaseFuncKey.Enabled = true;
 
-                Console.WriteLine("pressing the same func key, return...");
+                Dbg.WriteLine("pressing the same func key, return...");
                 return;
             }
             last_key_code = KeyCode;
@@ -1188,7 +1188,7 @@ namespace KMouse
 		private void KMouse_KeyUp(object sender, KeyEventArgs e)
 		{
 #if false   //鼠标的动作才需要up和down，因为up时要释放按钮使能
-            Console.WriteLine("KEYUP>>keycode:{0}", e.KeyCode);
+            Dbg.WriteLine("KEYUP>>keycode:{0}", e.KeyCode);
 
 			if(e.KeyCode == Keys.NumPad8) { Func_MouseUp_MoveUp(); }
 			if(e.KeyCode == Keys.NumPad2) { Func_MouseUp_MoveDown(); }
@@ -1237,7 +1237,7 @@ namespace KMouse
 
             for(i = 0; i < textBox_EKey.TextLength; i++)
             {
-                Console.WriteLine("c:{0}\n", char_buffer[i]);
+                Dbg.WriteLine("c:{0}\n", char_buffer[i]);
 
                 if(special_key_step == SPEC_KEY_NONE)
                 {

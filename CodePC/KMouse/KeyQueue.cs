@@ -139,6 +139,7 @@ namespace KMouse
                 public const uint SHUTDOWN = 1;
                 public const uint IO_High = 2;
                 public const uint IO_Low = 3;
+                public const uint AUTOPOWER = 4;
             }
 
             public const uint LEAVE = 0x0000FFFF;
@@ -192,7 +193,7 @@ namespace KMouse
 
         public bool FIFO_Input(keyQ.eKEY key)
         {
-            Console.WriteLine("keyQ In:{0}", key);            
+            Dbg.WriteLine("keyQ In:{0}", key);            
 
             if(timer_queue_full.Enabled == true)
             {
@@ -232,7 +233,7 @@ namespace KMouse
             if (FIFO_HasData() == true)
             {
                 key = queue_key.Dequeue();
-                Console.WriteLine("keyQ Out:{0}", key);
+                Dbg.WriteLine("keyQ Out:{0}", key);
 
                 return key;
             }

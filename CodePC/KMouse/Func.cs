@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Management;
 using System.Drawing;
+using System.Runtime.InteropServices;   //使用DllImport
+using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 namespace KMouse
 {
@@ -192,17 +195,58 @@ namespace KMouse
             }
         }
 
-		public static void DumpBuffer(byte[] buffer, int length)
+        [DllImport("user32.dll")]
+        static extern bool GetCursorInfo(out CURSORINFO pci);
+        private const Int32 CURSOR_SHOWING = 0x00000001;
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct POINT
+        {
+            public Int32 x;
+            public Int32 y;
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        struct CURSORINFO
+        {
+            public Int32 cbSize;
+            public Int32 flags;
+            public IntPtr hCursor;
+            public POINT ptScreenPos;
+        }
+        public static Cursor GetCursor(out int x, out int y)
+        {
+            //画出鼠标
+            CURSORINFO pci;
+            pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+            GetCursorInfo(out pci);
+            Cursor cur;
+            try
+            {
+                cur = new Cursor(pci.hCursor);
+            }
+            catch
+            {
+                cur = null;
+                //Dbg.WriteLine("#Cal curur fail!");
+            }
+
+            x = pci.ptScreenPos.x;
+            y = pci.ptScreenPos.y;
+
+            return cur;
+        }
+
+        public static void DumpBuffer(byte[] buffer, int length)
         {
             for(int i = 0; i < length; i++)
             {
                 if(i % 16 == 0)
                 {
-                    Console.WriteLine("");
+                    Dbg.WriteLine("");
                 }
                 Console.Write("{0:x2} ", buffer[i]);
             }
-            Console.WriteLine("");
+            Dbg.WriteLine("");
         }
 		
         public static char GetHexHighLow(byte n, byte mode)
@@ -288,7 +332,7 @@ namespace KMouse
                 {
                     char high_char = GetHexHighLow((byte)chahArray[i], 0);
                     char low_char = GetHexHighLow((byte)chahArray[i], 1);
-                    //Console.WriteLine("i:{0}|{1} H:{2} L:{3}", i, n, high_char, low_char);
+                    //Dbg.WriteLine("i:{0}|{1} H:{2} L:{3}", i, n, high_char, low_char);
 
                     hex_show += high_char;
                     hex_show += low_char;
@@ -568,12 +612,12 @@ namespace KMouse
                 value = buffer_value[bottom];
 
 #if SUPPORT_SHOW_FIFO_DATA
-                Console.WriteLine("out:{0}({1}:{2})", value, top, bottom);
+                Dbg.WriteLine("out:{0}({1}:{2})", value, top, bottom);
                 for(int i = 0; i < buffer_value[bottom]; i++)
                 {
                     Console.Write(" {0}", buffer_data[bottom][i]);
                 }
-                Console.WriteLine("({0}:{1})", top, bottom);
+                Dbg.WriteLine("({0}:{1})", top, bottom);
 #endif
 
                 is_full = false;
@@ -606,12 +650,12 @@ namespace KMouse
                 buffer_value[top] = value;
 
 #if SUPPORT_SHOW_FIFO_DATA
-                Console.WriteLine("in:{0}({1}:{2})", value, top, bottom);
+                Dbg.WriteLine("in:{0}({1}:{2})", value, top, bottom);
                 for(int i = 0; i < buffer_value[top]; i++)
                 {
                     Console.Write(" {0}", buffer_data[top][i]);
                 }
-                Console.WriteLine("({0}:{1})", top, bottom);
+                Dbg.WriteLine("({0}:{1})", top, bottom);
 #endif
                 top++;
 

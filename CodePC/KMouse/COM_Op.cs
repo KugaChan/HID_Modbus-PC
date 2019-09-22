@@ -15,7 +15,7 @@ namespace KMouse
         {
             if(_comboBox_COMNumber.SelectedIndex == -1)
             {
-                Console.WriteLine("Serial port not select!");
+                Dbg.WriteLine("Serial port not select!");
                 serialport.PortName = "null";
             }
             else
@@ -130,19 +130,19 @@ namespace KMouse
             _comboBox_COMStopBit.Items.Add("1");
             _comboBox_COMStopBit.Items.Add("2");
             _comboBox_COMStopBit.Items.Add("1.5");
-
+            
             if((_comboBox_COMNumber.Items.Count > 0)
-             && (Properties.Settings.Default._com_num_select_index < _comboBox_COMNumber.Items.Count))    //串口列表选用号
+             && (Param.ini.com_select < _comboBox_COMNumber.Items.Count))    //串口列表选用号
             {
-                _comboBox_COMNumber.SelectedIndex = Properties.Settings.Default._com_num_select_index;
+                _comboBox_COMNumber.SelectedIndex = Param.ini.com_select;
             }
             else
             {
                 _comboBox_COMNumber.SelectedIndex = -1;
             }
             Update_SerialPortName(_comboBox_COMNumber);
-
-            _comboBox_COMBaudrate.SelectedIndex = Properties.Settings.Default._baudrate_select_index;
+            
+            _comboBox_COMBaudrate.SelectedIndex = Param.ini.baudrate_select;
             Update_SerialBaudrate(_comboBox_COMBaudrate);
 
             _comboBox_COMCheckBit.SelectedIndex = 0;
@@ -156,7 +156,7 @@ namespace KMouse
         }
 
         int combobox_comnumber_width_bak = 0;
-        public void comboBox_COMNumber_DropDown(object sender, EventArgs e)
+        public void comboBox_COMNumber_DropDown(object sender)
         {
             ComboBox _comboBox_COMNumber = sender as ComboBox;
 
@@ -169,21 +169,21 @@ namespace KMouse
             Update_SerialPortName(_comboBox_COMNumber);
         }
 
-        public void comboBox_COMNumber_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox_COMNumber_SelectedIndexChanged(object sender)
         {
             ComboBox _comboBox_COMNumber = sender as ComboBox;
 
             Update_SerialPortName(_comboBox_COMNumber);
         }
 
-        public void comboBox_COMNumber_DropDownClosed(object sender, EventArgs e)
+        public void comboBox_COMNumber_DropDownClosed(object sender)
         {
             ComboBox _comboBox_COMNumber = sender as ComboBox;
 
             _comboBox_COMNumber.Width = combobox_comnumber_width_bak;
         }
 
-        public void comboBox_COMBaudrate_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox_COMBaudrate_SelectedIndexChanged(object sender)
         {
             ComboBox _comboBox_COMBaudrate = sender as ComboBox;
 
@@ -204,30 +204,30 @@ namespace KMouse
             }
         }
 
-        public void comboBox_COMCheckBit_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox_COMCheckBit_SelectedIndexChanged(object sender)
         {
             ComboBox _comboBox_COMCheckBit = sender as ComboBox;
             Update_SerialParityBit(_comboBox_COMCheckBit);
         }
 
-        public void comboBox_COMDataBit_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox_COMDataBit_SelectedIndexChanged(object sender)
         {
             ComboBox _comboBox_COMDataBit = sender as ComboBox;
             Update_SerialDataBit(_comboBox_COMDataBit);
         }
 
-        public void comboBox_COMStopBit_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox_COMStopBit_SelectedIndexChanged(object sender)
         {
             ComboBox _comboBox_COMStopBit = sender as ComboBox;
             Update_SerialStopBit(_comboBox_COMStopBit);
         }
 
 
-        public void button_ComOpen_Click(object sender, EventArgs e, FormMain fm)
+        public void button_ComOpen_Click(object sender, FormMain fm)
         {
             //timer_CloseSerialPort.SynchronizingObject = Callback_CloseCOM;//跨线程访问的控件
 
-            Console.WriteLine("COM open or close:{0}", serialport.IsOpen);
+            Dbg.WriteLine("COM open or close:{0}", serialport.IsOpen);
 
             Button _button_ComOpen = sender as Button;
 

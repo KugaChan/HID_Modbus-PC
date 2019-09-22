@@ -9,6 +9,7 @@ namespace KMouse
 	static class Program
 	{
         static public string[] parameters;
+        static public bool call_from_cmd;
 
 		/// <summary>
 		/// 应用程序的主入口点。
@@ -17,15 +18,18 @@ namespace KMouse
 		static void Main(string[] args)
 		{
             parameters = args;
-
-            System.Console.WriteLine("parameter count = {0}", args.Length);
+            if(args.Length > 0)
+            {
+                call_from_cmd = true;
+            }
+            Dbg.WriteLine("parameter count = {0}", args.Length);
 
             for(int i = 0; i < args.Length; i++)
             {
-                System.Console.WriteLine("Arg[{0}] = [{1}]", i, args[i]);
+                Dbg.WriteLine("Arg[{0}] = [{1}]", i, args[i]);
             }
             //Console.ReadLine();
-
+            
             Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new FormMain());

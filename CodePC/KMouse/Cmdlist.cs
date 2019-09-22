@@ -13,21 +13,31 @@ namespace KMouse
     {
         public struct CMD
         {
-            public const string BOOT_PC = "boot";
-            public const string SHUTDOWN_PC = "shutdown";
-            public const string IO_HIGH = "high";
-            public const string IO_LOW = "low";
-            public const string EXIT = "exit";
-            public const string IDENTIFY = "identify";
-            public const string DELAY = "delay";
-            public const string AGAIN = "again";
+            public const string TEST = "Test";
+            public const string BOOT_PC = "Boot";
+            public const string SHUTDOWN_PC = "Shutdown";
+            public const string AUOTPOWER_PC = "AutoPower";
+            public const string IO_HIGH = "High";
+            public const string IO_LOW = "Low";
+            public const string EXIT = "Exit";
+            public const string IDENTIFY = "Identify";
+            public const string DELAY = "Delay";
+            public const string AGAIN = "Again";
+
+            public const string MOUSE_SET = "MouseSet";
+            public const string MOUSE_LEFT = "MouseL";
+            public const string MOUSE_RIGHT = "MouseR";
+            public const string MOUSE_MIDDLE = "MouseM";
+            public const string MOUSE_ROLLUP = "MouseU";
+            public const string MOUSE_ROLLDOWN = "MouseD";
         }
 
         const int MAX_CMD_LIST_LENGTH = 128;
         string[] cmd_list_name;
-        int[] cmd_list_value;
+        double[] cmd_list_value;
         int cmd_list_total = 0;
 
+        MoveCursor mc;
 
         public int cmd_list_cnt = 0;
         public int cycle_cnt = 0;
@@ -44,7 +54,7 @@ namespace KMouse
         public void Init(Button _button_run, TextBox _textBox_Cmdlist, TextBox _textBox_Point, Modbus _mdbs, FormMain _fm)
         {
             cmd_list_name = new string[MAX_CMD_LIST_LENGTH];
-            cmd_list_value = new int[MAX_CMD_LIST_LENGTH];
+            cmd_list_value = new double[MAX_CMD_LIST_LENGTH];
 
             timer_execute = new System.Timers.Timer(200);
             timer_execute.Elapsed += new System.Timers.ElapsedEventHandler(timer_execute_Tick);
@@ -56,13 +66,15 @@ namespace KMouse
             textBox_Point = _textBox_Point;
             fm = _fm;
             mdbs = _mdbs;
+
+            mc = new MoveCursor();
         }
 
         public void BatCall(TextBox textbox, SerialPort _serialport)
         {
             for(int i = 0; i < Program.parameters.Length; i++)
             {
-                Console.WriteLine("Arg[{0}] = [{1}]", i, Program.parameters[i]);
+                Dbg.WriteLine("Arg[{0}] = [{1}]", i, Program.parameters[i]);
                 textbox.Text += i.ToString() + ":" + Program.parameters[i] + "\r\n";
             }
             if((_serialport.IsOpen == true) && (Program.parameters.Length == 1))
@@ -74,7 +86,7 @@ namespace KMouse
             }
         }
 
-        private int Func_GetParam(string str_cmd)
+        private double Func_GetParam(string str_cmd)
         {
             string value = "";
             int start_index;
@@ -92,7 +104,7 @@ namespace KMouse
 
             try
             {
-                return int.Parse(value);
+                return double.Parse(value);
             }
             catch
             {
@@ -112,13 +124,17 @@ namespace KMouse
             return str_cmd.Substring(0, end_index);
         }
 
-        private void CmdList_Execute(string cmd, int value)
+        private void CmdList_Execute(string cmd, double value)
         {
-            Console.WriteLine("@@[{0}]ExeCMD. Cnt:{1}|{2} Cmd:{3} Args:{4}", 
+            Dbg.WriteLine("@@[{0}]ExeCMD. Cnt:{1}|{2} Cmd:{3} Args:{4}", 
                 DateTime.Now.ToString("yy/MM/dd HH:mm:ss"), cmd_list_cnt, cmd_list_total,
                 cmd_list_name[cmd_list_cnt], cmd_list_value[cmd_list_cnt]);
-
-            if(cmd == CMD.BOOT_PC)
+            
+            if(cmd == CMD.TEST)
+            {
+                Dbg.WriteLine("I am CMD Test");
+            }
+            else if(cmd == CMD.BOOT_PC)
             {
                 //MessageBox.Show("Run Boot!");
                 mdbs.Send_03(Modbus.REG.MOVEMENT, 1, keyQ.MOUSE.MOVEMENT.BOOT);
@@ -127,6 +143,11 @@ namespace KMouse
             {
                 //MessageBox.Show("Run Shutdown!");
                 mdbs.Send_03(Modbus.REG.MOVEMENT, 1, keyQ.MOUSE.MOVEMENT.SHUTDOWN);
+            }
+            else if(cmd == CMD.AUOTPOWER_PC)
+            {
+                //MessageBox.Show("Run AuotPower!");
+                mdbs.Send_03(Modbus.REG.MOVEMENT, 1, keyQ.MOUSE.MOVEMENT.AUTOPOWER);
             }
             else if(cmd == CMD.IO_HIGH)
             {
@@ -145,7 +166,7 @@ namespace KMouse
             else if(cmd == CMD.DELAY)
             {
                 timer_execute.Stop();
-                Thread.Sleep(value*1000);
+                Thread.Sleep((int)value*1000);
                 timer_execute.Start();            
             }
             else if(cmd == CMD.AGAIN)
@@ -156,10 +177,39 @@ namespace KMouse
                     cycle_cnt++;
                 }
             }
+            else if(cmd == CMD.MOUSE_SET)
+            {
+                int XR = (int)value;
+                int YR = (int)((value - XR) * 1000);
+
+                Dbg.WriteLine("XR:{0} YR:{1}", XR, YR);
+
+                mc.Mouse_AbsoluteMove(XR, YR);
+            }
+            else if(cmd == CMD.MOUSE_LEFT)
+            {
+                mc.Mouse_Single_LeftClick();
+            }
+            else if(cmd == CMD.MOUSE_RIGHT)
+            {
+                mc.Mouse_RightClick();
+            }
+            else if(cmd == CMD.MOUSE_MIDDLE)
+            {
+                mc.Mouse_MiddleClick();
+            }
+            else if(cmd == CMD.MOUSE_ROLLUP)
+            {
+                mc.Mouse_WheelMove(100);
+            }
+            else if(cmd == CMD.MOUSE_ROLLDOWN)
+            {
+                mc.Mouse_WheelMove(-100);
+            }
             else
             {
                 //MessageBox.Show("Unknown CMD!");
-                Console.WriteLine("##Unknown CMD!");
+                Dbg.WriteLine("##Unknown CMD!");
             }
         }
 
@@ -186,7 +236,7 @@ namespace KMouse
 
         void Reset()
         {
-            Console.WriteLine("Reset");
+            Dbg.WriteLine("Reset");
 
             fm.Invoke((EventHandler)(delegate
             {
@@ -204,7 +254,7 @@ namespace KMouse
 
         void Start()
         {
-            Console.WriteLine("Start");
+            Dbg.WriteLine("Start");
 
             fm.Invoke((EventHandler)(delegate
             {
@@ -221,7 +271,7 @@ namespace KMouse
         {
             if(button_run.Text == "Run")
             {
-                Console.WriteLine("eCMD count:{0}", textbox.Lines.Length);
+                Dbg.WriteLine("eCMD count:{0}", textbox.Lines.Length);
 
                 cmd_list_total = 0;
                 foreach(string str_cmd in textbox.Lines)
@@ -237,7 +287,7 @@ namespace KMouse
                     }
 
                     cmd_list_value[cmd_list_total] = Func_GetParam(str_cmd);
-                    Console.WriteLine("Cnt:{0} Cmd:{1} Args:{2}", cmd_list_total, cmd_list_name[cmd_list_total], cmd_list_value[cmd_list_total]);
+                    Dbg.WriteLine("Cnt:{0} Cmd:{1} Args:{2}", cmd_list_total, cmd_list_name[cmd_list_total], cmd_list_value[cmd_list_total]);
                     cmd_list_total++;
                 }
 
