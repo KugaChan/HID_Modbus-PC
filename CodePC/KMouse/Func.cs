@@ -9,6 +9,9 @@ using System.Drawing;
 using System.Runtime.InteropServices;   //使用DllImport
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace KMouse
 {
@@ -528,7 +531,28 @@ namespace KMouse
             }
 
             return same;           
-        } 
+        }
+
+        //比较2个对象是否完全相等，必须在类定义时，表明为可顺序化[Serializable]
+        public static bool Compare(object obj1, object obj2)
+        {
+            //将对象序列化成内存中的二进制流  
+            BinaryFormatter inputFormatter = new BinaryFormatter();
+            MemoryStream inputStream;
+            MemoryStream inputStream2;
+            using(inputStream = new MemoryStream())
+            {
+                inputFormatter.Serialize(inputStream, obj1);
+            }
+            using(inputStream2 = new MemoryStream())
+            {
+                inputFormatter.Serialize(inputStream2, obj2);
+            }
+            string md5_1 = HashHelper.MD5Encrypt(inputStream.ToArray());
+            string md5_2 = HashHelper.MD5Encrypt(inputStream2.ToArray());
+
+            return (md5_1 == md5_2);
+        }
     }
 
     /***************************eFIFO Start********************************/

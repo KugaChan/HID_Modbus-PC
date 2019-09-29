@@ -51,17 +51,14 @@ namespace KMouse
             com.ControlModule_Init(comboBox_COMNumber, comboBox_COMBaudrate,
                 comboBox_COMCheckBit, comboBox_COMDataBit, comboBox_COMStopBit);
             com.Init(mdbs);
-            bool res = com.Open();
-            if(res == true)
-            {
-                button_COMOpen.Text = "COM is opened";
-                button_COMOpen.ForeColor = System.Drawing.Color.Green;
 
-                //comboBox_COMBaudrate.Enabled = false;
-                comboBox_COMCheckBit.Enabled = false;
-                comboBox_COMDataBit.Enabled = false;
-                comboBox_COMNumber.Enabled = false;
-                comboBox_COMStopBit.Enabled = false;
+            if(Param.ini.com_is_open == true)
+            {
+                bool res = com.Open();
+                if(res == true)
+                {
+                    SetComStatus(res);
+                }
             }
 
             kq.Init(queue_message);
@@ -94,10 +91,7 @@ namespace KMouse
             kq.Close();
             mdbs.Close();
 
-            if(Program.call_from_cmd == false)  //命令行调用的话，窗体可能被异常关闭，此时不能去编译ini
-            {
-                Func_PropertiesSettingsSave();  //关闭的时候保存参数
-            }
+            Func_SaveNewParameter();        //关闭的时候保存参数
 
 			notifyIcon.Dispose();
             this.Close();
@@ -110,17 +104,28 @@ namespace KMouse
             timer_CloseForm.Enabled = true;
 		}
                 
-        private void Func_PropertiesSettingsSave()
-        {   
-            Param.ini.cmdlist_cycle = int.Parse(textBox_Cycle.Text);
+        private void Func_SaveNewParameter()
+        {
+            Param.tParam ini_bak = new Param.tParam();
+            ini_bak = Param.ini;
+
+            Param.ini.com_is_open = button_COMOpen.ForeColor == Color.Green ? true : false;
+            Param.ini.com_select = comboBox_COMNumber.SelectedIndex;
+            Param.ini.com_baudrate = comboBox_COMBaudrate.SelectedIndex;
+            
             Param.ini.eKey_String = textBox_EKey.Text;
-            Param.ini.cmdlist_string = textBox_Cmdlist.Text;
             Param.ini.func_op = (int)func_op;
 
-            Param.ini.baudrate_select = comboBox_COMBaudrate.SelectedIndex;
-            Param.ini.com_select = comboBox_COMNumber.SelectedIndex;
+            Param.ini.cmdlist_string = textBox_Cmdlist.Text;
+            Param.ini.cmdlist_cycle = int.Parse(textBox_Cycle.Text);
 
-            Param.SaveIniParam();
+            bool result = Func.Compare(ini_bak, Param.ini);                 //如果参数没有发生变化，就不用去重写ini文件了
+            
+            if(result == false)
+            {
+                Dbg.WriteLine("Param ini is changed, save new ini file");
+                Param.SaveIniParam();
+            }
         }
 
 		private void KMouse_SizeChanged(object sender, EventArgs e)

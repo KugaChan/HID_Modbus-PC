@@ -10,19 +10,22 @@ namespace KMouse
     class Param
     {
         //常量
-        public const byte _VersionGit = 26;	//Git版本号
+        public const byte _VersionGit = 27;	//Git版本号
 
+        [Serializable]
         public struct tParam
         {
-            public const string BAUDRATE_SELECT = "BAUDRATE_SELECT";
+            public const string COM_IS_OPEN = "COM_IS_OPEN";
             public const string COM_SELECT = "COM_SELECT";
+            public const string COM_BAUDRATE = "COM_BAUDRATE";            
             public const string EKEY_STRING = "EKEY_STRING";
             public const string FUNC_OP = "FUNC_OP";
             public const string CMDLIST_STRING = "CMDLIST_STRING";
             public const string CMDLIST_CYCLE = "CMDLIST_CYCLE";
 
-            public int baudrate_select;
+            public bool com_is_open;
             public int com_select;
+            public int com_baudrate;            
             public string eKey_String;
             public int func_op;
             public string cmdlist_string;
@@ -38,10 +41,13 @@ namespace KMouse
 
             string str = "";
 
-            str += tParam.BAUDRATE_SELECT + "=" + ini.baudrate_select + ";\r\n";
+            str += tParam.COM_IS_OPEN + "=" + ini.com_is_open + ";\r\n";
             str += tParam.COM_SELECT + "=" + ini.com_select + ";\r\n";
+            str += tParam.COM_BAUDRATE + "=" + ini.com_baudrate + ";\r\n";
+
             str += tParam.EKEY_STRING + "=" + ini.eKey_String + ";\r\n";
             str += tParam.FUNC_OP + "=" + ini.func_op + ";\r\n";
+
             str += tParam.CMDLIST_STRING + "=" + ini.cmdlist_string + ";\r\n";
             str += tParam.CMDLIST_CYCLE + "=" + ini.cmdlist_cycle + ";\r\n";
 
@@ -60,10 +66,13 @@ namespace KMouse
         tag_open:
             if(File.Exists(path_ini_file) == false)
             {
-                ini.baudrate_select = -1;
+                ini.com_is_open = false;
                 ini.com_select = -1;
+                ini.com_baudrate = -1;
+                
                 ini.eKey_String = "Hello world";
                 ini.func_op = 0;
+
                 ini.cmdlist_string = "Identify()";
                 ini.cmdlist_cycle = 0;
 
@@ -137,15 +146,20 @@ namespace KMouse
                     Dbg.WriteLine("Param[%] line:% index:%|% name:% value:%", i++, line_number, index_equal, index_end, param_name, param_value);
 
                     //ui->plainTextEdit_ScanCMD->appendPlainText(str);
-                    if(param_name == tParam.BAUDRATE_SELECT)
+                    if(param_name == tParam.COM_IS_OPEN)
                     {
-                        ini.baudrate_select = int.Parse(param_value);
-                        Dbg.WriteLine("get BAUDRATE_SELECT. value:%", ini.baudrate_select);
+                        ini.com_is_open = bool.Parse(param_value);
+                        Dbg.WriteLine("get COM_IS_OPEN. value:%", ini.com_is_open);
                     }
                     else if(param_name == tParam.COM_SELECT)
                     {
                         ini.com_select = int.Parse(param_value);
-                        Dbg.WriteLine("get COM_SELECT. value:%", ini.baudrate_select);
+                        Dbg.WriteLine("get COM_SELECT. value:%", ini.com_baudrate);
+                    }
+                    else if(param_name == tParam.COM_BAUDRATE)
+                    {
+                        ini.com_baudrate = int.Parse(param_value);
+                        Dbg.WriteLine("get COM_BAUDRATE. value:%", ini.com_baudrate);
                     }
                     else if(param_name == tParam.EKEY_STRING)
                     {

@@ -142,7 +142,7 @@ namespace KMouse
             }
             Update_SerialPortName(_comboBox_COMNumber);
             
-            _comboBox_COMBaudrate.SelectedIndex = Param.ini.baudrate_select;
+            _comboBox_COMBaudrate.SelectedIndex = Param.ini.com_baudrate;
             Update_SerialBaudrate(_comboBox_COMBaudrate);
 
             _comboBox_COMCheckBit.SelectedIndex = 0;

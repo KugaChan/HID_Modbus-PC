@@ -1,5 +1,9 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git27
+1. 命令行执行参数可以多于1个
+2. 修改上版本，使用ini保存多行字符串时，恢复时不准确的问题
+
 Git26
 1. 变量不在通过windows program data保存，而是使用本地的ini文件
 2. 加入了鼠标移动命令和自动超稳命令

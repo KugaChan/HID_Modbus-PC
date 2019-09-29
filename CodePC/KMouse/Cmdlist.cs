@@ -23,6 +23,7 @@ namespace KMouse
             public const string IDENTIFY = "Identify";
             public const string DELAY = "Delay";
             public const string AGAIN = "Again";
+            public const string CLOSE = "Close";
 
             public const string MOUSE_SET = "MouseSet";
             public const string MOUSE_LEFT = "MouseL";
@@ -74,16 +75,21 @@ namespace KMouse
         {
             for(int i = 0; i < Program.parameters.Length; i++)
             {
-                Dbg.WriteLine("Arg[{0}] = [{1}]", i, Program.parameters[i]);
+                Dbg.WriteLine("Arg[%] = [%]", i, Program.parameters[i]);
                 textbox.Text += i.ToString() + ":" + Program.parameters[i] + "\r\n";
-            }
-            if((_serialport.IsOpen == true) && (Program.parameters.Length == 1))
-            {
-                CmdList_Execute(Program.parameters[0], 0);
 
-                Thread.Sleep(100);
-                fm.Close();
+                string cmd_name = Func_GetCmd(Program.parameters[i]);
+                if(cmd_name == "")
+                {
+                    continue;
+                }
+
+                double cmd_value = Func_GetParam(Program.parameters[i]);
+
+                CmdList_Execute(cmd_name, cmd_value);
             }
+
+            Dbg.WriteLine("Bat run cmd end.");
         }
 
         private double Func_GetParam(string str_cmd)
@@ -176,6 +182,11 @@ namespace KMouse
                     cmd_list_cnt = -1;
                     cycle_cnt++;
                 }
+            }
+            else if(cmd == CMD.CLOSE)
+            {
+                Thread.Sleep(100);                
+                fm.Close();
             }
             else if(cmd == CMD.MOUSE_SET)
             {

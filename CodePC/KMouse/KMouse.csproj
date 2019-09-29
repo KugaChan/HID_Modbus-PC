@@ -55,6 +55,7 @@
     <Compile Include="COM_Op.cs" />
     <Compile Include="Dbg.cs" />
     <Compile Include="COM.cs" />
+    <Compile Include="DEncryptHelper.cs" />
     <Compile Include="FormControl.cs">
       <SubType>Form</SubType>
     </Compile>
