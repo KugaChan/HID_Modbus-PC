@@ -10,7 +10,7 @@ namespace KMouse
     class Param
     {
         //常量
-        public const byte _VersionGit = 27;	//Git版本号
+        public const double _VersionGit = 28;	//Git版本号
 
         [Serializable]
         public struct tParam
@@ -22,6 +22,7 @@ namespace KMouse
             public const string FUNC_OP = "FUNC_OP";
             public const string CMDLIST_STRING = "CMDLIST_STRING";
             public const string CMDLIST_CYCLE = "CMDLIST_CYCLE";
+            public const string BAT_PATH = "BAT_PATH";
 
             public bool com_is_open;
             public int com_select;
@@ -30,10 +31,12 @@ namespace KMouse
             public int func_op;
             public string cmdlist_string;
             public int cmdlist_cycle;
+
+            public string bat_path_string;
         }
         static public tParam ini;
 
-        static string path_ini_file = ".\\KMouse.ini";
+        static public string path_ini_file = ".\\KMouse.ini";
 
         static void CreateIniFile()
         {
@@ -51,6 +54,8 @@ namespace KMouse
             str += tParam.CMDLIST_STRING + "=" + ini.cmdlist_string + ";\r\n";
             str += tParam.CMDLIST_CYCLE + "=" + ini.cmdlist_cycle + ";\r\n";
 
+            str += tParam.BAT_PATH + "=" + ini.bat_path_string + ";\r\n";
+
             sw.WriteLine(str);
 
             sw.Close();
@@ -64,7 +69,7 @@ namespace KMouse
         static public void LoadIniParameter()
         {
         tag_open:
-            if(File.Exists(path_ini_file) == false)
+            if(File.Exists(path_ini_file) == false) //第一次创建ini文件，填写默认值
             {
                 ini.com_is_open = false;
                 ini.com_select = -1;
@@ -75,6 +80,8 @@ namespace KMouse
 
                 ini.cmdlist_string = "Identify()";
                 ini.cmdlist_cycle = 0;
+
+                ini.bat_path_string = "";
 
                 CreateIniFile();
 
@@ -180,6 +187,11 @@ namespace KMouse
                     {
                         ini.cmdlist_cycle = int.Parse(param_value);
                         Dbg.WriteLine("get CMDLIST_CYCLE. value:%", ini.cmdlist_cycle);
+                    }
+                    else if(param_name == tParam.BAT_PATH)
+                    {
+                        ini.bat_path_string = param_value;
+                        Dbg.WriteLine("get BAT_PATH. value:%", ini.bat_path_string);
                     }
                     else
                     {

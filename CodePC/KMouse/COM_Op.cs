@@ -126,7 +126,6 @@ namespace KMouse
             _comboBox_COMDataBit.Items.Add("5");
 
             //停止位
-            _comboBox_COMStopBit.Items.Add("0");
             _comboBox_COMStopBit.Items.Add("1");
             _comboBox_COMStopBit.Items.Add("2");
             _comboBox_COMStopBit.Items.Add("1.5");
@@ -151,7 +150,7 @@ namespace KMouse
             _comboBox_COMDataBit.SelectedIndex = 0;
             Update_SerialDataBit(_comboBox_COMDataBit);
 
-            _comboBox_COMStopBit.SelectedIndex = 1;
+            _comboBox_COMStopBit.SelectedIndex = 0;
             Update_SerialStopBit(_comboBox_COMStopBit);
         }
 

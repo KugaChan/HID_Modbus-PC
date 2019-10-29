@@ -935,6 +935,7 @@ namespace KMouse
 		private void button_P_Identify_Click(object sender, EventArgs e)
 		{
 			mdbs.Send_03(Modbus.REG.IDENTIFY, 1, 0);
+            button_P_Identify.Text = "ID(?)";
 		}
 
 		private void button_Reboot_Click(object sender, EventArgs e)
@@ -945,7 +946,7 @@ namespace KMouse
 		private void button_Reconect_Click(object sender, EventArgs e)
 		{
 			mdbs.Send_03(Modbus.REG.USB_RECONNECT, 1, 0);
-		}
+        }
         /***********************鼠标单击键盘按钮 END**************************/
 
         /**************************键盘热键 START****************************/

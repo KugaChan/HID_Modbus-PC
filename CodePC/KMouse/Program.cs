@@ -22,11 +22,11 @@ namespace KMouse
             {
                 call_from_cmd = true;
             }
-            Dbg.WriteLine("parameter count = {0}", args.Length);
+            Dbg.WriteLine("parameter count:%", args.Length);
 
             for(int i = 0; i < args.Length; i++)
             {
-                Dbg.WriteLine("Arg[{0}] = [{1}]", i, args[i]);
+                Dbg.WriteLine("Arg[%]:%", i, args[i]);
             }
             //Console.ReadLine();
             

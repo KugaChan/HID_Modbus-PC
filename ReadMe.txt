@@ -1,5 +1,10 @@
 https://github.com/KugaChan/HID_Modbus-PC.git
 
+Git28
+1. 参数列表支持运行制定BAT文件
+2. 支持多个KMouse运行可以互锁的功能
+3. 可以在信息框中得到Delay的进度
+
 Git27
 1. 命令行执行参数可以多于1个
 2. 修改上版本，使用ini保存多行字符串时，恢复时不准确的问题

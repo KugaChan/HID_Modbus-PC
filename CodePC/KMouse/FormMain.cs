@@ -37,11 +37,23 @@ namespace KMouse
 			InitializeComponent();
 		}
 
-		private void FormMain_Load(object sender, EventArgs e)
+        Param.tParam ini_bak = new Param.tParam();
+
+        private void FormMain_Load(object sender, EventArgs e)
 		{
-            this.Text = "KMouse Git" + Param._VersionGit.ToString();
+            string fullPath = this.GetType().Assembly.Location;
+            string exe_name = System.IO.Path.GetFileName(fullPath);//文件名 “Default.aspx”
+
+            int dot_index = exe_name.IndexOf(".");
+            exe_name = exe_name.Substring(0, dot_index);
+
+            Param.path_ini_file = ".\\" + exe_name + ".ini";
+
+            this.Text = "KMouse Git" + Param._VersionGit.ToString() + "[" + Param.path_ini_file + "]";
 
             Param.LoadIniParameter();
+
+            button_BatPath.Text = "Bat: " + Param.ini.bat_path_string;
 
             textBox_EKey.Text = Param.ini.eKey_String;
             textBox_Cycle.Text = Param.ini.cmdlist_cycle.ToString();
@@ -75,6 +87,8 @@ namespace KMouse
             cmd_list.Init(button_Run, textBox_Cmdlist, textBox_Point, mdbs, this);
             cmd_list.BatCall(textBox_ComRec, com.serialport);
             cmd_list.cycle_total = int.Parse(textBox_Cycle.Text);
+
+            ini_bak = Param.ini;
         }
 
         private void timer_CloseForm_Tick(object sender, EventArgs e)
@@ -106,9 +120,6 @@ namespace KMouse
                 
         private void Func_SaveNewParameter()
         {
-            Param.tParam ini_bak = new Param.tParam();
-            ini_bak = Param.ini;
-
             Param.ini.com_is_open = button_COMOpen.ForeColor == Color.Green ? true : false;
             Param.ini.com_select = comboBox_COMNumber.SelectedIndex;
             Param.ini.com_baudrate = comboBox_COMBaudrate.SelectedIndex;
@@ -149,25 +160,22 @@ namespace KMouse
 			}
 		}       
 
-        private void button_eKeyClear_Click(object sender, EventArgs e)
-        {
-            textBox_Cmdlist.Text = "";
-            mdbs.success_cnt = 0;
-        }
-
         private void button_Func_Click(object sender, EventArgs e)
         {
             if(func_op == eFunc_OP.EKEY)
             {
                 func_op = eFunc_OP.CMDLIST;
+                button_Run.Enabled = true;
             }
             else if(func_op == eFunc_OP.CMDLIST)
             {
                 func_op = eFunc_OP.NULL;
+                button_Run.Enabled = false;
             }
             else
             {
                 func_op = eFunc_OP.EKEY;
+                button_Run.Enabled = true;
             }
 
             Update_Func_OP_State();
@@ -183,7 +191,7 @@ namespace KMouse
             if(func_op == eFunc_OP.EKEY)
             {
                 kq.modbus_kb_waiting_max = keyQ.MODBUS_KB_WAITING_EKEY;
-                textBox_Cmdlist.Enabled = false;
+                groupBox_Cmdlist.Enabled = false;
                 textBox_EKey.Enabled = true;
                 button_Func.Text = "eKey";
 
@@ -195,7 +203,7 @@ namespace KMouse
             else if(func_op == eFunc_OP.CMDLIST)
             {
                 kq.modbus_kb_waiting_max = keyQ.MODBUS_KB_WAITING_NORMAL;
-                textBox_Cmdlist.Enabled = true;                
+                groupBox_Cmdlist.Enabled = true;
                 textBox_EKey.Enabled = false;
                 button_Func.Text = "CList";
 
@@ -206,7 +214,7 @@ namespace KMouse
             }
             else
             {
-                textBox_Cmdlist.Enabled = false;
+                groupBox_Cmdlist.Enabled = false;
                 textBox_EKey.Enabled = false;
                 button_Func.Text = "Null";
 
@@ -241,8 +249,8 @@ namespace KMouse
 
 			mdbs.Send_03((Modbus.REG)Reg, 1, Val);
 		}
-
-        private void timer_background_Tick(object sender, EventArgs e)
+        
+        private void timer_background_Tick(object sender, EventArgs e)      //100ms
         {
             this.Invoke((EventHandler)(delegate
             {
@@ -271,15 +279,22 @@ namespace KMouse
             {
                 textBox_ComRec.AppendText("\r\n" + queue_message.Dequeue());
             }
-            
+
+            if(groupBox_Cmdlist.Enabled == true)
+            {
+                int cur_x, cur_y;
+                Cursor cur = Func.GetCursor(out cur_x, out cur_y);
+                label_XY.Text = "(" + cur_x.ToString() + "." + cur_y.ToString() + ")";
+            }
+
             label_Rcv.Text = "Received:" + com.recv_cnt.ToString() + "(Bytes)";
         }
 
         void Delegate_ModbusCallBack_Identify(uint value)
         {
             this.Invoke((EventHandler)(delegate
-            {
-                label_Status.Text = value.ToString();
+            {                
+                button_P_Identify.Text = "ID(" + value.ToString() + ")";
             }));
         }
 
@@ -331,6 +346,9 @@ namespace KMouse
         {
             textBox_ComRec.Text = "";
             com.recv_cnt = 0;
+
+            mdbs.success_cnt = 0;
+            mdbs.fail_cnt = 0;
         }
 
         private void comboBox_COMNumber_DropDown(object sender, EventArgs e)
@@ -398,6 +416,25 @@ namespace KMouse
         private void comboBox_COMNumber_DropDownClosed(object sender, EventArgs e)
         {
             com.comboBox_COMNumber_DropDownClosed(sender);
+        }
+
+        private void button_BatPath_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog bat_path_txt = new OpenFileDialog();
+            bat_path_txt.Filter = "bat file|*.bat*";
+            bat_path_txt.ValidateNames = true;
+            bat_path_txt.CheckPathExists = true;
+            bat_path_txt.CheckFileExists = true;
+            if(bat_path_txt.ShowDialog() == DialogResult.OK)
+            {
+                Param.ini.bat_path_string = bat_path_txt.FileName;
+                button_BatPath.Text = "Bat: " + Param.ini.bat_path_string;
+            }
+        }
+
+        private void button_Param_Click(object sender, EventArgs e)
+        {
+            Func_SaveNewParameter();
         }
         /********************与串口控制相关的 End***************************/
     }

@@ -125,11 +125,11 @@ namespace KMouse
 
         public bool Open()
         {
-            Dbg.WriteLine("PortName:{0}", serialport.PortName);
-            Dbg.WriteLine("Baudrate:{0}", serialport.BaudRate);
-            Dbg.WriteLine("Parity:{0}", serialport.Parity);
-            Dbg.WriteLine("Data:{0}", serialport.DataBits);
-            Dbg.WriteLine("Stop:{0}", serialport.StopBits);
+            Dbg.WriteLine("PortName:%", serialport.PortName);
+            Dbg.WriteLine("Baudrate:%", serialport.BaudRate);
+            Dbg.WriteLine("Parity:%", serialport.Parity);
+            Dbg.WriteLine("Data:%", serialport.DataBits);
+            Dbg.WriteLine("Stop:%", serialport.StopBits);
 
             if((serialport.PortName == "null") ||
                 (serialport.BaudRate == 1) ||
